@@ -1,0 +1,148 @@
+\documentclass[12pt, titlepage]{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{nunito}
+\usepackage[margin=1in]{geometry}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\author{Antoni Przybylik \\ PROI 23L \\ GRUPA 103 \and
+	Zoja Hordyńska \\ PROI 23L \\ GRUPA 103}
+\date{\today}
+\title{<TODO: Nazwa Gry> - Dokumentacja Projektu}
+
+\setcounter{secnumdepth}{0}
+\begin{document}
+\maketitle
+\justifying
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{listingstyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+\lstset{style=listingstyle}
+
+\section{Cel i opis projektu}
+Przedmiotem projektu jest "`<TODO: Nazwa Gry>"' - studencka
+gra RPG inspirowana przez Diablo. Gracz (student) przechodzi
+przez mapę Politechniki zbierając przedmioty i walcząc z potworami
+godnymi studiów. Każdy gracz posiada pewne umiejętności,
+zdrowie i manę. Celem gry jest zabicie wszystkich bosów
+i tym samym przeżycie studiów.
+\\~\\
+Projekt ma zostać zrealizowany w języku C++ z użyciem
+jego zaawansowanych mechanizmów i ze szczególnym uwzględnieniem
+paradygmatu obiektowego. Planowane jest stworzenie
+dedykowanego silnika gry zaimplementowanego przy użyciu
+biblioteki SFML, który będzie warstwą abstrakcji między
+wysokopoziomowym kodem właściwej gry operującym na "`duszkach"',
+a interfejsem biblioteki SFML pozwalającym na proste operacje
+takie jak wyświetlanie obrazów.
+
+\section{Architektura}
+Projekt jest podzielony na cztery moduły:
+\begin{itemize}
+	\item Silnik gry
+	\item Ciało gry
+	\item Launcher
+	\item Aplikacja gry
+\end{itemize}
+
+\noindent
+Silnik gry dostarcza interfejs zaprojektowany w
+paradygmacie obiektowym. Jest on oparty o model
+"`Sprite'owy"'. Użytkownik tworzy "`duszki"' (ang.
+sprite) i określa ich interakcje z otoczeniem.
+Następnie dodaje duszki do silnika i uruchamia
+silnik. Silnik symuluje zachowanie duszków
+podane przez użytkownika. Programowanie obiektowe
+pozwala na przeładowanie klasy Sprite (duszek) i
+umieszczenie w nim kodu który zostanie wykonany na
+odpowiednich zdarzeniach takich jak zderzenie dwóch
+duszków lub kodu który jest wykonywany w każdym
+tyknięciu zegara.
+
+\begin{lstlisting}[language=C++, caption=Interfejs silnika - kod poglądowy]
+        /* Utworzenie duszka. */
+        skin = new SpriteSkin(*tiles, 3, 500, 1);
+        sprite = new Sprite(skin,
+                            Rect(0, 0, win_x, win_y),
+                            BA_BOUNCE);
+        sprite->set_position(Rect(100, 100, 75, 75));
+        sprite->set_velocity(Vector(120, 250));
+
+        /* Silnik. */
+        engine = new Engine();
+        engine->bind_window(window);
+        engine->add_sprite(sprite);
+
+        engine->exec();
+\end{lstlisting}
+
+\noindent
+Ciało gry to kod implementujący właściwą
+rozgrywkę. <TODO: Napisz coś o ciele gry.>
+\\~\\
+Launcher jest programem służącym do
+uruchomienia gry. Można w nim modyfikować
+ustawienia rozgrywki i powinna być możliwość
+wczytania stanu gry z pliku. <TODO: Napisz coś
+o launcherze.>
+\\~\\
+Aplikacja gry jest programem który służy
+do grania w grę. W oknie aplikacji gry jest
+renderowana symulacja gry. Aplikacja gry
+powinna dodatkowo pozwalać na zatrzymanie
+gry, zmianę ustawień i wyjście z gry. <TODO:
+Napisz coś o aplikacji gry.>
+
+\section{Wymagania}
+Gra wymaga zainstalowanej biblioteki
+SFML. Założone jest działanie gry
+na systemach operacyjnych Windows i
+Linux. Opcjonalnie gra mogłaby wspierać
+system MacOS. Pewnie Makefile dla Linuksa
+będzie działał na MacOS, ale nie mam tego
+systemu i nie zobowiązuję się że gra będzie
+na nim prawidłowo działać i kompilować
+bez ostrzeżeń.
+\\~\\
+<TODO: Napisać więcej.>
+
+\section{Instrukcja użycia}
+<TODO>
+
+\end{document}
