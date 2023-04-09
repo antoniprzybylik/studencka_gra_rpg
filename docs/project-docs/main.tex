@@ -1,0 +1,155 @@
+\documentclass[12pt, titlepage]{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{nunito}
+\usepackage[margin=1in]{geometry}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\author{Antoni Przybylik \\ PROI 23L \\ GRUPA 103 \and
+	Zoja Hordyńska \\ PROI 23L \\ GRUPA 103}
+\date{\today}
+\title{Studenckie RPG - Dokumentacja Projektu}
+
+\setcounter{secnumdepth}{0}
+\begin{document}
+\maketitle
+\justifying
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{listingstyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+\lstset{style=listingstyle}
+
+\section{Cel i opis projektu}
+Przedmiotem projektu jest „Studenckie RPG” - gra RPG inspirowana grą Diablo. Gracz (student) przechodzi przez mapę Politechniki, zbierając przedmioty i walcząc z potworami godnymi studiów. Każdy gracz posiada pewne umiejętności, zdrowie i manę. Podczas walki,  gracz rzuca umiejętności, które zadają losowe obrażenia z danego przedziału (obrażenia są zwiększane przez przedmioty oraz inne umiejętności). Celem gry jest zabicie wszystkich bossów i tym samym przeżycie studiów.
+\\~\\
+Projekt ma zostać zrealizowany w języku C++ z użyciem
+jego zaawansowanych mechanizmów i ze szczególnym uwzględnieniem
+paradygmatu obiektowego. Planowane jest stworzenie
+dedykowanego silnika gry zaimplementowanego przy użyciu
+biblioteki SFML, który będzie warstwą abstrakcji między
+wysokopoziomowym kodem właściwej gry operującym na "`duszkach"',
+a interfejsem biblioteki SFML pozwalającym na proste operacje
+takie jak wyświetlanie obrazów.
+
+\section{Architektura}
+Projekt jest podzielony na cztery moduły:
+\begin{itemize}
+	\item Silnik gry
+	\item Ciało gry
+	\item Launcher
+	\item Aplikacja gry
+\end{itemize}
+
+\noindent
+Silnik gry dostarcza interfejs zaprojektowany w
+paradygmacie obiektowym. Jest on oparty o model
+"`Sprite'owy"'. Użytkownik tworzy "`duszki"' (ang.
+sprite) i określa ich interakcje z otoczeniem.
+Następnie dodaje duszki do silnika i uruchamia
+silnik. Silnik symuluje zachowanie duszków
+podane przez użytkownika. Programowanie obiektowe
+pozwala na przeładowanie klasy Sprite (duszek) i
+umieszczenie w nim kodu który zostanie wykonany na
+odpowiednich zdarzeniach takich jak zderzenie dwóch
+duszków lub kodu który jest wykonywany w każdym
+tyknięciu zegara.
+
+\begin{lstlisting}[language=C++, caption=Interfejs silnika - kod poglądowy]
+        /* Utworzenie duszka. */
+        skin = new SpriteSkin(*tiles, 3, 500, 1);
+        sprite = new Sprite(skin,
+                            Rect(0, 0, win_x, win_y),
+                            BA_BOUNCE);
+        sprite->set_position(Rect(100, 100, 75, 75));
+        sprite->set_velocity(Vector(120, 250));
+
+        /* Silnik. */
+        engine = new Engine();
+        engine->bind_window(window);
+        engine->add_sprite(sprite);
+
+        engine->exec();
+\end{lstlisting}
+
+\noindent
+Ciało gry to kod implementujący właściwą rozgrywkę. To w nim znajdą się takie klasy jak: Player, Enemy, Spell, czy Item.
+\begin{itemize}
+	\item Klasa Player przechowywać będzie wszystkie, potrzebne do gry, informacje odnośnie gracza: ilość punktów zdrowia, manę, moc, położenie i ekwipunek. Będzie umożliwiała działania na ekwipunku oraz walkę z przeciwnikami.  
+	\item Klasa Enemy będzie określać różnego rodzaju potwory oraz umożliwiać walkę z przeciwnikiem.
+	\item Klasa Spell charakteryzować będzie zaklęcia - ich moc ataku oraz efekty specjalne. Zaklęcia są inne dla gracza, a inne dla każdego rodzaju potwora. 
+	\item Item to klasa dotycząca przedmiotów zbieranych w grze, każdy przedmiot dodawać będzie graczowi określoną ilość zdrowia i mocy, która przekładać się będzie na zwiększoną moc ataku.
+\end{itemize}
+\\~\\
+Launcher jest programem służącym do uruchomienia gry. Można w nim modyfikować ustawienia rozgrywki - zmienić teren,  wybrać rozgrywkę bez mniej znaczących przeciwników, a także wczytać stan gry z pliku. <TODO>
+\\~\\
+Aplikacja gry jest programem który służy
+do grania w grę. W oknie aplikacji gry jest
+renderowana symulacja gry. Aplikacja gry
+powinna dodatkowo pozwalać na zatrzymanie
+gry, zmianę ustawień i wyjście z gry. <TODO:
+Napisz coś o aplikacji gry.>
+
+\section{Wymagania (ja bym póki co tego nie dawała)}
+Gra wymaga zainstalowanej biblioteki
+SFML. Założone jest działanie gry
+na systemach operacyjnych Windows i
+Linux. Opcjonalnie gra mogłaby wspierać
+system MacOS. Pewnie Makefile dla Linuksa
+będzie działał na MacOS, ale nie mam tego
+systemu i nie zobowiązuję się że gra będzie
+na nim prawidłowo działać i kompilować
+bez ostrzeżeń.
+\\~\\
+<TODO: Napisać więcej.>
+
+\section{Instrukcja użycia}
+<TODO>
+
+\section{Planowane biblioteki i narzędzia}
+<TODO>
+
+\section{Podział pracy}
+\begin{itemize}
+	\item Antoni - <TODO>
+ 
+	\item Zoja – menu i interfejs gry, tekstury i obrazki, klasy związane z ciałem gry (Player, Enemy, Spell, Item) <TODO>
+\end{itemize}
+\end{document}
+
+
