@@ -18,6 +18,7 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{multimedia}
 
 \author{Antoni Przybylik \\ PROI 23L \\ GRUPA 103 \and
 	Zoja Hordyńska \\ PROI 23L \\ GRUPA 103}
@@ -56,17 +57,28 @@
 \lstset{style=listingstyle}
 
 \section{Cel i opis projektu}
-Przedmiotem projektu jest „Studenckie RPG” - gra RPG inspirowana grą Diablo. Gracz (student) przechodzi przez mapę Politechniki, zbierając przedmioty i walcząc z potworami godnymi studiów. Każdy gracz posiada pewne umiejętności, zdrowie i manę. Podczas walki,  gracz rzuca umiejętności, które zadają losowe obrażenia z danego przedziału (obrażenia są zwiększane przez przedmioty oraz inne umiejętności). Celem gry jest zabicie wszystkich bossów i tym samym przeżycie studiów.
+Przedmiotem projektu jest gra "`Studenckie RPG"'- RPG
+inspirowane grą Diablo. Gracz (student) przechodzi
+przez mapę Politechniki, zbierając przedmioty i
+walcząc z potworami godnymi studiów. Każdy gracz
+posiada pewne umiejętności, zdrowie i manę.
+Podczas walki, gracz rzuca umiejętności, które
+zadają losowe obrażenia z danego przedziału
+(obrażenia są zwiększane przez przedmioty oraz
+inne umiejętności). Celem gry jest zabicie
+wszystkich bossów i tym samym przeżycie studiów.
 \\~\\
 Projekt ma zostać zrealizowany w języku C++ z użyciem
-jego zaawansowanych mechanizmów i ze szczególnym uwzględnieniem
-paradygmatu obiektowego. Planowane jest stworzenie
-dedykowanego silnika gry zaimplementowanego przy użyciu
-biblioteki SFML, który będzie warstwą abstrakcji między
-wysokopoziomowym kodem właściwej gry operującym na "`duszkach"',
-a interfejsem biblioteki SFML pozwalającym na proste operacje
-takie jak wyświetlanie obrazów.
+jego zaawansowanych mechanizmów i ze szczególnym
+uwzględnieniem paradygmatu obiektowego. Planowane
+jest stworzenie dedykowanego silnika gry
+zaimplementowanego przy użyciu biblioteki SFML, który
+będzie warstwą abstrakcji między wysokopoziomowym
+kodem właściwej gry operującym na "`duszkach"', a
+interfejsem biblioteki SFML pozwalającym na
+proste operacje takie jak wyświetlanie obrazów.
 
+\newpage
 \section{Architektura}
 Projekt jest podzielony na cztery moduły:
 \begin{itemize}
@@ -108,15 +120,37 @@ tyknięciu zegara.
 \end{lstlisting}
 
 \noindent
-Ciało gry to kod implementujący właściwą rozgrywkę. To w nim znajdą się takie klasy jak: Player, Enemy, Spell, czy Item.
-\begin{itemize}
-	\item Klasa Player przechowywać będzie wszystkie, potrzebne do gry, informacje odnośnie gracza: ilość punktów zdrowia, manę, moc, położenie i ekwipunek. Będzie umożliwiała działania na ekwipunku oraz walkę z przeciwnikami.  
-	\item Klasa Enemy będzie określać różnego rodzaju potwory oraz umożliwiać walkę z przeciwnikiem.
-	\item Klasa Spell charakteryzować będzie zaklęcia - ich moc ataku oraz efekty specjalne. Zaklęcia są inne dla gracza, a inne dla każdego rodzaju potwora. 
-	\item Item to klasa dotycząca przedmiotów zbieranych w grze, każdy przedmiot dodawać będzie graczowi określoną ilość zdrowia i mocy, która przekładać się będzie na zwiększoną moc ataku.
-\end{itemize}
+Ciało gry to kod implementujący właściwą
+rozgrywkę. To w nim znajdą się klasy takie
+jak: Player, Enemy, Spell, czy Item.
 \\~\\
-Launcher jest programem służącym do uruchomienia gry. Można w nim modyfikować ustawienia rozgrywki - zmienić teren,  wybrać rozgrywkę bez mniej znaczących przeciwników, a także wczytać stan gry z pliku. <TODO>
+\textbf{Klasa Player} przechowuje
+stan gracza: liczbę punktów zdrowia, manę,
+moc i ekwipunek. Metody klasy
+będą pozwalać na zarządzanie ekwipunkiem i
+modyfikację parametrów gracza.
+TODO: Dziedziczy po Sprite.
+\\~\\
+\textbf{Klasa Enemy} jest klasą bazową
+dla wrogów. Jej interfejs powinien
+pozwalać na walkę niezależnie od tego,
+z jakim przeciwnikiem mamy do czynienia.
+\\~\\
+\textbf{Klasa Spell} jest pomniejszą
+klasą
+bazową dostarczająca interfejs czaru.
+Wszelkie parametry czaru są wirtualne,
+a interfejs ma być taki sam dla wszystkich
+klas pochodnych.
+\\~\\
+\textbf{Item} jest pomniejszą klasą
+bazową implementującą interfejs
+przedmiotu.
+\\~\\
+Launcher jest programem służącym do uruchomienia gry.
+Można w nim modyfikować ustawienia rozgrywki. Zakładane
+możliwości dostosowania ustawień rozgrywki obejmują:
+zmianę mapy, wczytanie stanu gry z pliku. <TODO>
 \\~\\
 Aplikacja gry jest programem który służy
 do grania w grę. W oknie aplikacji gry jest
@@ -125,7 +159,7 @@ powinna dodatkowo pozwalać na zatrzymanie
 gry, zmianę ustawień i wyjście z gry. <TODO:
 Napisz coś o aplikacji gry.>
 
-\section{Wymagania (ja bym póki co tego nie dawała)}
+\section{Wymagania}
 Gra wymaga zainstalowanej biblioteki
 SFML. Założone jest działanie gry
 na systemach operacyjnych Windows i
@@ -145,11 +179,20 @@ bez ostrzeżeń.
 <TODO>
 
 \section{Podział pracy}
+\textbf{Antoni}
 \begin{itemize}
-	\item Antoni - <TODO>
- 
-	\item Zoja – menu i interfejs gry, tekstury i obrazki, klasy związane z ciałem gry (Player, Enemy, Spell, Item) <TODO>
+	\item Silnik
+	\item Części ciała gry
 \end{itemize}
+ 
+\textbf{Zoja}
+\begin{itemize}
+	\item Menu
+	\item Interfejs gry
+	\item Tekstury i obrazki
+	\item Części ciała gry: Player, Enemy, Spell, Item
+\end{itemize}
+
 \end{document}
 
 
