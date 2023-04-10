@@ -154,7 +154,16 @@ klas pochodnych.
 \textbf{Item} jest pomniejszą klasą
 bazową implementującą interfejs
 przedmiotu.
-\\~\\
+\begin{lstlisting}[language=C++, caption=Klasa "`Sword"' - kod poglądowy]
+class Sword : public Item {
+public:
+        virtual Sword(void);
+        virtual ~Sword(void);
+
+        virtual void action(void);
+};
+\end{lstlisting}
+
 Launcher jest programem służącym do uruchomienia gry.
 Można w nim modyfikować ustawienia rozgrywki. Zakładane
 możliwości dostosowania ustawień rozgrywki obejmują:
