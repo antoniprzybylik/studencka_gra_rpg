@@ -61,15 +61,32 @@
 \lstset{style=listingstyle}
 
 \section{Cel i opis projektu}
+Głównym celem projektu jest zademonstrowanie
+umiejętności z zakresu programowania
+obiektowego, znajomości języka C++,
+jego standardowej biblioteki, umiejętności
+inżynierskich związanych z projektowaniem
+złożonych aplikacji i umiejętności społecznych
+związanych z pracą w zespole zdobytych na
+przedmiocie "`Podstawy Informatyki i Programowania"'
+(PROI), a także pogłębienie i utrwalenie
+tej wiedzy i tych umiejętności. 
+\\~\\
+Dodatkowo projekt może pomóc jego uczestnikom w
+lepszym zrozumieniu zasady działania gier
+komputerowych i zdobyciu wiedzy na temat budowania
+oprogramowania.
+\\~\\
 Przedmiotem projektu jest gra "`Studenckie RPG"'- RPG
-inspirowane grą Diablo. Gracz (student) przechodzi
+inspirowane grą Diablo. Podczas rozgrywki, gracz
+wcielający się w studenta przechodzi
 przez mapę Politechniki, zbierając przedmioty i
 walcząc z potworami godnymi studiów. Każdy gracz
 posiada pewne umiejętności, zdrowie i manę.
 Podczas walki, gracz rzuca umiejętności, które
 zadają losowe obrażenia z danego przedziału
-(obrażenia są zwiększane przez przedmioty oraz
-inne umiejętności). Celem gry jest zabicie
+(obrażenia mogą być zwiększone przez niektóre
+przedmioty i umiejętności). Celem gry jest zabicie
 wszystkich bossów i tym samym przeżycie studiów.
 \\~\\
 Projekt ma zostać zrealizowany w języku C++ z użyciem
@@ -183,26 +200,49 @@ Gra wymaga zainstalowanej biblioteki
 SFML. Założone jest działanie gry
 na systemach operacyjnych Windows i
 Linux. Opcjonalnie gra mogłaby wspierać
-system MacOS. Pewnie Makefile dla Linuksa
-będzie działał na MacOS, ale nie mam tego
-systemu i nie zobowiązuję się że gra będzie
-na nim prawidłowo działać i kompilować
-bez ostrzeżeń.
-\\~\\
-<TODO: Napisać więcej.>
+system MacOS. Jednak nie mam tego
+systemu operacyjnego i nie zobowiązuję
+się że gra będzie na nim działać.
 
 \newpage
 \section{Instrukcja użycia}
-<TODO>
+Należy uruchomić launcher. W
+launcherze wybrać preferowane
+ustawienia i rozpocząć grę
+przyciskiem START. Wtedy pojawi
+się nowe okno aplikacji gry.
 
-\section{Planowane biblioteki i narzędzia}
-<TODO>
+\section{Biblioteki i Narzędzia}
+Projekt w całości ma zostać zrealizowany
+w języku C++, w standardzie C++20.
+Dopuszczalne jest używanie rozszerzeń
+GCC.
+\\~\\
+Skrypty pozwalające na zbudowanie
+projektu mają być kompatybilne z
+programem make i do zbudowania
+projektu ma zostać użyty toolchain
+GCC. Do kompilacji gry na Windowsa
+zostanie użyty MinGW.
+\\~\\
+Projekt ma zostać zrealizowany przy
+użyciu biblioteki SFML, biblioteki
+standardowej języka C++ (libstdc++),
+biblioteki standardowej języka C (libc)
+i biblioteki matematycznej (libm). Poza
+nimi, nie jest planowane użycie żadnych
+dodatkowych bibliotek.
+\\~\\
+W projekcie nie jest wymagane ścisłe
+trzymanie się kanonicznej wersji tych
+bibliotek. Dopuszczalne jest użycie
+rozszerzeń GLIBC.
 
-\section{Podział pracy}
+\section{Podział Pracy}
 \textbf{Antoni}
 \begin{itemize}
 	\item Silnik
-	\item Części ciała gry
+	\item Wybrane części gry
 \end{itemize}
  
 \noindent
@@ -211,7 +251,7 @@ bez ostrzeżeń.
 	\item Menu
 	\item Interfejs gry
 	\item Tekstury i obrazki
-	\item Części ciała gry: Player, Enemy, Spell, Item
+	\item Ciało gry; Klasy: Player, Enemy, Spell, Item
 \end{itemize}
 
 \end{document}
