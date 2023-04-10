@@ -117,19 +117,20 @@ Projekt jest podzielony na cztery moduły:
 	\item Aplikacja gry
 \end{itemize}
 
-\noindent
+\subsection{Silnik}
 Silnik gry dostarcza interfejs zaprojektowany w
 paradygmacie obiektowym. Jest on oparty o model
 "`Sprite'owy"'. Użytkownik tworzy "`duszki"' (ang.
 sprite) i określa ich interakcje z otoczeniem.
 Następnie dodaje duszki do silnika i uruchamia
 silnik. Silnik symuluje zachowanie duszków
-podane przez użytkownika. Programowanie obiektowe
-pozwala na przeładowanie klasy Sprite (duszek) i
-umieszczenie w nim kodu który zostanie wykonany na
-odpowiednich zdarzeniach takich jak zderzenie dwóch
-duszków lub kodu który jest wykonywany w każdym
-tyknięciu zegara.
+podane przez użytkownika. Polimorfizm w języku C++
+nadpisywanie w klasach dziedziczących po klasie
+Sprite (duszek) funkcji wirtualnych i dzięki temu
+można w duszkach umieszczać kod który zostanie
+wykonany na odpowiednich zdarzeniach takich jak
+zderzenie dwóch duszków lub kodu który jest
+wykonywany w każdym tyknięciu zegara.
 \\~
 \begin{lstlisting}[language=C++, caption=Interfejs silnika - kod poglądowy]
         /* Utworzenie duszka. */
@@ -152,7 +153,9 @@ tyknięciu zegara.
 Działanie tego kodu jest zademonstrowane
 na
 \href{https://gitlab-stud.elka.pw.edu.pl/aprzyby2/proi_projekt/-/blob/bcad75a44615c7e19fda7ad53a3b5c0541fd482f/docs/project-docs/rc/demo.webm}{filmie}.
-\\~\\
+
+\newpage
+\subsection{Ciało Gry}
 Ciało gry to kod implementujący właściwą
 rozgrywkę. To w nim znajdą się klasy takie
 jak: Player, Enemy, Spell, czy Item.
@@ -190,12 +193,13 @@ public:
 };
 \end{lstlisting}
 
-\noindent
+\subsection{Launcher}
 Launcher jest programem służącym do uruchomienia gry.
 Można w nim modyfikować ustawienia rozgrywki. Zakładane
 możliwości dostosowania ustawień rozgrywki obejmują:
 zmianę mapy, wczytanie stanu gry z pliku. <TODO>
-\\~\\
+
+\subsection{Aplikacja Gry}
 Aplikacja gry jest programem który służy
 do grania w grę. W oknie aplikacji gry jest
 renderowana symulacja gry. Aplikacja gry
