@@ -18,7 +18,6 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{multimedia}
 
 \author{Antoni Przybylik \\ PROI 23L \\ GRUPA 103 \and
 	Zoja Hordyńska \\ PROI 23L \\ GRUPA 103}
@@ -52,6 +51,11 @@
 	showstringspaces=false,
 	showtabs=false,
 	tabsize=2
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
 }
 
 \lstset{style=listingstyle}
@@ -120,6 +124,10 @@ tyknięciu zegara.
 \end{lstlisting}
 
 \noindent
+Działanie tego kodu jest zademonstrowane
+na
+\href{https://gitlab-stud.elka.pw.edu.pl/aprzyby2/proi_projekt/-/blob/bcad75a44615c7e19fda7ad53a3b5c0541fd482f/docs/project-docs/rc/demo.webm}{filmie}.
+\\~\\
 Ciało gry to kod implementujący właściwą
 rozgrywkę. To w nim znajdą się klasy takie
 jak: Player, Enemy, Spell, czy Item.
