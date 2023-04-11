@@ -125,11 +125,12 @@ sprite) i określa ich interakcje z otoczeniem.
 Następnie dodaje duszki do silnika i uruchamia
 silnik. Silnik symuluje zachowanie duszków
 podane przez użytkownika. Polimorfizm w języku C++
+pozwala na
 nadpisywanie w klasach dziedziczących po klasie
 Sprite (duszek) funkcji wirtualnych i dzięki temu
 można w duszkach umieszczać kod który zostanie
 wykonany na odpowiednich zdarzeniach takich jak
-zderzenie dwóch duszków lub kodu który jest
+zderzenie dwóch duszków lub kodu, który jest
 wykonywany w każdym tyknięciu zegara.
 \\~
 \begin{lstlisting}[language=C++, caption=Interfejs silnika - kod poglądowy]
@@ -212,9 +213,7 @@ Gra wymaga zainstalowanej biblioteki
 SFML. Założone jest działanie gry
 na systemach operacyjnych Windows i
 Linux. Opcjonalnie gra mogłaby wspierać
-system MacOS. Jednak nie mam tego
-systemu operacyjnego i nie zobowiązuję
-się że gra będzie na nim działać.
+system MacOS.
 
 \newpage
 \section{Instrukcja użycia}
@@ -241,9 +240,12 @@ Projekt ma zostać zrealizowany przy
 użyciu biblioteki SFML, biblioteki
 standardowej języka C++ (libstdc++),
 biblioteki standardowej języka C (libc)
-i biblioteki matematycznej (libm). Poza
-nimi, nie jest planowane użycie żadnych
-dodatkowych bibliotek.
+i biblioteki matematycznej (libm).
+\\~\\
+Dodatkowe aplikacje takie jak
+launcher mogą zostać zrealizowane
+przy użyciu innych bibliotek np.
+QT.
 \\~\\
 W projekcie nie jest wymagane ścisłe
 trzymanie się kanonicznej wersji tych
@@ -267,5 +269,3 @@ rozszerzeń GLIBC.
 \end{itemize}
 
 \end{document}
-
-
