@@ -4,7 +4,7 @@
 PROJECT = menu-app
 
 CXX = g++
-LINK = g++
+LINK = ld
 STRIP = strip
 
 CXXFLAGS = -MMD -MP -Wall -std=c++20 -pedantic
@@ -16,6 +16,7 @@ LDFLAGS = -fPIC  \
 OBJS = \
 main.o \
 menu.o \
+font_arial.o \
 
 DEPS = $(OBJS:%.o=%.d)
 
@@ -25,17 +26,20 @@ compile: $(OBJS)
 
 build: CXXFLAGS += -O3
 build: compile
-	$(LINK) $(OBJS) -o $(PROJECT) $(LDFLAGS)
+	$(CXX) $(OBJS) -o $(PROJECT) $(LDFLAGS)
 	$(STRIP) $(PROJECT)
 
 debug: CXXFLAGS += -g
 debug: clean | compile
-	$(LINK) $(OBJS) -o $(PROJECT) $(LDFLAGS)
+	$(CXX) $(OBJS) -o $(PROJECT) $(LDFLAGS)
 
 clean:
 	rm -f $(OBJS) $(DEPS)
 
-.cpp.o:
+%.o : %.cpp
 	$(CXX) $< -o $@ -c $(CXXFLAGS)
+
+%.o : %.ttf
+	$(LINK) -r -b binary $< -o $@
 
 -include $(DEPS)
