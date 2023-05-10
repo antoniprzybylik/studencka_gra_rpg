@@ -1,5 +1,5 @@
 .PHONY: all clean build debug
-.SUFFIXES: .o .cpp
+.SUFFIXES: .o .cpp .ttf
 
 PROJECT = menu-app
 
@@ -36,10 +36,10 @@ debug: clean | compile
 clean:
 	rm -f $(OBJS) $(DEPS)
 
-%.o : %.cpp
+.cpp.o:
 	$(CXX) $< -o $@ -c $(CXXFLAGS)
 
-%.o : %.ttf
+.ttf.o:
 	$(LINK) -r -b binary $< -o $@
 
 -include $(DEPS)
