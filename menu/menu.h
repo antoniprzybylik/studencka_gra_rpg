@@ -6,10 +6,11 @@
 class Menu
 {
 public:
-    Menu(float width, float height);
+    Menu(sf::RenderWindow &window);
     ~Menu();
 
     void draw(sf::RenderWindow &window);
+    void update_text(sf::RenderWindow &window);
     void move_up();
     void move_down();
     int get_pressed_item();

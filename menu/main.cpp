@@ -5,8 +5,9 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
-    Menu menu(window.getSize().x, window.getSize().y);
+    sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
+    Menu menu(window);
+
 
     while (window.isOpen())
     {
@@ -45,6 +46,7 @@ int main()
         }
 
         window.clear();
+        window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
         menu.draw(window);
         window.display();
     }
