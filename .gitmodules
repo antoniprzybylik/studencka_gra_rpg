@@ -1,0 +1,3 @@
+[submodule "engine/engine"]
+	path = engine/engine
+	url = https://gitlab-stud.elka.pw.edu.pl/aprzyby2/game_engine.git

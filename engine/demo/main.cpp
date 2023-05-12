@@ -1,0 +1,230 @@
+#include <iostream>
+#include <memory>
+#include <vector>
+
+#include "engine.h"
+#include "sprite.h"
+#include "sprite_skin.h"
+#include "game_window.h"
+#include "algebra.h"
+#include "time_utils.h"
+
+#include "map.h"
+#include "tile_data.h"
+#include "game.h"
+
+#include "tile_sprite.h"
+#include "label_sprite.h"
+
+static
+void handle_keys(void)
+{
+	tile_data_t tile_data;
+
+	if (sf::Keyboard::
+		isKeyPressed(sf::Keyboard::Left)) {
+		sx = -5*x_vel / tile_size;
+	} else {
+		if (sf::Keyboard::
+			isKeyPressed(sf::Keyboard::Right)) {
+			sx = 5*x_vel / tile_size;
+		} else {
+			sx = 0;
+		}
+	}
+
+	if (sf::Keyboard::
+		isKeyPressed(sf::Keyboard::Up)) {
+		/* TODO */
+
+		/* Tymczasowe. */
+		sy = -y_vel*50 / tile_size;
+	} else {
+		if (sf::Keyboard::
+			isKeyPressed(sf::Keyboard::Down)) {
+			sy = y_vel*50 / tile_size;
+		} else {
+			sy = 0;
+		}
+	}
+}
+
+static
+void move_player(void)
+{
+	player_x += sx;
+
+	if (sx < 0) {
+		/* TODO: Checks. */
+	} else if (sx > 0) {
+		/* TODO: Checks. */
+	}
+
+	//sy = (0.02-sy)*0.975;
+	/* Tymczasowe */
+	player_y += sy;
+	
+	if (sy < 0) {
+		/* TODO */
+	} else {
+		/* TODO */
+	}
+}
+
+static
+const int ticks_in_frame = 17;
+
+static std::string position_str("position: (-, -)");
+static std::shared_ptr<LabelSprite> label_sprite(nullptr);
+
+static
+void on_tick(void)
+{
+	scroll_x = (player_x + scroll_x*6)/7;
+	scroll_y = (player_y + scroll_y*6)/7;
+
+	handle_keys();
+	move_player();
+
+	/* TODO */
+
+	position_str = std::string("position: (") +
+		       std::to_string(player_x) +
+		       std::string(", ") +
+		       std::to_string(player_y) +
+		       std::string(")");
+}
+
+static
+void prepare_game(std::unique_ptr<Engine> &engine)
+{
+	std::shared_ptr<TileSprite> tile_sprite(nullptr);
+	std::unique_ptr<sf::Image> tiles(nullptr);
+	std::shared_ptr<TextureSkin> skin(nullptr);
+
+	int ac_index;
+	int ac_x, ac_y;
+	int i, j;
+
+	/* Obrazki bloków. */
+	tiles = std::make_unique<sf::Image>();
+	if (!tiles->loadFromFile("rc/blocks.png")) {
+		throw std::runtime_error(
+				"Loading resources "
+				"failure.");
+	}
+
+	tile_size = 80;
+	scroll_x = map_width/2;
+	scroll_y = map_height*0.1;
+	screen_x = 17;
+	screen_y = 10;
+	player_x = scroll_x;
+	player_y = scroll_y;
+	sx = 0;
+	sy = 0;
+	shift_x = 640;
+	shift_y = 360;
+
+	ac_x = (int) (scroll_x - screen_x/2);
+	ac_y = (int) (scroll_y - screen_y/2);
+
+	ac_index = 0;
+	for (i = 0; i < (int) screen_y; i++) {
+		for (j = 0; j < (int) screen_x; j++) {
+			skin = std::make_shared<TextureSkin>(*tiles, 11, 1);
+
+			tile_sprite = std::make_shared<TileSprite>
+						(skin, Rect(0, 0, 1280, 720), BA_NONE);
+
+			tile_sprite->set_position(Rect(0, 0,
+						       80, 80));
+			tile_sprite->x = ac_x;
+			tile_sprite->y = ac_y;
+			tile_sprite->index = ac_index;
+			tile_sprite->block_id = 0;
+
+			engine->add_sprite(std::static_pointer_cast<Sprite>(tile_sprite));
+			tile_sprite->translate(0, 0);
+
+			ac_x++;
+			ac_index++;
+		}
+
+		ac_x -= screen_x;
+		ac_y++;
+	}
+
+	/* Tło. */
+	std::unique_ptr<sf::Image> bg_img = std::make_unique<sf::Image>();
+	if (!bg_img->loadFromFile("rc/background.png")) {
+		throw std::runtime_error(
+				"Loading resources "
+				"failure.");
+	}
+
+	/* Label Sprite. */
+	label_sprite = std::make_shared<LabelSprite>(10, 10, &position_str);
+	engine->add_sprite(std::static_pointer_cast<Sprite>(label_sprite));
+
+	/* Background Sprite. */
+	std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
+	texture->loadFromImage(*bg_img, sf::IntRect(0, 0, 1280, 720));
+	std::shared_ptr<TextureSkin> bg_skin = std::make_shared<TextureSkin>(texture);
+
+	std::shared_ptr<Sprite> bg_sprite = std::make_shared<Sprite>
+				(std::static_pointer_cast<SpriteSkin>(bg_skin), -1);
+	engine->add_sprite(bg_sprite);
+}
+
+static
+std::unique_ptr<Engine> game_init(void)
+{
+	std::shared_ptr<GameWindow> window;
+	std::unique_ptr<Engine> engine(nullptr);
+
+	/* Okno gry. */
+	window = std::make_shared<GameWindow>();
+
+	window->set_size(1280, 720);
+	window->set_title(std::string("Engine test."));
+	window->set_state(GW_ACTIVE);
+
+	/* Silink. */
+	engine = std::make_unique<Engine>(on_tick, ticks_in_frame);
+	engine->bind_window(window);
+
+	map_height = 100;
+	map_width = 300;
+	map = generate_map(map_width,
+			   map_height,
+			   2, 3, 2);
+	tile_data = load_tile_data();
+
+	/* Utworzenie duszków bloków,
+	 * gracza, tła.
+	 * Ustawienie stałych. */
+	prepare_game(engine);
+
+	return engine;
+}
+
+int main(void)
+{
+	std::unique_ptr<Engine> engine(nullptr);
+
+	try {
+		engine = game_init();
+	}
+	catch (std::exception &e) {
+		std::cerr << "Game initialization "
+			  << "failure.\n\n"
+			  << "Exception occured:\n"
+			  << e.what() << std::endl;
+		return(-1);
+	}
+
+	engine->exec();
+
+	return(0);
+}
