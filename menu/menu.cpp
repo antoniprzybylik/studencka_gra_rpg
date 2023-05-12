@@ -1,7 +1,11 @@
 #include "menu.h"
 #include <exception>
 #include <iostream>
+#include <cstdint>
 #include <cmath>
+
+extern char _binary_font_arial_ttf_start[];
+extern char _binary_font_arial_ttf_end[];
 
 Menu::Menu(sf::RenderWindow &window)
 {
@@ -10,7 +14,9 @@ Menu::Menu(sf::RenderWindow &window)
         throw std::invalid_argument("background load error");
     }
 
-    if(!font.loadFromFile("arial.ttf"))
+    if(!font.loadFromMemory(_binary_font_arial_ttf_start,
+			    (size_t) ((uint64_t) _binary_font_arial_ttf_end -
+				      (uint64_t) _binary_font_arial_ttf_start)))
     {
         throw std::invalid_argument("font load error");
     }
