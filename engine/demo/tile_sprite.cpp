@@ -47,9 +47,9 @@ void TileSprite::animate(void)
 		rel_shift_y = tile_data[block_id].shift_y;
 
 		Rect pos = position;
-		pos.set_pos_x((int) ((x - scroll_x)*tile_size) +
+		pos.set_pos_x((x - scroll_x)*tile_size +
 			      shift_x + rel_shift_x - tile_size/2);
-		pos.set_pos_y((int) ((y - scroll_y)*tile_size) +
+		pos.set_pos_y((y - scroll_y)*tile_size +
 			      shift_y + rel_shift_y - tile_size/2);
 		set_position(pos);
 

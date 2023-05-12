@@ -9,6 +9,12 @@ typedef struct {
 	int shift_y;
 } tile_data_t;
 
+typedef struct {
+	int hard;
+	int index;
+	int above;
+} tile_info_t;
+
 std::unique_ptr<tile_data_t[]> load_tile_data(void);
 
 #endif /* TILE_DATA_H_ */

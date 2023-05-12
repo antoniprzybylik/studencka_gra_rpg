@@ -7,7 +7,7 @@ CXX = g++
 LINK = g++
 STRIP = strip
 
-CXXFLAGS = -MMD -MP -Wall -I../engine/ -std=c++20 -pedantic
+CXXFLAGS = -MMD -MP -Wall -I../engine/ -std=c++20
 LDFLAGS = -fPIC -L../engine/ -lengine \
 	  -lsfml-graphics \
 	  -lsfml-window \

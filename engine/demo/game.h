@@ -14,6 +14,7 @@ extern double map_height, map_width;
 extern Map map;
 extern std::unique_ptr<tile_data_t[]> tile_data;
 
+extern double player_width, player_height;
 extern double tile_size;
 extern double screen_x, screen_y;
 

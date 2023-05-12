@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <cmath>
 
 #include "engine.h"
 #include "sprite.h"
@@ -17,17 +18,56 @@
 #include "label_sprite.h"
 
 static
+tile_info_t check_tile(int x, int y)
+{
+	int index = 0;
+	int hard = 0;
+	int above = 0;
+
+	index = y*map_width+x;
+	if ((x < 0) || (x >= map_width)) {
+		hard = 0;
+	} else {
+		if ((y < 0) || (y >= map_height)) {
+			hard = 0;
+		} else {
+			hard = map[index];
+			if (hard > 0) {
+				hard = tile_data[hard].hard;
+				index += map_width;
+				above = tile_data[map[index]].hard;
+			}
+		}
+	}
+
+	return ((tile_info_t) {hard, index, above});
+}
+
+static
+tile_info_t check_tiles(int x1, int y1,
+			int x2, int y2)
+{
+	tile_info_t tile_info;
+
+	tile_info = check_tile(x1, y1);
+	if (tile_info.hard == 0)
+		return check_tile(x2, y2);
+
+	return tile_info;
+}
+
+static
 void handle_keys(void)
 {
-	tile_data_t tile_data;
+	tile_info_t tile_info;
 
 	if (sf::Keyboard::
 		isKeyPressed(sf::Keyboard::Left)) {
-		sx = -5*x_vel / tile_size;
+		sx = -x_vel / tile_size;
 	} else {
 		if (sf::Keyboard::
 			isKeyPressed(sf::Keyboard::Right)) {
-			sx = 5*x_vel / tile_size;
+			sx = x_vel / tile_size;
 		} else {
 			sx = 0;
 		}
@@ -35,39 +75,70 @@ void handle_keys(void)
 
 	if (sf::Keyboard::
 		isKeyPressed(sf::Keyboard::Up)) {
-		/* TODO */
+		tile_info = check_tiles(player_x + player_width/2,
+					player_y + 1,
+					player_x + player_width + player_width/2,
+					player_y+1);
 
-		/* Tymczasowe. */
-		sy = -y_vel*50 / tile_size;
-	} else {
-		if (sf::Keyboard::
-			isKeyPressed(sf::Keyboard::Down)) {
-			sy = y_vel*50 / tile_size;
-		} else {
-			sy = 0;
-		}
+		if (tile_info.hard)
+			sy = y_vel;
 	}
 }
 
 static
 void move_player(void)
 {
+	tile_info_t tile_info;
+
 	player_x += sx;
 
 	if (sx < 0) {
-		/* TODO: Checks. */
+		tile_info = check_tiles(player_x + player_width/2,
+					player_y,
+					player_x + player_width + player_width/2,
+					player_y - player_height);
+
+		if (tile_info.hard) {
+			player_x = std::ceil(player_x);
+			player_x -= 0.5 - player_width/2;
+			sx = 0;
+		}
 	} else if (sx > 0) {
-		/* TODO: Checks. */
+		tile_info = check_tiles(player_x + player_width + player_width/2,
+					player_y,
+					player_x + 2*player_width + player_width/2,
+					player_y - player_height);
+
+		if (tile_info.hard > 0) {
+			player_x = (int) player_x;
+			player_x += 0.5 - player_width/2;
+			sx = 0;
+		}
 	}
 
-	//sy = (0.02-sy)*0.975;
-	/* Tymczasowe */
-	player_y += sy;
+	sy = (sy-0.005)*0.99;
+	player_y -= sy;
 	
 	if (sy < 0) {
-		/* TODO */
+		tile_info = check_tiles(player_x + player_width/2,
+					player_y+1,
+					player_x + player_width + player_width/2,
+					player_y+1);
+
+		if (tile_info.hard) {
+			player_y = int(player_y);
+			sy = 0;
+		}
 	} else {
-		/* TODO */
+		tile_info = check_tiles(player_x + player_width/2,
+					player_y + player_height,
+					player_x + player_width + player_width/2,
+					player_y - player_height);
+
+		if (tile_info.hard) {
+			player_y = int(player_y);
+			sy = 0;
+		}
 	}
 }
 
@@ -75,16 +146,26 @@ static
 const int ticks_in_frame = 17;
 
 static std::string position_str("position: (-, -)");
+
 static std::shared_ptr<LabelSprite> label_sprite(nullptr);
+static std::shared_ptr<Sprite> player_sprite(nullptr);
 
 static
 void on_tick(void)
 {
-	scroll_x = (player_x + scroll_x*6)/7;
-	scroll_y = (player_y + scroll_y*6)/7;
+	scroll_x = (player_x + scroll_x*11)/12;
+	scroll_y = (player_y + scroll_y*11)/12;
 
 	handle_keys();
 	move_player();
+
+	player_sprite->set_position(Rect(
+			(player_x-scroll_x)*tile_size +
+			shift_x - player_width*tile_size/2,
+			(player_y - scroll_y)*tile_size +
+			shift_y - player_height*tile_size/2,
+			player_width*tile_size,
+			player_height*tile_size));
 
 	/* TODO */
 
@@ -117,6 +198,8 @@ void prepare_game(std::unique_ptr<Engine> &engine)
 	tile_size = 80;
 	scroll_x = map_width/2;
 	scroll_y = map_height*0.1;
+	player_width = 0.5;
+	player_height = 1.0;
 	screen_x = 17;
 	screen_y = 10;
 	player_x = scroll_x;
@@ -155,32 +238,44 @@ void prepare_game(std::unique_ptr<Engine> &engine)
 		ac_y++;
 	}
 
-	/* Tło. */
+	/* Label Sprite. */
+	label_sprite = std::make_shared<LabelSprite>(10, 10, &position_str);
+	engine->add_sprite(std::static_pointer_cast<Sprite>(label_sprite));
+
+	/* Background Sprite. */
 	std::unique_ptr<sf::Image> bg_img = std::make_unique<sf::Image>();
 	if (!bg_img->loadFromFile("rc/background.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
 	}
-
-	/* Label Sprite. */
-	label_sprite = std::make_shared<LabelSprite>(10, 10, &position_str);
-	engine->add_sprite(std::static_pointer_cast<Sprite>(label_sprite));
-
-	/* Background Sprite. */
-	std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
-	texture->loadFromImage(*bg_img, sf::IntRect(0, 0, 1280, 720));
-	std::shared_ptr<TextureSkin> bg_skin = std::make_shared<TextureSkin>(texture);
+	std::shared_ptr<sf::Texture> bg_texture = std::make_shared<sf::Texture>();
+	bg_texture->loadFromImage(*bg_img, sf::IntRect(0, 0, 1280, 720));
+	std::shared_ptr<TextureSkin> bg_skin = std::make_shared<TextureSkin>(bg_texture);
 
 	std::shared_ptr<Sprite> bg_sprite = std::make_shared<Sprite>
 				(std::static_pointer_cast<SpriteSkin>(bg_skin), -1);
 	engine->add_sprite(bg_sprite);
+
+	/* Player Sprite. */
+	std::unique_ptr<sf::Image> plr_img = std::make_unique<sf::Image>();
+	if (!plr_img->loadFromFile("rc/player.png")) {
+		throw std::runtime_error(
+				"Loading resources "
+				"failure.");
+	}
+	std::shared_ptr<sf::Texture> plr_texture = std::make_shared<sf::Texture>();
+	plr_texture->loadFromImage(*plr_img, sf::IntRect(0, 0, 40, 80));
+	std::shared_ptr<TextureSkin> plr_skin = std::make_shared<TextureSkin>(plr_texture);
+	player_sprite = std::make_shared<Sprite>
+				(std::static_pointer_cast<SpriteSkin>(plr_skin), 5);
+	engine->add_sprite(player_sprite);
 }
 
 static
 std::unique_ptr<Engine> game_init(void)
 {
-	std::shared_ptr<GameWindow> window;
+	std::shared_ptr<GameWindow> window(nullptr);
 	std::unique_ptr<Engine> engine(nullptr);
 
 	/* Okno gry. */
