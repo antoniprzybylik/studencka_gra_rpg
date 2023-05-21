@@ -118,7 +118,7 @@ void move_player(void)
 
 	sy = (sy-0.005)*0.99;
 	player_y -= sy;
-
+	
 	if (sy < 0) {
 		tile_info = check_tiles(player_x + player_width/2,
 					player_y+1,
@@ -189,7 +189,7 @@ void prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Obrazki bloków. */
 	tiles = std::make_unique<sf::Image>();
-	if (!tiles->loadFromFile("rc/tiles.png")) {
+	if (!tiles->loadFromFile("rc/blocks.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
@@ -215,7 +215,7 @@ void prepare_game(std::unique_ptr<Engine> &engine)
 	ac_index = 0;
 	for (i = 0; i < (int) screen_y; i++) {
 		for (j = 0; j < (int) screen_x; j++) {
-			skin = std::make_shared<TextureSkin>(*tiles, 5, 1);
+			skin = std::make_shared<TextureSkin>(*tiles, 11, 1);
 
 			tile_sprite = std::make_shared<TileSprite>
 						(skin, Rect(0, 0, 1280, 720), BA_NONE);
@@ -244,7 +244,7 @@ void prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Background Sprite. */
 	std::unique_ptr<sf::Image> bg_img = std::make_unique<sf::Image>();
-	if (!bg_img->loadFromFile("rc/background_right.png")) {
+	if (!bg_img->loadFromFile("rc/background.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
@@ -259,7 +259,7 @@ void prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Player Sprite. */
 	std::unique_ptr<sf::Image> plr_img = std::make_unique<sf::Image>();
-	if (!plr_img->loadFromFile("rc/hero.png")) {
+	if (!plr_img->loadFromFile("rc/player.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
@@ -281,7 +281,7 @@ std::unique_ptr<Engine> game_init(void)
 	/* Okno gry. */
 	window = std::make_shared<GameWindow>();
 
-	window->set_size(1280, 640); //z 720 na 640
+	window->set_size(1280, 720);
 	window->set_title(std::string("Engine test."));
 	window->set_state(GW_ACTIVE);
 
@@ -293,7 +293,7 @@ std::unique_ptr<Engine> game_init(void)
 	map_width = 300;
 	map = generate_map(map_width,
 			   map_height,
-			   2, 3, 2); //plants z 2 na 3
+			   2, 3, 2);
 	tile_data = load_tile_data();
 
 	/* Utworzenie duszków bloków,
