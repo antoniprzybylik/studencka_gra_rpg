@@ -31,7 +31,7 @@ void place_books(uint8_t *map, int width, int x)
 
 }
 
-void place_flower(uint8_t *map, int width, int x)
+void place_desk(uint8_t *map, int width, int x)
 {
 	int y;
 	int val;
@@ -66,7 +66,7 @@ void place_flower(uint8_t *map, int width, int x)
 	}
 }
 
-void place_cloud(uint8_t *map, int width, int x)
+void place_board(uint8_t *map, int width, int x)
 {
 	int y;
 
@@ -82,7 +82,7 @@ void place_cloud(uint8_t *map, int width, int x)
 }
 
 Map generate_map(int width, int height,
-		 int max_dh, int flatness, int plants)
+		 int max_dh, int flatness, int desks)
 {
 	int map_size = width*height;
 	Map map(width, height);
@@ -108,25 +108,25 @@ Map generate_map(int width, int height,
 			delta_height = 0;
 
 			if (tf >= 5) {
-				if (pick(re)%plants == 0) {
+				if (pick(re)%desks == 0) {
 					tf=0;
 					place_books(tab,
 						   width,
 						   i - 2);
 				}
 				else {
-					if ((pick(re) & 1) == 0 || (pick(re) & 1) == 1 ) {
+					if ((pick(re) & 1) == 0) {
 						tf = 0;
-						place_cloud(tab,
+						place_board(tab,
 							    width,
 							    i - 2);
 					}
 				}
 			} else {
-				if ((pick(re) % 5*plants == 0) &&
+				if ((pick(re) % 5*desks == 0) &&
 				    tf >= 2) {
 					tf = 0;
-					place_flower(tab,
+					place_desk(tab,
 						     width,
 						     i - 2);
 				}

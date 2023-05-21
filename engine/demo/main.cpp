@@ -281,7 +281,7 @@ std::unique_ptr<Engine> game_init(void)
 	/* Okno gry. */
 	window = std::make_shared<GameWindow>();
 
-	window->set_size(1280, 640); //z 720 na 640
+	window->set_size(1280, 720);
 	window->set_title(std::string("Engine test."));
 	window->set_state(GW_ACTIVE);
 
@@ -293,7 +293,7 @@ std::unique_ptr<Engine> game_init(void)
 	map_width = 300;
 	map = generate_map(map_width,
 			   map_height,
-			   2, 3, 2); //plants z 2 na 3
+			   2, 4, 1); //plants z 2 na 3
 	tile_data = load_tile_data();
 
 	/* Utworzenie duszków bloków,
