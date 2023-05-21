@@ -9,14 +9,14 @@ void TileSprite::translate(int tx, int ty)
 	x += tx;
 	y += ty;
 
-	if (x < 0 || !(x < map_width)) {
+	if (x < 0 || !(x < Game::map_width)) {
 		index = 0;
 	} else {
-		if (y < 0 || !(y < map_height)) {
+		if (y < 0 || !(y < Game::map_height)) {
 			index = 0;
 			block_id = 0;
 		} else {
-			index = y*map_width + x;
+			index = y*Game::map_width + x;
 		}
 	}
 }
@@ -25,32 +25,32 @@ void TileSprite::animate(void)
 {
 	int rel_shift_x, rel_shift_y;
 
-	while (x - scroll_x < -screen_x/2)
-		translate(screen_x, 0);
+	while (x - Game::scroll_x < -Game::screen_x/2)
+		translate(Game::screen_x, 0);
 
-	while (x - scroll_x > screen_x/2)
-		translate(-screen_x, 0);
+	while (x - Game::scroll_x > Game::screen_x/2)
+		translate(-Game::screen_x, 0);
 
-	while (y - scroll_y < -screen_y/2)
-		translate(0, screen_y);
+	while (y - Game::scroll_y < -Game::screen_y/2)
+		translate(0, Game::screen_y);
 
-	while (y - scroll_y > screen_y/2)
-		translate(0, -screen_y);
+	while (y - Game::scroll_y > Game::screen_y/2)
+		translate(0, -Game::screen_y);
 
 	if (index > 0)
-		block_id = map[index];
+		block_id = Game::map[index];
 	else
 		block_id = BLOCK_EMPTY;
 
 	if (block_id > 0) {
-		rel_shift_x = tile_data[block_id].shift_x;
-		rel_shift_y = tile_data[block_id].shift_y;
+		rel_shift_x = Game::tile_data[block_id].shift_x;
+		rel_shift_y = Game::tile_data[block_id].shift_y;
 
 		Rect pos = position;
-		pos.set_pos_x((x - scroll_x)*tile_size +
-			      shift_x + rel_shift_x - tile_size/2);
-		pos.set_pos_y((y - scroll_y)*tile_size +
-			      shift_y + rel_shift_y - tile_size/2);
+		pos.set_pos_x((x - Game::scroll_x)*Game::tile_size +
+			      Game::shift_x + rel_shift_x - Game::tile_size/2);
+		pos.set_pos_y((y - Game::scroll_y)*Game::tile_size +
+			      Game::shift_y + rel_shift_y - Game::tile_size/2);
 		set_position(pos);
 
 		static_pointer_cast<TextureSkin>(skin)->
