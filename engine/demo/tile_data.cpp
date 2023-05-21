@@ -11,7 +11,7 @@ std::unique_ptr<tile_data_t[]> load_tile_data(void)
 	tile_data[0].shift_x = 0;
 	tile_data[0].shift_y = 0;
 
-	tile_data[1].hard = 1;
+	tile_data[1].hard = 0;
 	tile_data[1].shift_x = 0;
 	tile_data[1].shift_y = 0;
 
