@@ -26,7 +26,6 @@ void place_books(uint8_t *map, int width, int x)
 		map[y*width+x+1] = BLOCK_BOOKS;
 		map[y*width+x-1] = BLOCK_BOOKS;
 		y++;
-
 	}
 
 }
@@ -75,9 +74,9 @@ void place_board(uint8_t *map, int width, int x)
 		y++;
 
 	if (pick(re) & 1) {
-		map[(y+3)*width + x] = BLOCK_BOARD;
-	} else {
 		map[(y+2)*width + x] = BLOCK_BOARD;
+	} else {
+		map[(y+3)*width + x] = BLOCK_BOARD;
 	}
 }
 
@@ -107,28 +106,28 @@ Map generate_map(int width, int height,
 			tf++;
 			delta_height = 0;
 
-			if (tf >= 5) {
-				if (pick(re)%desks == 0) {
-					tf=0;
-					place_books(tab,
-						   width,
-						   i - 2);
+			if (tf >= 3)
+			{
+				if ((pick(re) & 1) == 0)
+				{
+					tf = 0;
+					place_board(tab, width, i - 2);
 				}
-				else {
-					if ((pick(re) & 1) == 0) {
-						tf = 0;
-						place_board(tab,
-							    width,
-							    i - 2);
+				else
+				{
+					if (pick(re)%desks == 0)
+					{
+						tf=0;
+						place_books(tab, width, i - 2);
 					}
 				}
-			} else {
-				if ((pick(re) % 5*desks == 0) &&
-				    tf >= 2) {
+			}
+			else
+			{
+				if ((pick(re) % 2*desks == 0) && tf >= 2)
+				{
 					tf = 0;
-					place_desk(tab,
-						     width,
-						     i - 2);
+					place_desk(tab, width, i - 2);
 				}
 			}
 		}

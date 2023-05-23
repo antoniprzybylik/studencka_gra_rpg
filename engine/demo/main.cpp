@@ -293,7 +293,7 @@ std::unique_ptr<Engine> game_init(void)
 	map_width = 300;
 	map = generate_map(map_width,
 			   map_height,
-			   2, 4, 1); //plants z 2 na 3
+			   2, 4, 1);
 	tile_data = load_tile_data();
 
 	/* Utworzenie duszków bloków,
