@@ -131,7 +131,7 @@ Map generate_map(int width, int height,
 	ac_height = height/2;
 	tf = 0;
 	for (i = 0; i < width; i++) {
-		if (pick(re)%flatness == BLOCK_EMPTY) {
+		if (pick(re)%flatness == 0) {
 			tf = 0;
 			delta_height = (pick(re) % 2*max_dh+1) -
 				       max_dh;
