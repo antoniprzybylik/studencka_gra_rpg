@@ -38,7 +38,7 @@ void TileSprite::animate(void)
 		translate(0, -Game::screen_y);
 
 	if (index > 0)
-		block_id = Game::map[index];
+		block_id = Game::map.tile(index);
 	else
 		block_id = BLOCK_EMPTY;
 

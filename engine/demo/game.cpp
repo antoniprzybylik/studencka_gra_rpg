@@ -30,11 +30,12 @@ tile_info_t Game::check_tile(int x, int y)
 		if ((y < 0) || (y >= map_height)) {
 			hard = 0;
 		} else {
-			hard = map[index];
+			hard = map.tile(index);
 			if (hard > 0) {
 				hard = tile_data[hard].hard;
 				index += map_width;
-				above = tile_data[map[index]].hard;
+				above = tile_data[
+					   map.tile(index)].hard;
 			}
 		}
 	}

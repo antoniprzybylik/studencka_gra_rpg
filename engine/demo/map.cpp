@@ -49,17 +49,6 @@ int Map::get_height(void) const noexcept
 	return this->height;
 }
 
-const std::shared_ptr<uint8_t[]>
-Map::get_map(void) const noexcept
-{
-	return this->map;
-}
-
-uint8_t &Map::operator[](int index) noexcept
-{
-	return map[index];
-}
-
 Map &Map::operator=(Map &&map) & noexcept
 {
 	this->map = map.map;
