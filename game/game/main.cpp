@@ -1,19 +1,6 @@
 #include <iostream>
-#include <memory>
-#include <vector>
-#include <cmath>
 
-#include "engine.h"
-#include "sprite.h"
-#include "sprite_skin.h"
-#include "game_window.h"
-#include "algebra.h"
-#include "time_utils.h"
-
-#include "map.h"
-#include "tile_data.h"
 #include "game.h"
-
 #include "tile_sprite.h"
 #include "label_sprite.h"
 
@@ -306,20 +293,23 @@ std::unique_ptr<Engine> game_init(void)
 
 int main(void)
 {
-	std::unique_ptr<Engine> engine(nullptr);
-
 	try {
-		engine = game_init();
+		Game::init();
 	}
 	catch (std::exception &e) {
-		std::cerr << "Game initialization "
-			  << "failure.\n\n"
-			  << "Exception occured:\n"
+		std::cerr << "Exception occured: "
 			  << e.what() << std::endl;
 		return(-1);
 	}
 
-	engine->exec();
+	try {
+		Game::exec();
+	}
+	catch (std::exception &e) {
+		std::cerr << "Exception occured: "
+			  << e.what() << std::endl;
+		return(-1);
+	}
 
 	return(0);
 }

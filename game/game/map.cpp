@@ -1,4 +1,4 @@
-#include <cstring>
+#include <algorithm>
 
 #include "map.h"
 
@@ -10,19 +10,21 @@ height(0)
 }
 
 Map::Map(int width, int height) :
-map(new uint8_t[width*height + 1]),
+map(std::make_shared<uint8_t[]>(width*height + 1)),
 width(width),
 height(height)
 {
 }
 
 Map::Map(const Map &map) :
-map(new uint8_t[map.width*map.height + 1]),
+map(std::make_shared<uint8_t[]>(map.width*map.height + 1)),
 width(map.width),
 height(map.height)
 {
-	memcpy(this->map, map.map,
-	       map.width*map.height + 1);
+	std::copy(map.map.get(),
+		  map.map.get() +
+		  map.width*map.height + 1,
+		  this->map.get());
 }
 
 Map::Map(Map &&map) noexcept :
@@ -35,7 +37,6 @@ height(map.height)
 
 Map::~Map(void)
 {
-	delete this->map;
 }
 
 int Map::get_width(void) const noexcept
@@ -46,16 +47,6 @@ int Map::get_width(void) const noexcept
 int Map::get_height(void) const noexcept
 {
 	return this->height;
-}
-
-uint8_t *const Map::get_map(void) const noexcept
-{
-	return this->map;
-}
-
-uint8_t &Map::operator[](int index) noexcept
-{
-	return map[index];
 }
 
 Map &Map::operator=(Map &&map) & noexcept
