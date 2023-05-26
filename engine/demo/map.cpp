@@ -10,21 +10,21 @@ height(0)
 }
 
 Map::Map(int width, int height) :
-map(new uint8_t[width*height + 1]),
+map(std::make_shared<uint8_t[]>(width*height + 1)),
 width(width),
 height(height)
 {
 }
 
 Map::Map(const Map &map) :
-map(new uint8_t[map.width*map.height + 1]),
+map(std::make_shared<uint8_t[]>(map.width*map.height + 1)),
 width(map.width),
 height(map.height)
 {
-	std::copy(map.map,
-		  map.map +
+	std::copy(map.map.get(),
+		  map.map.get() +
 		  map.width*map.height + 1,
-		  this->map);
+		  this->map.get());
 }
 
 Map::Map(Map &&map) noexcept :
@@ -37,7 +37,6 @@ height(map.height)
 
 Map::~Map(void)
 {
-	delete this->map;
 }
 
 int Map::get_width(void) const noexcept
@@ -50,7 +49,8 @@ int Map::get_height(void) const noexcept
 	return this->height;
 }
 
-uint8_t *const Map::get_map(void) const noexcept
+const std::shared_ptr<uint8_t[]>
+Map::get_map(void) const noexcept
 {
 	return this->map;
 }

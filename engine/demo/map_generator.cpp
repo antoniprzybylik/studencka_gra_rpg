@@ -9,7 +9,7 @@ static std::uniform_int_distribution<unsigned short> pick;
 static std::random_device rd;
 static std::default_random_engine re(rd());
 
-void place_tree(uint8_t *map, int width, int x)
+void place_tree(Map &map, int width, int x)
 {
 	int y;
 	int h;
@@ -56,7 +56,7 @@ void place_tree(uint8_t *map, int width, int x)
 	}
 }
 
-void place_flower(uint8_t *map, int width, int x)
+void place_flower(Map &map, int width, int x)
 {
 	int y;
 	int val;
@@ -93,7 +93,7 @@ void place_flower(uint8_t *map, int width, int x)
 	}
 }
 
-void place_cloud(uint8_t *map, int width, int x)
+void place_cloud(Map &map, int width, int x)
 {
 	int y;
 	
@@ -119,7 +119,6 @@ Map generate_map(int width, int height,
 {
 	int map_size = width*height;
 	Map map(width, height);
-	uint8_t *tab = map.get_map();
 	
 	int ac_height, delta_height;
 	int tf;
@@ -127,7 +126,7 @@ Map generate_map(int width, int height,
 	int i, j;
 
 	for (i = 0; i < map_size; i++)
-		tab[i] = BLOCK_EMPTY;
+		map[i] = BLOCK_EMPTY;
 	
 	ac_height = height/2;
 	tf = 0;
@@ -143,13 +142,13 @@ Map generate_map(int width, int height,
 			if (tf >= 5) {
 				if (pick(re)%plants == 0) {
 					tf=0;
-					place_tree(tab,
+					place_tree(map,
 						   width,
 						   i - 2);
 				} else {
 					if ((pick(re) & 1) == 0) {
 						tf = 0;
-						place_cloud(tab,
+						place_cloud(map,
 							    width,
 							    i - 2);
 					}
@@ -158,7 +157,7 @@ Map generate_map(int width, int height,
 				if ((pick(re) % 5*plants == 0) &&
 				    tf >= 2) {
 					tf = 0;
-					place_flower(tab,
+					place_flower(map,
 						     width,
 						     i - 2);
 				}
@@ -169,10 +168,11 @@ Map generate_map(int width, int height,
 		
 		j = 0;
 		for ( ; j < ac_height; j++)
-			tab[j*width + i] = BLOCK_DIRT;
-		tab[j*width + i] = BLOCK_GRASS;
+			map[j*width + i] = BLOCK_DIRT;
+		map[j*width + i] = BLOCK_GRASS;
 	}
 	
-	std::reverse(tab, tab + map_size+1);
+	std::reverse(map.get_map().get(),
+		     map.get_map().get() + map_size+1);
 	return map;
 }

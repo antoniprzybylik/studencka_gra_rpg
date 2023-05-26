@@ -1,11 +1,12 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include <memory>
 #include <cstdint>
 
 class Map {
 private:
-	uint8_t *map;
+	std::shared_ptr<uint8_t[]> map;
 	int width, height;
 
 public:
@@ -17,7 +18,7 @@ public:
 
 	int get_width(void) const noexcept;
 	int get_height(void) const noexcept;
-	uint8_t *const get_map(void) const noexcept;
+	const std::shared_ptr<uint8_t[]> get_map(void) const noexcept;
 
 	uint8_t &operator[](int index) noexcept;
 	Map &operator=(Map&&) & noexcept;
