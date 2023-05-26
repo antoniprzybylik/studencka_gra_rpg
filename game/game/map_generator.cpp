@@ -137,8 +137,7 @@ Map generate_map(int width, int height,
 		
 		j = 0;
 		for ( ; j < ac_height; j++)
-			map[j][i] = BLOCK_FLOOR;
-		// TODO: Ostatni blok: Podłoga z deskami?
+			map[j][i] = BLOCK_CONCRETE;
 		map[j][i] = BLOCK_FLOOR;
 	}
 	
