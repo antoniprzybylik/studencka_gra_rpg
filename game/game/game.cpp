@@ -184,7 +184,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Obrazki bloków. */
 	tiles = std::make_unique<sf::Image>();
-	if (!tiles->loadFromFile("rc/blocks.png")) {
+	if (!tiles->loadFromFile("rc/tiles.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
@@ -196,7 +196,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	ac_index = 0;
 	for (i = 0; i < (int) screen_y; i++) {
 		for (j = 0; j < (int) screen_x; j++) {
-			skin = std::make_shared<TextureSkin>(*tiles, 11, 1);
+			skin = std::make_shared<TextureSkin>(*tiles, 5, 1);
 
 			tile_sprite = std::make_shared<TileSprite>
 						(skin, Rect(0, 0, 1280, 720), BA_NONE);
@@ -240,7 +240,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Player Sprite. */
 	std::unique_ptr<sf::Image> plr_img = std::make_unique<sf::Image>();
-	if (!plr_img->loadFromFile("rc/player.png")) {
+	if (!plr_img->loadFromFile("rc/hero.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");

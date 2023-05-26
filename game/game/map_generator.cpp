@@ -38,12 +38,14 @@ void place_desk(Map &map, int x)
 	while (map[y][x] != 0)
 		y++;
 	
-	map[y][x] = BLOCK_YFLR;
+	map[y][x] = BLOCK_DESK;
 	
-	if (pick(re) & 1)
-		map[y][x] = BLOCK_YFLR;
-	else
-		map[y][x] = BLOCK_RFLR;
+	if (pick(re) & 1) {
+		map[y][x] = BLOCK_DESK;
+	} else {
+		// TODO: Inny obiekt?
+		//map[y][x] = BLOCK_DESK;
+	}
 	
 	if (map[y][x+1] == BLOCK_EMPTY &&
 	    map[(y-1)][x+1] != BLOCK_EMPTY) {
@@ -135,8 +137,9 @@ Map generate_map(int width, int height,
 		
 		j = 0;
 		for ( ; j < ac_height; j++)
-			map[j][i] = BLOCK_DIRT;
-		map[j][i] = BLOCK_GRASS;
+			map[j][i] = BLOCK_FLOOR;
+		// TODO: Ostatni blok: Podłoga z deskami?
+		map[j][i] = BLOCK_FLOOR;
 	}
 	
 	std::reverse(map.get_map(),
