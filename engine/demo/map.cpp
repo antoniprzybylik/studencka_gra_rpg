@@ -1,4 +1,4 @@
-#include <cstring>
+#include <algorithm>
 
 #include "map.h"
 
@@ -21,8 +21,10 @@ map(new uint8_t[map.width*map.height + 1]),
 width(map.width),
 height(map.height)
 {
-	memcpy(this->map, map.map,
-	       map.width*map.height + 1);
+	std::copy(map.map,
+		  map.map +
+		  map.width*map.height + 1,
+		  this->map);
 }
 
 Map::Map(Map &&map) noexcept :
