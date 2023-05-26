@@ -140,11 +140,11 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                 window.close();
             else if (event.type == sf::Event::KeyReleased)
             {
-                if (event.key.code == sf::Keyboard::Up)
+                if (event.key.code == sf::Keyboard::Up && (q_ui.get_text(0).getString() != "Press space to continue") && (q_ui.get_text(0).getString() != "I will let you go... for now"))
                 {
                     q_ui.move_up();
                 }
-                else if (event.key.code == sf::Keyboard::Down)
+                else if (event.key.code == sf::Keyboard::Down && (q_ui.get_text(0).getString() != "Press space to continue") && (q_ui.get_text(0).getString() != "I will let you go... for now"))
                 {
                     q_ui.move_down();
                 }
@@ -161,7 +161,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                         {
                             q_ui.get_text(1).setFillColor(sf::Color::Red);
                             q_ui.get_text(1).setString("Wrong!");
-                            player.set_hp(player.get_hp() - enemy.get_attack_damage());
+                            enemy.attack(player);
                             q_ui.get_text(0).setString("Press space to continue");
                         }
                     }
@@ -176,7 +176,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                         {
                             q_ui.get_text(2).setFillColor(sf::Color::Red);
                             q_ui.get_text(2).setString("Wrong!");
-                            player.set_hp(player.get_hp() - enemy.get_attack_damage());
+                            enemy.attack(player);
                             q_ui.get_text(0).setString("Press space to continue");
                         }
                     }

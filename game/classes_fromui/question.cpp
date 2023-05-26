@@ -9,11 +9,11 @@
 #include <ctime>
 #include <stdexcept>
 
-Question::Question(std::string new_content, std::string new_good_answear, std::string new_wrong_answear, int new_id)
+Question::Question(std::string new_content, std::string new_good_answer, std::string new_wrong_answer, int new_id)
 {
     set_content(new_content);
-    set_good_answear(new_good_answear);
-    set_wrong_answear(new_wrong_answear);
+    set_good_answer(new_good_answer);
+    set_wrong_answer(new_wrong_answer);
     set_id(new_id);
 }
 
@@ -22,14 +22,14 @@ std::string Question::get_content() const
     return content;
 }
 
-std::string Question::get_good_answear() const
+std::string Question::get_good_answer() const
 {
-    return good_answear;
+    return good_answer;
 }
 
-std::string Question::get_wrong_answear() const
+std::string Question::get_wrong_answer() const
 {
-    return wrong_answear;
+    return wrong_answer;
 }
 
 int Question::get_id() const
@@ -43,14 +43,14 @@ void Question::set_content(std::string new_content)
     content = new_content;
 }
 
-void Question::set_good_answear(std::string new_good_answear)
+void Question::set_good_answer(std::string new_good_answer)
 {
-    good_answear = new_good_answear;
+    good_answer = new_good_answer;
 }
 
-void Question::set_wrong_answear(std::string new_wrong_answear)
+void Question::set_wrong_answer(std::string new_wrong_answer)
 {
-    wrong_answear = new_wrong_answear;
+    wrong_answer = new_wrong_answer;
 }
 
 void Question::set_id(int new_id)
@@ -60,7 +60,7 @@ void Question::set_id(int new_id)
 
 std::ostream& operator<<(std::ostream& stream, const Question& question)
 {
-    stream << question.get_content() << "? Answear one: " << question.get_good_answear() << ". Answear two: " << question.get_wrong_answear() << std::endl;
+    stream << question.get_content() << "? Answear one: " << question.get_good_answer() << ". Answear two: " << question.get_wrong_answer() << std::endl;
     return stream;
 }
 
@@ -82,7 +82,7 @@ void Question::save_to_file(Question& question, std::string path)
     {
         throw std::invalid_argument("Path doesn't exist");
     }
-    file<<question.get_content() << " " << question.get_good_answear() << " " << question.get_wrong_answear() << std::endl;
+    file<<question.get_content() << " " << question.get_good_answer() << " " << question.get_wrong_answer() << " " << question.get_id() << std::endl;
     file.close();
 }
 
@@ -96,7 +96,7 @@ std::vector<Question> Question::read_from_file(std::string path)
     }
     std::vector<Question> questions;
     Question temp(" ", " ", " ",0);
-    while (file>>temp.content>>temp.good_answear>>temp.wrong_answear)
+    while (file>>temp.content>>temp.good_answer>>temp.wrong_answer>>temp.id)
     {
         questions.push_back(temp);
     }

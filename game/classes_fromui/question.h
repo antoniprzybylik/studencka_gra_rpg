@@ -9,8 +9,8 @@ class Question
     private:
 
         std::string content;
-        std::string good_answear;
-        std::string wrong_answear;
+        std::string good_answer;
+        std::string wrong_answer;
         int id;
 
     public:
@@ -18,14 +18,13 @@ class Question
         Question(std::string, std::string, std::string, int);
 
         std::string get_content() const;
-        std::string get_good_answear() const;
-        std::string get_wrong_answear() const;
+        std::string get_good_answer() const;
+        std::string get_wrong_answer() const;
         int get_id() const;
 
-
         void set_content(std::string new_content);
-        void set_good_answear(std::string new_good_answear);
-        void set_wrong_answear(std::string new_wrong_answear);
+        void set_good_answer(std::string new_good_answer);
+        void set_wrong_answer(std::string new_wrong_answer);
         void set_id(int new_id);
 
         friend std::ostream& operator<<(std::ostream& stream, const Question& question);

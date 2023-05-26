@@ -8,7 +8,6 @@
 #include <ctime>
 #include <stdexcept>
 
-const int INIT_DMG_MINI = 1;
 
 Enemy::Enemy(std::string new_name, int new_attack_dmg, int new_pos_x, int new_pos_y)
 {
@@ -85,8 +84,7 @@ void Enemy::attack(Player &player)
 {
     if (player.is_alive())
     {
-        srand(time(0));
-        player.set_hp(player.get_hp() - (INIT_DMG_MINI + (rand() % attack_damage)));
+        player.set_hp(player.get_hp() - attack_damage);
     }
     else
     {
@@ -130,7 +128,7 @@ void Enemy::save_to_file(Enemy& enemy, std::string path)
     {
         throw std::invalid_argument("Path doesn't exist");
     }
-    file<<enemy.get_name()<<" " <<enemy.get_attack_damage()<< " "<<enemy.get_pos_x()<< " "<< std::endl;
+    file<<enemy.get_name()<<" " <<enemy.get_attack_damage()<< " "<<enemy.get_pos_x()<< " "<<enemy.is_done()<< std::endl;
     file.close();
 }
 
@@ -144,7 +142,7 @@ std::vector<Enemy> Enemy::read_from_file(std::string path)
     }
     std::vector<Enemy> enemies;
     Enemy temp(" ", 1, 1, 1);
-    while (file>>temp.name>>temp.attack_damage>>temp.pos_x>>temp.pos_y)
+    while (file>>temp.name>>temp.attack_damage>>temp.pos_x>>temp.pos_y>>temp.done)
     {
         enemies.push_back(temp);
     }
@@ -196,7 +194,7 @@ std::string Enemy::get_content_fromid(int i)
     }
     else
     {
-      throw std::invalid_argument("content Out of range");
+      throw std::invalid_argument("Out of range");
     }
 }
 
@@ -204,11 +202,11 @@ std::string Enemy::get_ganswer_fromid(int i)
 {
     if (i >= 0 && i < this->number_of_elements())
     {
-        return questions[i].get_good_answear();
+        return questions[i].get_good_answer();
     }
     else
     {
-      throw std::invalid_argument("ganswer Out of range");
+      throw std::invalid_argument("Out of range");
     }
 }
 
@@ -216,11 +214,11 @@ std::string Enemy::get_wanswer_fromid(int i)
 {
     if (i >= 0 && i < this->number_of_elements())
     {
-        return questions[i].get_wrong_answear();
+        return questions[i].get_wrong_answer();
     }
     else
     {
-      throw std::invalid_argument("wanser Out of range");
+      throw std::invalid_argument("Out of range");
     }
 }
 
