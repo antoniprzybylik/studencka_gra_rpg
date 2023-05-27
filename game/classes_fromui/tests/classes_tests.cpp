@@ -1,7 +1,10 @@
-#include "catch_amalgamated.hpp"
-#include "../player.h"
-#include "../question.h"
-#include "../enemy.h"
+#define CATCH_CONFIG_MAIN
+
+#include <catch2/catch.hpp>
+
+#include "player.h"
+#include "question.h"
+#include "enemy.h"
 
 
 TEST_CASE("player tests", "[player]")
@@ -270,7 +273,7 @@ TEST_CASE("enemy tests", "[enemy]")
 }
 
 
-TEST_CASE("exceptions", "[player]")
+TEST_CASE("player class exceptions", "[player]")
 {
     Player player("Bob", 60, 1, 1);
     Enemy enemy("ork", 1, 1, 1);
@@ -290,7 +293,7 @@ TEST_CASE("exceptions", "[player]")
 }
 
 
-TEST_CASE("exceptions", "[question]")
+TEST_CASE("question class exceptions", "[question]")
 {
     Question question1("Ile to 2+2?", "4", "3", 1);
 
@@ -301,7 +304,7 @@ TEST_CASE("exceptions", "[question]")
 }
 
 
-TEST_CASE("exceptions", "[enemy]")
+TEST_CASE("enemy class exceptions", "[enemy]")
 {
     Enemy enemy("ork", 1, 1, 1);
     Player player("Bob", 1, 1, 1);
