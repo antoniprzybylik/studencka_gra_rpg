@@ -9,22 +9,44 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1400, 1000), "SFML works!");
-    Question question1("Ile to 2+1?", "3", "4", 1);
-    Question question2("Ile to 2+2?", "4", "1", 2);
-    Question question3("Ile to 2+3?", "5", "6", 3);
-    Enemy enemy("Pani z dziekanatu", 2, 1, 1);
-    enemy.set_questions(question1);
-    enemy.set_questions(question2);
-    enemy.set_questions(question3);
-    QuestionUI q_ui(window, enemy);
-    Player player("Zoja", 10, 1, 1);
 
-    // enemy ma wektor z trzema pytaniami (obiekt Question)
-    // okno przechodzi po trzech obiektach, bierze z nich pytanie i odpowiedzi, pokazuje na ekranie
-    // dla kazdego ruchu gracza sprawdza czy odpowiedz jest poprawna - jesli tak to przechodzi do nastepnego
-    // jesli nie to zabiera zycie i przechodzi do nastepnego
-    // sprawdza czy skonczyly sie obiekty w wektorze - jesli tak to markuje enemy jako done (wtedy powinien zniknac z mapy)
+    Player player("Zoja", 3, 1, 1);
 
-    q_ui.exec(enemy, player, window);
+    Question question1("Czy zlozyles/as juz legitymacje do podbicia?", "tak", "nie", 1);
+    Question question2("Ktorego dnia dziekanat nie przyjmuje studentow?", "sroda", "piatek", 2);
+    Question question3("Punkty, przyznawane w ramach zaliczenia przedmiotu to:", "ECTS", "ADTC", 3);
+
+    Question question4("Ktore zdanie jest prawdziwe dla referencji?", "Musi byc zainicjowana.", "Mozna jej przypisac wartosc nullptr.", 4);
+    Question question5("Ktory operator mozna przeciazyc? ", "()", "?:", 5);
+    Question question6("Rozmiar zmiennej typu int w bajtach to:", "4", "2", 6);
+
+    Question question7("Calka z 5x^4 + 8x to:", "x^5 + 4x^2", " 20x^3 + 8", 7);
+    Question question8("Funkcje gestosci rozkladu normalnego opisuje:", "krzywa Gaussa", "funkcja wykladnicza", 8);
+    Question question9("Idealne zrodlo napieciowe mozna zastapic:", "zwarciem", "rozwarciem", 9);
+
+    Enemy enemy1("Pani z dziekanatu", 1, 1, 1);
+    Enemy enemy2("Prowadzacy", 2, 1, 1);
+    Enemy enemy3("Sesja", 3, 1, 1);
+
+    enemy1.set_questions(question1);
+    enemy1.set_questions(question2);
+    enemy1.set_questions(question3);
+
+    enemy2.set_questions(question4);
+    enemy2.set_questions(question5);
+    enemy2.set_questions(question6);
+
+    enemy3.set_questions(question7);
+    enemy3.set_questions(question8);
+    enemy3.set_questions(question9);
+
+    QuestionUI q_ui1(window, enemy1);
+    QuestionUI q_ui2(window, enemy2);
+    QuestionUI q_ui3(window, enemy3);
+
+    q_ui1.exec(enemy1, player, window);
+    //q_ui1.exec(enemy2, player, window);
+    //q_ui1.exec(enemy3, player, window);
+
     return 0;
 }

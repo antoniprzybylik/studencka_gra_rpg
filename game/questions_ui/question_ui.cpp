@@ -29,15 +29,15 @@ QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy)
         throw std::invalid_argument("font load error");
     }
     text[0].setFont(font);
-    text[0].setCharacterSize(80);
+    text[0].setCharacterSize(55);
     text[0].setFillColor(sf::Color::Black);
-    text[0].setString(new_enemy.get_name() + " pyta: " + new_enemy.get_content_fromid(0));
-    text[0].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[0].getGlobalBounds().width / 2 , window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 1));
+    text[0].setString(new_enemy.get_content_fromid(0));
+    text[0].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[0].getGlobalBounds().width / 2 , window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS) * 1));
 
     text[1].setFont(font);
-    text[1].setCharacterSize(80);
+    text[1].setCharacterSize(55);
     text[1].setFillColor(sf::Color::Blue);
-    text[1].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[1].getGlobalBounds().width / 2, window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 2));
+    text[1].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[1].getGlobalBounds().width / 2, window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS) * 2));
 
     if ((pick(re) & 1) == 0)
     {
@@ -51,10 +51,10 @@ QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy)
     }
 
     text[2].setFont(font);
-    text[2].setCharacterSize(80);
+    text[2].setCharacterSize(55);
     text[2].setFillColor(sf::Color::Black);
 
-    text[2].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[2].getGlobalBounds().width / 2, window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 3));
+    text[2].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[2].getGlobalBounds().width / 2, window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS) * 3));
 
     selected_index = 1;
 
@@ -125,6 +125,7 @@ void QuestionUI::move_down()
     }
 }
 
+
 void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
 {
     QuestionUI q_ui(window, enemy);
@@ -140,61 +141,77 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                 window.close();
             else if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::Up && (q_ui.get_text(0).getString() != "Press space to continue") && (q_ui.get_text(0).getString() != "I will let you go... for now"))
+                if (event.key.code == sf::Keyboard::Up && q_ui.get_text(0).getString() == enemy.get_content_fromid(i))
                 {
                     q_ui.move_up();
                 }
-                else if (event.key.code == sf::Keyboard::Down && (q_ui.get_text(0).getString() != "Press space to continue") && (q_ui.get_text(0).getString() != "I will let you go... for now"))
+                else if (event.key.code == sf::Keyboard::Down && q_ui.get_text(0).getString() == enemy.get_content_fromid(i))
                 {
                     q_ui.move_down();
                 }
-                else if ((event.key.code == sf::Keyboard::Return) && (q_ui.get_text(0).getString() != "Press space to continue") && (q_ui.get_text(0).getString() != "I will let you go... for now"))
+                else if (event.key.code == sf::Keyboard::Return && q_ui.get_text(0).getString() == enemy.get_content_fromid(i))
                 {
                     if (q_ui.get_pressed_item() == 1)
                     {
                         if (q_ui.get_text(1).getString() == enemy.get_ganswer_fromid(i))
                         {
-                            q_ui.get_text(1).setString("Correct!");
-                            q_ui.get_text(0).setString("Press space to continue");
+                            q_ui.get_text(1).setString("Dobrze!");
+                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
                         }
                         else
                         {
                             q_ui.get_text(1).setFillColor(sf::Color::Red);
-                            q_ui.get_text(1).setString("Wrong!");
+                            q_ui.get_text(1).setString("Zle!");
                             enemy.attack(player);
-                            q_ui.get_text(0).setString("Press space to continue");
+                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
+                            if (player.get_hp() <= 0)
+                            {
+                                q_ui.get_text(0).setString("Nie udalo Ci sie przezyc studiow.");
+                                q_ui.get_text(1).setFillColor(sf::Color::Black);
+                                q_ui.get_text(0).setFillColor(sf::Color::Red);
+                                q_ui.get_text(1).setString("Nacisnij escape, aby wyjsc");
+                                q_ui.get_text(2).setString("");
+                            }
                         }
                     }
                     else if (q_ui.get_pressed_item() == 2)
                     {
                         if (q_ui.get_text(2).getString() == enemy.get_ganswer_fromid(i))
                         {
-                            q_ui.get_text(2).setString("Correct!");
-                            q_ui.get_text(0).setString("Press space to continue");
+                            q_ui.get_text(2).setString("Dobrze!");
+                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
                         }
                         else
                         {
                             q_ui.get_text(2).setFillColor(sf::Color::Red);
-                            q_ui.get_text(2).setString("Wrong!");
+                            q_ui.get_text(2).setString("Zle!");
                             enemy.attack(player);
-                            q_ui.get_text(0).setString("Press space to continue");
+                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
+                            if (player.get_hp() <= 0)
+                            {
+                                q_ui.get_text(0).setString("Nie udalo Ci sie przezyc studiow.");
+                                q_ui.get_text(0).setFillColor(sf::Color::Red);
+                                q_ui.get_text(1).setFillColor(sf::Color::Black);
+                                q_ui.get_text(1).setString("Nacisnij escape, aby wyjsc");
+                                q_ui.get_text(2).setString("");
+                            }
                         }
                     }
                 }
-                else if (event.key.code == sf::Keyboard::Space && q_ui.get_text(0).getString() == "Press space to continue")
+                else if (event.key.code == sf::Keyboard::Space && q_ui.get_text(0).getString() == "Nacisnij spacje, aby kontynuowac")
                 {
                     if (i == (enemy.number_of_elements() - 1))
                     {
-                        q_ui.get_text(1).setString("Press  escape to exit");
+                        q_ui.get_text(1).setString("Nacisnij escape, aby wyjsc");
                         q_ui.get_text(0).setFillColor(sf::Color::Blue);
                         q_ui.get_text(1).setFillColor(sf::Color::Black);
-                        q_ui.get_text(0).setString("I will let you go... for now");
+                        q_ui.get_text(0).setString("I tak sie pewnie zobaczymy we wrzesniu...");
                         q_ui.get_text(2).setString("");
                         enemy.set_done(true);
                     }
                     else
                     {
-                        q_ui.get_text(0).setString(enemy.get_name() + " pyta: " + enemy.get_content_fromid(i+1));
+                        q_ui.get_text(0).setString(enemy.get_content_fromid(i+1));
                         q_ui.get_text(1).setFillColor(sf::Color::Blue);
                         if ((pick(re) & 1) == 0)
                         {
@@ -211,7 +228,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                         i++;
                     }
                 }
-                else if (event.key.code == sf::Keyboard::Escape && q_ui.get_text(0).getString() == "I will let you go... for now")
+                else if (event.key.code == sf::Keyboard::Escape && q_ui.get_text(1).getString() == "Nacisnij escape, aby wyjsc")
                 {
                     window.close();
                 }
