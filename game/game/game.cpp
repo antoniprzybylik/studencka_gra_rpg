@@ -106,12 +106,12 @@ void Game::move_player(void)
 	} else if (sx > 0) {
 		tile_info = check_tiles(player_x + player_width + player_width/2,
 					player_y,
-					player_x + 2*player_width + player_width/2,
+					player_x + player_width/2,
 					player_y - player_height);
 
 		if (tile_info.hard > 0) {
 			player_x = (int) player_x;
-			player_x += 0.5 - player_width/2;
+			player_x += 0.5 - player_width/2 - 0.0125;
 			sx = 0;
 		}
 	}
@@ -120,9 +120,12 @@ void Game::move_player(void)
 	player_y -= sy;
 	
 	if (sy < 0) {
-		tile_info = check_tiles(player_x + player_width/2,
+		/* Sprawdzamy po jednym bloku.
+		 * Ale gracz stoi na polu o
+		 * szerokości tile_width + player_width!!! */
+		tile_info = check_tiles(player_x + 0.5 - player_width/2,
 					player_y+1,
-					player_x + player_width + player_width/2,
+					player_x + 0.5 + player_width/2,
 					player_y+1);
 
 		if (tile_info.hard) {
@@ -130,10 +133,10 @@ void Game::move_player(void)
 			sy = 0;
 		}
 	} else {
-		tile_info = check_tiles(player_x + player_width/2,
-					player_y + player_height,
-					player_x + player_width + player_width/2,
-					player_y - player_height);
+		tile_info = check_tiles(player_x + 0.5 + player_width/2,
+					player_y - 1,
+					player_x + 0.5 + player_width/2,
+					player_y - 1);
 
 		if (tile_info.hard) {
 			player_y = int(player_y);
