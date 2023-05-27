@@ -1,4 +1,4 @@
-.PHONY: all clean build debug
+.PHONY: all clean build debug tests
 .SUFFIXES: .o .cpp
 
 TARGET = questions_core.a
@@ -15,7 +15,7 @@ enemy.o \
 
 DEPS = $(OBJS:%.o=%.d)
 
-all: build
+all: build | tests
 
 compile: $(OBJS)
 
@@ -28,6 +28,9 @@ debug: CXXFLAGS += -DGLIBCXX_DEBUG -g
 debug: clean | compile
 	ar r $(TARGET) $(OBJS)
 	ranlib $(TARGET)
+
+tests:
+	make -C tests/
 
 clean:
 	rm -f $(OBJS) $(DEPS)
