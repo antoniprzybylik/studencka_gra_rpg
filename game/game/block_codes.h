@@ -7,5 +7,6 @@
 #define BLOCK_BOARD	((uint8_t) 3)
 #define BLOCK_BOOKS	((uint8_t) 4)
 #define BLOCK_FLOOR	((uint8_t) 5)
+#define BLOCK_FORBIDDEN	((uint8_t) 6)
 
 #endif /* BLOCK_CODES_H_ */

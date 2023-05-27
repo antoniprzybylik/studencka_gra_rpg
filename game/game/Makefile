@@ -19,6 +19,7 @@ main.o \
 game.o \
 tile_sprite.o \
 player_sprite.o \
+boss_sprite.o \
 label_sprite.o \
 map.o \
 map_generator.o \

@@ -15,8 +15,10 @@
 #include "game.h"
 
 #include "player_sprite.h"
+#include "boss_sprite.h"
 #include "tile_sprite.h"
 #include "label_sprite.h"
+#include "block_codes.h"
 
 tile_info_t Game::check_tile(int x, int y)
 {
@@ -148,9 +150,9 @@ static std::string position_str("position: (-, -)");
 static std::shared_ptr<LabelSprite> label_sprite(nullptr);
 static std::shared_ptr<PlayerSprite> player_sprite(nullptr);
 
-static std::shared_ptr<Sprite> boss1_sprite(nullptr);
-static std::shared_ptr<Sprite> boss2_sprite(nullptr);
-static std::shared_ptr<Sprite> boss3_sprite(nullptr);
+static std::shared_ptr<BossSprite> boss1_sprite(nullptr);
+static std::shared_ptr<BossSprite> boss2_sprite(nullptr);
+static std::shared_ptr<BossSprite> boss3_sprite(nullptr);
 
 void Game::on_tick(void)
 {
@@ -179,6 +181,21 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	int ac_x, ac_y;
 	int i, j;
 
+	std::shared_ptr<sf::Texture> b1_texture(nullptr);
+	std::shared_ptr<sf::Texture> b2_texture(nullptr);
+	std::shared_ptr<sf::Texture> b3_texture(nullptr);
+	
+	std::shared_ptr<TextureSkin> b1_skin(nullptr);
+	std::shared_ptr<TextureSkin> b2_skin(nullptr);
+	std::shared_ptr<TextureSkin> b3_skin(nullptr);
+
+	int b1x = 0;
+	int b1y = 0;
+	int b2x = 0;
+	int b2y = 0;
+	int b3x = 0;
+	int b3y = 0;
+
 	/* Obrazki bloków. */
 	tiles = std::make_unique<sf::Image>();
 	if (!tiles->loadFromFile("rc/tiles.png")) {
@@ -193,7 +210,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	ac_index = 0;
 	for (i = 0; i < (int) screen_y; i++) {
 		for (j = 0; j < (int) screen_x; j++) {
-			skin = std::make_shared<TextureSkin>(*tiles, 6, 1);
+			skin = std::make_shared<TextureSkin>(*tiles, 7, 1);
 
 			tile_sprite = std::make_shared<TileSprite>
 						(skin, Rect(0, 0, 1280, 720), BA_NONE);
@@ -249,6 +266,46 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 				(std::static_pointer_cast<SpriteSkin>(plr_skin), 5);
 	engine->add_sprite(player_sprite);
 
+	/* Restrict area. */
+	for (i = map_height-1; i >= 0; i--) {
+		if (map[i][9] != BLOCK_CONCRETE &&
+		    map[i][9] != BLOCK_FLOOR) {
+			map[i][9] = BLOCK_FORBIDDEN;
+		}
+	}
+
+	for (i = map_height-1; i >= 0; i--) {
+		if (map[i][91] != BLOCK_CONCRETE &&
+		    map[i][91] != BLOCK_FLOOR) {
+			map[i][91] = BLOCK_FORBIDDEN;
+		}
+	}
+
+	/* Place enemies. */
+	for (i = map_height-1; i >= 0; i--) {
+		if (map[i][30] == BLOCK_FLOOR) {
+			b1x = 30;
+			b1y = i-1;
+			break;
+		}
+	}
+
+	for (i = map_height-1; i >= 0; i--) {
+		if (map[i][50] == BLOCK_FLOOR) {
+			b2x = 50;
+			b2y = i-1;
+			break;
+		}
+	}
+
+	for (i = map_height-1; i >= 0; i--) {
+		if (map[i][80] == BLOCK_FLOOR) {
+			b3x = 80;
+			b3y = i-1;
+			break;
+		}
+	}
+
 	/* Boss 1 Sprite. */
 	std::unique_ptr<sf::Image> b1_img = std::make_unique<sf::Image>();
 	if (!b1_img->loadFromFile("rc/panizdziekanatu.png")) {
@@ -256,12 +313,43 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 				"Loading resources "
 				"failure.");
 	}
-	std::shared_ptr<sf::Texture> b1_texture = std::make_shared<sf::Texture>();
+	b1_texture = std::make_shared<sf::Texture>();
 	b1_texture->loadFromImage(*b1_img, sf::IntRect(0, 0, 40, 80));
-	std::shared_ptr<TextureSkin> b1_skin = std::make_shared<TextureSkin>(b1_texture);
-	boss1_sprite = std::make_shared<Sprite>
-			(std::static_pointer_cast<SpriteSkin>(b1_skin), 5);
+	b1_skin = std::make_shared<TextureSkin>(b1_texture);
+	boss1_sprite = std::make_shared<BossSprite>
+			(std::static_pointer_cast<SpriteSkin>(b1_skin),
+			 b1x, b1y, 5);
 	engine->add_sprite(boss1_sprite);
+
+	/* Boss 2 Sprite. */
+	std::unique_ptr<sf::Image> b2_img = std::make_unique<sf::Image>();
+	if (!b2_img->loadFromFile("rc/prowadzacy.png")) {
+		throw std::runtime_error(
+				"Loading resources "
+				"failure.");
+	}
+	b2_texture = std::make_shared<sf::Texture>();
+	b2_texture->loadFromImage(*b2_img, sf::IntRect(0, 0, 40, 80));
+	b2_skin = std::make_shared<TextureSkin>(b2_texture);
+	boss2_sprite = std::make_shared<BossSprite>
+			(std::static_pointer_cast<SpriteSkin>(b2_skin),
+			 b2x, b2y, 5);
+	engine->add_sprite(boss2_sprite);
+
+	/* Boss 3 Sprite. */
+	std::unique_ptr<sf::Image> b3_img = std::make_unique<sf::Image>();
+	if (!b3_img->loadFromFile("rc/sesja.png")) {
+		throw std::runtime_error(
+				"Loading resources "
+				"failure.");
+	}
+	b3_texture = std::make_shared<sf::Texture>();
+	b3_texture->loadFromImage(*b3_img, sf::IntRect(0, 0, 40, 80));
+	b3_skin = std::make_shared<TextureSkin>(b3_texture);
+	boss3_sprite = std::make_shared<BossSprite>
+			(std::static_pointer_cast<SpriteSkin>(b3_skin),
+			 b3x, b3y, 5);
+	engine->add_sprite(boss3_sprite);
 }
 
 std::unique_ptr<Engine> Game::game_init(void)
@@ -296,10 +384,10 @@ std::unique_ptr<Engine> Game::game_init(void)
 std::unique_ptr<Engine> Game::engine(nullptr);
 Map Game::map;
 std::unique_ptr<tile_data_t[]> Game::tile_data(nullptr);
-double Game::scroll_x = Game::map_width/2;
-double Game::scroll_y = Game::map_height*0.1;
-double Game::player_x = Game::map_width/2;
-double Game::player_y = Game::map_height*0.1;
+double Game::scroll_x = 10;
+double Game::scroll_y = Game::map_height*0.15;
+double Game::player_x = 10;
+double Game::player_y = Game::map_height*0.15;
 double Game::sx = 0;
 double Game::sy = 0;
 
