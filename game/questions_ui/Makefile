@@ -7,14 +7,14 @@ CXX = g++
 LINK = ld
 STRIP = strip
 
-CXXFLAGS = -MMD -MP -Wall -I../classes_fromui/ -std=c++20 -pedantic
+CXXFLAGS = -MMD -MP -Wall -I../questions_core/ -std=c++20 -pedantic
 LDFLAGS = -fPIC \
 	  -lsfml-graphics \
 	  -lsfml-window \
 	  -lsfml-system \
 	  -lm \
-	  -L../classes_fromui/ \
-	  -l:classes_fromui.a \
+	  -L../questions_core/ \
+	  -l:questions_core.a \
 
 OBJS = \
 question_window.o \

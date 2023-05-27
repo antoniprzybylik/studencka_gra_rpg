@@ -1,7 +1,7 @@
 .PHONY: all clean build debug
 .SUFFIXES: .o .cpp
 
-TARGET = classes_fromui.a
+TARGET = questions_core.a
 
 CXX = g++
 LINK = ld
