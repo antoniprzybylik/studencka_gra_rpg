@@ -1,7 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
+#include <stdexcept>
 #include <iostream>
+#include <unistd.h>
+
 #include "menu.h"
+
+void run_game(void)
+{
+	static char command[] = "bin/game";
+	static char *const args[] = {command, nullptr};
+
+	if (execve(command, args, environ) < 0) {
+		throw std::runtime_error(
+			"Game core app execution "
+			"failed.");
+	}
+}
 
 int main()
 {
@@ -17,7 +33,7 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            else if (event.type == sf::Event::KeyReleased)
+            else if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Up)
                 {
@@ -31,7 +47,8 @@ int main()
                 {
                     if (menu.get_pressed_item() == 0)
                     {
-                        std::cout << "Play pressed" << std::endl;
+			    window.close();
+			    run_game();
                     }
                     else if (menu.get_pressed_item() == 1)
                     {

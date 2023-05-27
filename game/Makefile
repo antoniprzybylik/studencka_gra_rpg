@@ -25,6 +25,7 @@ application:
 	cp menu/menu-app application/
 	cp menu/rc/* application/rc/
 	cp game/game application/bin/
+	cp game/rc/* application/rc/
 
 clean:
 	make clean -C engine/
