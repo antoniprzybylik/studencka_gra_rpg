@@ -9,7 +9,7 @@ extern char _binary_font_arial_ttf_end[];
 
 Menu::Menu(sf::RenderWindow &window)
 {
-    if(!background.loadFromFile("background.jpg"))
+    if(!background.loadFromFile("rc/background.jpg"))
     {
         throw std::invalid_argument("background load error");
     }
