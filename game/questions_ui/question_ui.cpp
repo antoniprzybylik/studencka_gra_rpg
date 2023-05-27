@@ -138,7 +138,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            else if (event.type == sf::Event::KeyReleased)
+            else if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Up && (q_ui.get_text(0).getString() != "Press space to continue") && (q_ui.get_text(0).getString() != "I will let you go... for now"))
                 {
