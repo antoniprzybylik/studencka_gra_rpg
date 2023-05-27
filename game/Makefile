@@ -1,4 +1,4 @@
-.PHONY: all clean engine game menu questions-core questions-ui application
+.PHONY: all clean engine game menu questions-core questions-ui application run-tests
 
 all: engine game menu questions-core questions-ui | application
 
@@ -26,6 +26,10 @@ application:
 	cp menu/rc/* application/rc/
 	cp game/game application/bin/
 	cp game/rc/* application/rc/
+
+run-tests:
+	make run-tests -C questions_core/
+	make run-tests -C engine/
 
 clean:
 	make clean -C engine/
