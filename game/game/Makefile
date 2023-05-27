@@ -1,7 +1,7 @@
 .PHONY: all clean build debug
 .SUFFIXES: .o .cpp
 
-PROJECT = demo
+PROJECT = game
 
 CXX = g++
 LINK = g++
