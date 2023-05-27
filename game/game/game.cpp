@@ -14,6 +14,7 @@
 #include "tile_data.h"
 #include "game.h"
 
+#include "player_sprite.h"
 #include "tile_sprite.h"
 #include "label_sprite.h"
 
@@ -145,7 +146,11 @@ const int ticks_in_frame = 17;
 static std::string position_str("position: (-, -)");
 
 static std::shared_ptr<LabelSprite> label_sprite(nullptr);
-static std::shared_ptr<Sprite> player_sprite(nullptr);
+static std::shared_ptr<PlayerSprite> player_sprite(nullptr);
+
+static std::shared_ptr<Sprite> boss1_sprite(nullptr);
+static std::shared_ptr<Sprite> boss2_sprite(nullptr);
+static std::shared_ptr<Sprite> boss3_sprite(nullptr);
 
 void Game::on_tick(void)
 {
@@ -154,14 +159,6 @@ void Game::on_tick(void)
 
 	handle_keys();
 	move_player();
-
-	player_sprite->set_position(Rect(
-			(player_x-scroll_x)*tile_size +
-			shift_x - player_width*tile_size/2,
-			(player_y - scroll_y)*tile_size +
-			shift_y - player_height*tile_size/2,
-			player_width*tile_size,
-			player_height*tile_size));
 
 	/* TODO */
 
@@ -248,9 +245,23 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	std::shared_ptr<sf::Texture> plr_texture = std::make_shared<sf::Texture>();
 	plr_texture->loadFromImage(*plr_img, sf::IntRect(0, 0, 40, 80));
 	std::shared_ptr<TextureSkin> plr_skin = std::make_shared<TextureSkin>(plr_texture);
-	player_sprite = std::make_shared<Sprite>
+	player_sprite = std::make_shared<PlayerSprite>
 				(std::static_pointer_cast<SpriteSkin>(plr_skin), 5);
 	engine->add_sprite(player_sprite);
+
+	/* Boss 1 Sprite. */
+	std::unique_ptr<sf::Image> b1_img = std::make_unique<sf::Image>();
+	if (!b1_img->loadFromFile("rc/panizdziekanatu.png")) {
+		throw std::runtime_error(
+				"Loading resources "
+				"failure.");
+	}
+	std::shared_ptr<sf::Texture> b1_texture = std::make_shared<sf::Texture>();
+	b1_texture->loadFromImage(*b1_img, sf::IntRect(0, 0, 40, 80));
+	std::shared_ptr<TextureSkin> b1_skin = std::make_shared<TextureSkin>(b1_texture);
+	boss1_sprite = std::make_shared<Sprite>
+			(std::static_pointer_cast<SpriteSkin>(b1_skin), 5);
+	engine->add_sprite(boss1_sprite);
 }
 
 std::unique_ptr<Engine> Game::game_init(void)

@@ -18,6 +18,7 @@ OBJS = \
 main.o \
 game.o \
 tile_sprite.o \
+player_sprite.o \
 label_sprite.o \
 map.o \
 map_generator.o \
