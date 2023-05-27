@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cmath>
 
 #include "game.h"
@@ -60,8 +61,6 @@ void TileSprite::animate(void)
 		set_hidden(true);
 	}
 }
-
-#include <iostream>
 
 void TileSprite::on_click(void)
 {
