@@ -118,7 +118,7 @@ void Game::move_player(void)
 
 	sy = (sy-0.005)*0.99;
 	player_y -= sy;
-	
+
 	if (sy < 0) {
 		/* Sprawdzamy po jednym bloku.
 		 * Ale gracz stoi na polu o
@@ -187,7 +187,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	std::shared_ptr<sf::Texture> b1_texture(nullptr);
 	std::shared_ptr<sf::Texture> b2_texture(nullptr);
 	std::shared_ptr<sf::Texture> b3_texture(nullptr);
-	
+
 	std::shared_ptr<TextureSkin> b1_skin(nullptr);
 	std::shared_ptr<TextureSkin> b2_skin(nullptr);
 	std::shared_ptr<TextureSkin> b3_skin(nullptr);
@@ -201,7 +201,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Obrazki bloków. */
 	tiles = std::make_unique<sf::Image>();
-	if (!tiles->loadFromFile("rc/tiles.png")) {
+	if (!tiles->loadFromFile("rc/tiles2.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
@@ -213,7 +213,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	ac_index = 0;
 	for (i = 0; i < (int) screen_y; i++) {
 		for (j = 0; j < (int) screen_x; j++) {
-			skin = std::make_shared<TextureSkin>(*tiles, 7, 1);
+			skin = std::make_shared<TextureSkin>(*tiles, 8, 1);
 
 			tile_sprite = std::make_shared<TileSprite>
 						(skin, Rect(0, 0, 1280, 720), BA_NONE);

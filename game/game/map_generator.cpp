@@ -14,7 +14,7 @@ void place_books(Map &map, int x)
 	int y;
 	int h;
 	int i;
-	
+
 	y = 0;
 	while (map[y][x] != 0)
 		y++;
@@ -33,31 +33,30 @@ void place_desk(Map &map, int x)
 {
 	int y;
 	int val;
-	
+
 	y = 0;
 	while (map[y][x] != 0)
 		y++;
-	
+
 	map[y][x] = BLOCK_DESK;
-	
+
 	if (pick(re) & 1) {
 		map[y][x] = BLOCK_DESK;
 	} else {
-		// TODO: Inny obiekt?
-		//map[y][x] = BLOCK_DESK;
+		map[y][x] = BLOCK_STUDENT;
 	}
-	
+
 	if (map[y][x+1] == BLOCK_EMPTY &&
 	    map[(y-1)][x+1] != BLOCK_EMPTY) {
 		val = pick(re)%3;
-		
+
 		if (val == 0 || val == 1)
 			map[y][x+1] = map[y][x];
-		
+
 		if (map[y][x+2] == BLOCK_EMPTY &&
 		    map[(y-1)][x+2] != BLOCK_EMPTY) {
 			val = pick(re)%3;
-			
+
 			if (val == 0) {
 				map[y][x+2] = map[y][x];
 			}
@@ -68,11 +67,11 @@ void place_desk(Map &map, int x)
 void place_board(Map &map, int x)
 {
 	int y;
-	
+
 	y = 0;
 	while (map[y][x] != BLOCK_EMPTY)
 		y++;
-	
+
 	if (pick(re) & 1)
 		map[(y+2)][x] = BLOCK_BOARD;
 	else
@@ -84,7 +83,7 @@ Map generate_map(int width, int height,
 {
 	int map_size = width*height;
 	Map map(width, height);
-	
+
 	int ac_height, delta_height;
 	int tf;
 
@@ -92,7 +91,7 @@ Map generate_map(int width, int height,
 
 	for (i = 0; i < map_size; i++)
 		map.tile(i) = BLOCK_EMPTY;
-	
+
 	ac_height = height/2;
 	tf = 0;
 	for (i = 0; i < width; i++) {
@@ -134,13 +133,13 @@ Map generate_map(int width, int height,
 		}
 
 		ac_height += delta_height;
-		
+
 		j = 0;
 		for ( ; j < ac_height; j++)
 			map[j][i] = BLOCK_CONCRETE;
 		map[j][i] = BLOCK_FLOOR;
 	}
-	
+
 	std::reverse(map.get_map(),
 		     map.get_map() + map_size+1);
 	return map;
