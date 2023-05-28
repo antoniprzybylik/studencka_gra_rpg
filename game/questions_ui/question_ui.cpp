@@ -126,6 +126,51 @@ void QuestionUI::move_down()
     }
 }
 
+void QuestionUI::answered_correctly(int index)
+{
+    if (index < 0 || index > MAX_NUMBER_OF_ITEMS - 1)
+    {
+        throw WrongIndex(index);
+    }
+    else
+    {
+        text[index].setString("Dobrze!");
+        text[0].setString("Nacisnij spacje, aby kontynuowac");
+    }
+}
+
+void QuestionUI::answered_incorrectly(int index)
+{
+    if (index < 0 || index > MAX_NUMBER_OF_ITEMS - 1)
+    {
+        throw WrongIndex(index);
+    }
+    else
+    {
+        text[index].setFillColor(sf::Color::Red);
+        text[index].setString("Zle!");
+        text[0].setString("Nacisnij spacje, aby kontynuowac");
+    }
+}
+
+void QuestionUI::game_over()
+{
+    text[0].setString("Nie udalo Ci sie przezyc studiow.");
+    text[1].setFillColor(sf::Color::Black);
+    text[0].setFillColor(sf::Color::Red);
+    text[1].setString("Nacisnij escape, aby wyjsc");
+    text[2].setString("");
+}
+
+void QuestionUI::reached_end()
+{
+    text[1].setString("Nacisnij escape, aby wyjsc");
+    text[0].setFillColor(sf::Color::Blue);
+    text[1].setFillColor(sf::Color::Black);
+    text[0].setString("I tak sie pewnie zobaczymy we wrzesniu...");
+    text[2].setString("");
+}
+
 
 void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
 {
@@ -156,22 +201,15 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                     {
                         if (q_ui.get_text(1).getString() == enemy.get_ganswer_fromid(i))
                         {
-                            q_ui.get_text(1).setString("Dobrze!");
-                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
+                            q_ui.answered_correctly(1);
                         }
                         else
                         {
-                            q_ui.get_text(1).setFillColor(sf::Color::Red);
-                            q_ui.get_text(1).setString("Zle!");
+                            q_ui.answered_incorrectly(1);
                             enemy.attack(player);
-                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
                             if (player.get_hp() <= 0)
                             {
-                                q_ui.get_text(0).setString("Nie udalo Ci sie przezyc studiow.");
-                                q_ui.get_text(1).setFillColor(sf::Color::Black);
-                                q_ui.get_text(0).setFillColor(sf::Color::Red);
-                                q_ui.get_text(1).setString("Nacisnij escape, aby wyjsc");
-                                q_ui.get_text(2).setString("");
+                                q_ui.game_over();
                             }
                         }
                     }
@@ -179,22 +217,15 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                     {
                         if (q_ui.get_text(2).getString() == enemy.get_ganswer_fromid(i))
                         {
-                            q_ui.get_text(2).setString("Dobrze!");
-                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
+                            q_ui.answered_correctly(2);
                         }
                         else
                         {
-                            q_ui.get_text(2).setFillColor(sf::Color::Red);
-                            q_ui.get_text(2).setString("Zle!");
+                            q_ui.answered_incorrectly(2);
                             enemy.attack(player);
-                            q_ui.get_text(0).setString("Nacisnij spacje, aby kontynuowac");
                             if (player.get_hp() <= 0)
                             {
-                                q_ui.get_text(0).setString("Nie udalo Ci sie przezyc studiow.");
-                                q_ui.get_text(0).setFillColor(sf::Color::Red);
-                                q_ui.get_text(1).setFillColor(sf::Color::Black);
-                                q_ui.get_text(1).setString("Nacisnij escape, aby wyjsc");
-                                q_ui.get_text(2).setString("");
+                                q_ui.game_over();
                             }
                         }
                     }
@@ -203,11 +234,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                 {
                     if (i == (enemy.number_of_elements() - 1))
                     {
-                        q_ui.get_text(1).setString("Nacisnij escape, aby wyjsc");
-                        q_ui.get_text(0).setFillColor(sf::Color::Blue);
-                        q_ui.get_text(1).setFillColor(sf::Color::Black);
-                        q_ui.get_text(0).setString("I tak sie pewnie zobaczymy we wrzesniu...");
-                        q_ui.get_text(2).setString("");
+                        q_ui.reached_end();
                         enemy.set_done(true);
                     }
                     else

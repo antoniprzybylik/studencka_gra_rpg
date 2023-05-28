@@ -27,6 +27,10 @@ class QuestionUI
         void set_index(int new_index);
         sf::Text& get_text(int index);
         void exec(Enemy& enemy, Player& player, sf::RenderWindow &window);
+        void answered_correctly(int index);
+        void answered_incorrectly(int index);
+        void game_over();
+        void reached_end();
 };
 
 #endif
