@@ -59,3 +59,13 @@ Map &Map::operator=(Map &&map) & noexcept
 
 	return *this;
 }
+
+Json::value Map::dump(void) const
+{
+	TODO
+}
+
+void Map::load(Json::value&)
+{
+	TODO
+}
