@@ -2,6 +2,7 @@
 #include <math.h>
 #include "enemy.h"
 #include "player.h"
+#include "class_exceptions.h"
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
@@ -52,7 +53,7 @@ void Enemy::set_attack_damage(int new_attack_dmg)
 {
     if (new_attack_dmg < 0)
     {
-        throw std::invalid_argument("Attack damage cannot be of negative value");
+        throw NegativeArgument(new_attack_dmg);
     }
     attack_damage = new_attack_dmg;
 }
@@ -61,7 +62,7 @@ void Enemy::set_pos_x(int new_pos_x)
 {
     if (new_pos_x < 0)
     {
-        throw std::invalid_argument("Position cannot be of negative value");
+        throw NegativeArgument(new_pos_x);
     }
     pos_x = new_pos_x;
 }
@@ -70,7 +71,7 @@ void Enemy::set_pos_y(int new_pos_y)
 {
     if (new_pos_y < 0)
     {
-        throw std::invalid_argument("Position cannot be of negative value");
+        throw NegativeArgument(new_pos_y);
     }
     pos_y = new_pos_y;
 }
@@ -88,7 +89,7 @@ void Enemy::attack(Player &player)
     }
     else
     {
-        throw std::invalid_argument("Player is already dead");
+        throw AlreadyDead(player.get_hp());
     }
 }
 
@@ -126,7 +127,7 @@ void Enemy::save_to_file(Enemy& enemy, std::string path)
     file.open(path, std::ios::out | std::ios::app);
     if (!file)
     {
-        throw std::invalid_argument("Path doesn't exist");
+        throw WrongPath(path);
     }
     file<<enemy.get_name()<<" " <<enemy.get_attack_damage()<< " "<<enemy.get_pos_x()<< " "<<enemy.is_done()<< std::endl;
     file.close();
@@ -138,7 +139,7 @@ std::vector<Enemy> Enemy::read_from_file(std::string path)
     file.open(path);
     if (!file)
     {
-        throw std::invalid_argument("Path doesn't exist");
+        throw WrongPath(path);
     }
     std::vector<Enemy> enemies;
     Enemy temp(" ", 1, 1, 1);
@@ -153,7 +154,7 @@ void Enemy::set_questions(Question& question)
 {
     if (is_in_questions(question.get_id()))
     {
-        throw std::invalid_argument("Question already exists");
+        throw AlreadyExists(question.get_id());
     }
     questions.push_back(question);
 }
@@ -169,7 +170,6 @@ bool Enemy::is_in_questions(int id)
     {
        return false;
     }
-
 }
 
 Question& Enemy::get_question(int id)
@@ -182,7 +182,7 @@ Question& Enemy::get_question(int id)
     }
     else
     {
-        throw std::invalid_argument("No such question in an inventory");
+        throw WrongId(id);
     }
 }
 
@@ -194,7 +194,7 @@ std::string Enemy::get_content_fromid(int i)
     }
     else
     {
-      throw std::invalid_argument("Out of range");
+      throw OutOfRange(i);
     }
 }
 
@@ -206,7 +206,7 @@ std::string Enemy::get_ganswer_fromid(int i)
     }
     else
     {
-      throw std::invalid_argument("Out of range");
+      throw OutOfRange(i);
     }
 }
 
@@ -218,7 +218,7 @@ std::string Enemy::get_wanswer_fromid(int i)
     }
     else
     {
-      throw std::invalid_argument("Out of range");
+      throw OutOfRange(i);
     }
 }
 
@@ -230,7 +230,7 @@ void Enemy::remove_question(Question& question)
     }
     else
     {
-      throw std::invalid_argument("No such question exists");
+      throw DoNotExist(question.get_id());
     }
 }
 

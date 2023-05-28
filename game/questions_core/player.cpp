@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "enemy.h"
 #include "player.h"
+#include "class_exceptions.h"
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
@@ -16,7 +17,7 @@ Player::Player(std::string new_name, int new_hp, int new_pos_x, int new_pos_y)
     set_name(new_name);
     if (new_hp <=0)
     {
-        throw std::invalid_argument("Health cannot be of negative value");
+        throw NegativeArgument(new_hp);
     }
     set_hp(new_hp);
     set_pos_x(new_pos_x);
@@ -58,7 +59,7 @@ void Player::set_pos_x(int new_pos_x)
 {
     if (new_pos_x < 0)
     {
-        throw std::invalid_argument("Position cannot be of negative value");
+        throw NegativeArgument(new_pos_x);
     }
     pos_x = new_pos_x;
 }
@@ -67,7 +68,7 @@ void Player::set_pos_y(int new_pos_y)
 {
     if (new_pos_y< 0)
     {
-        throw std::invalid_argument("Position cannot be of negative value");
+        throw NegativeArgument(new_pos_y);
     }
     pos_y = new_pos_y;
 }
@@ -116,7 +117,7 @@ void Player::save_to_file(Player& player, std::string path)
     file.open(path, std::ios::out | std::ios::app);
     if (!file)
     {
-        throw std::invalid_argument("Path doesn't exist");
+        throw WrongPath(path);
     }
     file<<player_to_write.get_name()<< " "<<player_to_write.get_hp()<<" "<<player_to_write.get_pos_x()<< " " << player_to_write.get_pos_y()<<std::endl;
     file.close();
@@ -128,7 +129,7 @@ std::vector<Player> Player::read_from_file(std::string path)
     file.open(path);
     if (!file)
     {
-        throw std::invalid_argument("Path doesn't exist");
+        throw WrongPath(path);
     }
     std::vector<Player> players;
     Player temp(" ", 1, 1, 1);

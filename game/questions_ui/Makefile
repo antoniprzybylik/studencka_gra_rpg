@@ -19,6 +19,7 @@ LDFLAGS = -fPIC \
 OBJS = \
 question_window.o \
 question_ui.o \
+ui_exceptions.o \
 font_arial.o \
 
 DEPS = $(OBJS:%.o=%.d)

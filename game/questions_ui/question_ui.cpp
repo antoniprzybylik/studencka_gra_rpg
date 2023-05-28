@@ -1,4 +1,5 @@
 #include "question_ui.h"
+#include "ui_exceptions.h"
 #include <exception>
 #include <iostream>
 #include <cstdint>
@@ -19,14 +20,14 @@ QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy)
 {
     if(!background.loadFromFile("scroll_bgrd.png"))
     {
-        throw std::invalid_argument("background load error");
+        throw LoadError();
     }
 
     if(!font.loadFromMemory(_binary_font_arial_ttf_start,
 			    (size_t) ((uint64_t) _binary_font_arial_ttf_end -
 				      (uint64_t) _binary_font_arial_ttf_start)))
     {
-        throw std::invalid_argument("font load error");
+        throw LoadError();
     }
     text[0].setFont(font);
     text[0].setCharacterSize(55);
@@ -73,7 +74,7 @@ void QuestionUI::set_index(int new_index)
     }
     else
     {
-        throw std::invalid_argument("wrong index number");
+        throw WrongIndex(new_index);
     }
 }
 

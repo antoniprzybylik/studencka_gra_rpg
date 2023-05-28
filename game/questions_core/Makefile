@@ -12,6 +12,7 @@ OBJS = \
 question.o \
 player.o \
 enemy.o \
+class_exceptions.o \
 
 DEPS = $(OBJS:%.o=%.d)
 

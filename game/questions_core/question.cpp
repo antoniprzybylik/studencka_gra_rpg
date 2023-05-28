@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "player.h"
 #include "question.h"
+#include "class_exceptions.h"
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
@@ -80,7 +81,7 @@ void Question::save_to_file(Question& question, std::string path)
     file.open(path, std::ios::out | std::ios::app);
     if (!file)
     {
-        throw std::invalid_argument("Path doesn't exist");
+        throw WrongPath(path);
     }
     file<<question.get_content() << " " << question.get_good_answer() << " " << question.get_wrong_answer() << " " << question.get_id() << std::endl;
     file.close();
@@ -92,7 +93,7 @@ std::vector<Question> Question::read_from_file(std::string path)
     file.open(path);
     if (!file)
     {
-        throw std::invalid_argument("Path doesn't exist");
+        throw WrongPath(path);
     }
     std::vector<Question> questions;
     Question temp(" ", " ", " ",0);
