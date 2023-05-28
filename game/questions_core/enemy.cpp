@@ -186,39 +186,39 @@ Question& Enemy::get_question(int id)
     }
 }
 
-std::string Enemy::get_content_fromid(int i)
+std::string Enemy::get_content_fromid(int id)
 {
-    if (i >= 0 && i < this->number_of_elements())
+    if (id >= 0 && id < this->number_of_elements())
     {
-        return questions[i].get_content();
+        return questions[id].get_content();
     }
     else
     {
-      throw OutOfRange(i);
+      throw OutOfRange(id);
     }
 }
 
-std::string Enemy::get_ganswer_fromid(int i)
+std::string Enemy::get_ganswer_fromid(int id)
 {
-    if (i >= 0 && i < this->number_of_elements())
+    if (id >= 0 && id < this->number_of_elements())
     {
-        return questions[i].get_good_answer();
+        return questions[id].get_good_answer();
     }
     else
     {
-      throw OutOfRange(i);
+      throw OutOfRange(id);
     }
 }
 
-std::string Enemy::get_wanswer_fromid(int i)
+std::string Enemy::get_wanswer_fromid(int id)
 {
-    if (i >= 0 && i < this->number_of_elements())
+    if (id >= 0 && id < this->number_of_elements())
     {
-        return questions[i].get_wrong_answer();
+        return questions[id].get_wrong_answer();
     }
     else
     {
-      throw OutOfRange(i);
+      throw OutOfRange(id);
     }
 }
 

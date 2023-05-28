@@ -7,8 +7,8 @@
 
 class Question;
 class Player;
-// Class that represents an enemy with a name, hp, attack damage and position
-// Attack damage on a player is a random int from a range based on enemy's attack damage
+// Class that represents an enemy with a name, attack damage and position
+// contains questions that may be added or removed
 class Enemy
 {
     private:
@@ -40,9 +40,9 @@ class Enemy
         std::vector<Question> get_questions() const;
         bool is_in_questions(int id);
         Question& get_question(int id);
-        std::string get_content_fromid(int i);
-        std::string get_ganswer_fromid(int i);
-        std::string get_wanswer_fromid(int i);
+        std::string get_content_fromid(int id);
+        std::string get_ganswer_fromid(int id);
+        std::string get_wanswer_fromid(int id);
         void remove_question(Question& question);
         int number_of_elements();
 
@@ -53,8 +53,6 @@ class Enemy
 
         void save_to_file(Enemy& enemy, std::string path);
         std::vector<Enemy> read_from_file(std::string path);
-
-
 };
 std::ostream& operator<<(std::ostream& stream, const Enemy& enemy);
 #endif

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-// Class that represents questions
+// Class that represents questions - their content, a good and bad answer
 class Question
 {
     private:

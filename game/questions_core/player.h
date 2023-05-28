@@ -7,11 +7,7 @@
 
 
 class Enemy;
-// Class that represents a player - they have a name, hp, strength (for melee weapons), aim (for ranged weapons),
-// position, a weapon that they hold and inventory of items
-// Items add additional hp, strength or aim
-// An item may be added to inventory and removed from it
-// Attack damage on an enemy is a random int from a range that gets increased by strength or aim, depending on a type of weapon
+// Class that represents a player - its name, hp and position
 class Player
 {
     private:
