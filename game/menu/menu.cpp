@@ -51,6 +51,23 @@ Menu::~Menu()
 {
 }
 
+sf::Text& Menu::get_text(int index)
+{
+    return menu[index];
+}
+
+void Menu::set_index(int new_index)
+{
+    if (new_index < MAX_NUMBER_OF_ITEMS && new_index >= 0)
+    {
+        selected_index = new_index;
+    }
+    else
+    {
+        throw std::invalid_argument("Wrong index");
+    }
+}
+
 void Menu::update_text(sf::RenderWindow &window)
 {
     menu[0].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - menu[0].getGlobalBounds().width / 2 , window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 1));
@@ -80,9 +97,9 @@ void Menu::move_up()
     }
 }
 
-void Menu::move_down()
+void Menu::move_down(int limit)
 {
-    if (selected_index + 1 < MAX_NUMBER_OF_ITEMS)
+    if (selected_index + 1 < MAX_NUMBER_OF_ITEMS - limit)
     {
         menu[selected_index].setFillColor(sf::Color::Black);
         selected_index++;

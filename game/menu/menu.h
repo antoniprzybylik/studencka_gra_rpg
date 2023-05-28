@@ -5,19 +5,21 @@
 
 class Menu
 {
-public:
-    Menu(sf::RenderWindow &window);
-    ~Menu();
+    private:
+        int selected_index;
+        sf::Font font;
+        sf::Text menu[MAX_NUMBER_OF_ITEMS];
+        sf::Texture background;
 
-    void draw(sf::RenderWindow &window);
-    void update_text(sf::RenderWindow &window);
-    void move_up();
-    void move_down();
-    int get_pressed_item();
+    public:
+        Menu(sf::RenderWindow &window);
+        ~Menu();
 
-private:
-    int selected_index;
-    sf::Font font;
-    sf::Text menu[MAX_NUMBER_OF_ITEMS];
-    sf::Texture background;
+        void draw(sf::RenderWindow &window);
+        void update_text(sf::RenderWindow &window);
+        void move_up();
+        void move_down(int limit);
+        int get_pressed_item();
+        sf::Text& get_text(int index);
+        void set_index(int new_index);
 };

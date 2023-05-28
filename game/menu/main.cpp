@@ -41,27 +41,49 @@ int main()
                 }
                 else if (event.key.code == sf::Keyboard::Down)
                 {
-                    menu.move_down();
+                    if (menu.get_text(0).getString() == "Save game")
+                    {
+                        menu.move_down(1);
+                    }
+                    else {menu.move_down(0);}
                 }
                 else if (event.key.code == sf::Keyboard::Return)
                 {
                     if (menu.get_pressed_item() == 0)
                     {
-			    window.close();
-			    run_game();
+                        if (menu.get_text(0).getString() =="Save game")
+                        {
+                            std::cout << "Save game" << std::endl;
+                        }
+                        else
+                        {
+                            window.close();
+                            run_game();
+                        }
                     }
                     else if (menu.get_pressed_item() == 1)
                     {
-                        std::cout << "Options pressed" << std::endl;
+                        if (menu.get_text(0).getString() =="Play")
+                        {
+                            menu.get_text(0).setString("Save game");
+                            menu.get_text(0).setFillColor(sf::Color::Blue);
+                            menu.get_text(1).setFillColor(sf::Color::Black);
+                            menu.get_text(1).setString("Load game from file");
+                            menu.get_text(2).setString("");
+                            menu.set_index(0);
+                        }
+                        else
+                        {
+                            std::cout << "Load game from file" << std::endl;
+                        }
                     }
-                    else if (menu.get_pressed_item() == 2)
+                    else if (menu.get_pressed_item() == 2 && menu.get_text(0).getString() =="Play")
                     {
                         window.close();
                     }
                 }
             }
         }
-
         window.clear();
         window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
         menu.draw(window);
