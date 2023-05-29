@@ -9,7 +9,7 @@
 
 TEST_CASE("question_ui tests", "[question_ui]")
 {
-    Question question1("Ile to 2+2?", "4", "3", 1);
+    Question question1(L"Ile to 2+2?", L"4", L"3", 1);
     Enemy enemy("Bob", 2, 1, 1);
     enemy.set_questions(question1);
     sf::RenderWindow window(sf::VideoMode(1400, 1000), "SFML works!");
