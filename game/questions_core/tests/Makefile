@@ -1,4 +1,4 @@
-.PHONY: clean all run
+.PHONY: clean all build run
 
 all: build
 build: classes_tests
