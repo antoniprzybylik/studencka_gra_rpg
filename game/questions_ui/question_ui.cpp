@@ -12,13 +12,18 @@
 extern char _binary_font_arial_ttf_start[];
 extern char _binary_font_arial_ttf_end[];
 
+extern char _binary_scroll_bgrd_png_start[];
+extern char _binary_scroll_bgrd_png_end[];
+
 static std::uniform_int_distribution<unsigned short> pick;
 static std::random_device rd;
 static std::default_random_engine re(rd());
 
 QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy)
 {
-    if(!background.loadFromFile("scroll_bgrd.png"))
+    if(!background.loadFromMemory(_binary_scroll_bgrd_png_start,
+			          (size_t) ((uint64_t) _binary_scroll_bgrd_png_end -
+				            (uint64_t) _binary_scroll_bgrd_png_start)))
     {
         throw LoadError();
     }

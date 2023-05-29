@@ -1,5 +1,5 @@
 .PHONY: all clean build debug
-.SUFFIXES: .o .cpp .ttf
+.SUFFIXES: .o .cpp .ttf .png
 
 PROJECT = question_ui-app
 
@@ -15,12 +15,14 @@ LDFLAGS = -fPIC \
 	  -lm \
 	  -L../questions_core/ \
 	  -l:questions_core.a \
+	  -ljsoncpp \
 
 OBJS = \
 question_window.o \
 question_ui.o \
 ui_exceptions.o \
 font_arial.o \
+scroll_bgrd.o \
 
 DEPS = $(OBJS:%.o=%.d)
 
@@ -44,6 +46,9 @@ clean:
 	$(CXX) $< -o $@ -c $(CXXFLAGS)
 
 .ttf.o:
+	$(LINK) -r -b binary $< -o $@
+
+.png.o:
 	$(LINK) -r -b binary $< -o $@
 
 -include $(DEPS)
