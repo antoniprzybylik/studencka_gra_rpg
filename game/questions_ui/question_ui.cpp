@@ -265,6 +265,8 @@ void QuestionUI::exec(Player& player)
                 }
                 else if (event.key.code == sf::Keyboard::Escape && q_ui.get_text(1).getString() == "Nacisnij escape, aby wyjsc")
                 {
+                    if (player.get_hp() <= 0)
+			    window.close();
 		    return;
                 }
             }
