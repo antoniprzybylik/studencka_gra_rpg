@@ -222,7 +222,7 @@ TEST_CASE("enemy tests", "[enemy]")
         Json::Reader reader;
         Json::Value root;
 	std::ifstream ifs;
-	
+
 	ifs.open("output_enemy.json");
 	REQUIRE(reader.parse(ifs, root));
 
