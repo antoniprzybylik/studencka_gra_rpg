@@ -50,6 +50,8 @@ int main()
         q_ui1.exec(enemy1, player, window);
         //q_ui1.exec(enemy2, player, window);
         //q_ui1.exec(enemy3, player, window);
+	
+	window.close();
 
     }
     catch(const LoadError& e)

@@ -182,7 +182,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
     QuestionUI q_ui(window, enemy);
     int i = 0;
 
-    while (window.isOpen())
+    for (;;)
     {
         sf::Event event;
 
@@ -263,7 +263,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
                 }
                 else if (event.key.code == sf::Keyboard::Escape && q_ui.get_text(1).getString() == "Nacisnij escape, aby wyjsc")
                 {
-                    window.close();
+		    return;
                 }
             }
         }
