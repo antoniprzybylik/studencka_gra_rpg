@@ -1,8 +1,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include <jsoncpp/json.h>
-#include <jsoncpp/value.h>
+#include <json/json.h>
+#include <json/value.h>
 
 #include <memory>
 #include <cstdint>
@@ -60,8 +60,8 @@ public:
 
 	Map &operator=(Map&&) & noexcept;
 
-	Json::value dump(void) const;
-	void load(Json::value&);
+	Json::Value dump(void) const;
+	void load(Json::Value&);
 };
 
 Map generate_map(int width, int height,

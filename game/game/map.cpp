@@ -60,12 +60,60 @@ Map &Map::operator=(Map &&map) & noexcept
 	return *this;
 }
 
-Json::value Map::dump(void) const
+Json::Value Map::dump(void) const
 {
-	TODO
+	size_t i;
+	Json::Value root;
+
+	for (i = 0; i < 0; i++)
+		root.append(static_cast<int>(map[i]));
+
+	return root;
 }
 
-void Map::load(Json::value&)
+void Map::load(Json::Value &d_root)
 {
-	TODO
+	int width, height;
+	int i;
+
+	if (!d_root.isObject()) {
+		throw std::invalid_argument(
+			"Corrupted data.");
+	}
+
+	Json::Value &d_width = d_root["width"];
+	Json::Value &d_height = d_root["height"];
+	Json::Value &d_map = d_root["map"];
+
+	if (!d_map.isArray()) {
+		throw std::invalid_argument(
+			"Corrupted data.");
+	}
+
+	if (!d_width.isNumeric()) {
+		throw std::invalid_argument(
+			"Corrupted data.");
+	}
+	width = d_width.asInt();
+
+	if (!d_height.isNumeric()) {
+		throw std::invalid_argument(
+			"Corrupted data.");
+	}
+	height = d_height.asInt();
+
+	if (d_map.size() != (size_t) (width*height+1)) {
+		throw std::invalid_argument(
+			"Corrupted data.");
+	}
+
+	map = std::make_shared<uint8_t[]>(d_map.size());
+	for (i = 0; (size_t) i < d_map.size(); i++) {
+		if (!d_map[i].isNumeric()) {
+			throw std::invalid_argument(
+				"Corrupted data.");
+		}
+
+		map[i] = d_map[i].asInt();
+	}
 }

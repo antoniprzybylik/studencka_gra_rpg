@@ -13,6 +13,7 @@ LDFLAGS = -fPIC -L../engine/ -lengine \
 	  -lsfml-window \
 	  -lsfml-system \
 	  -lm \
+	  -ljsoncpp \
 
 OBJS = \
 main.o \
