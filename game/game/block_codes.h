@@ -9,5 +9,6 @@
 #define BLOCK_FLOOR	((uint8_t) 5)
 #define BLOCK_FORBIDDEN	((uint8_t) 6)
 #define BLOCK_STUDENT ((uint8_t) 7)
+#define BLOCK_STOP ((uint8_t) 8)
 
 #endif /* BLOCK_CODES_H_ */

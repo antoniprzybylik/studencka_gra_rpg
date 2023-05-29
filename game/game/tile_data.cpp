@@ -39,5 +39,9 @@ std::unique_ptr<tile_data_t[]> load_tile_data(void)
 	tile_data[7].shift_x = 0;
 	tile_data[7].shift_y = 0;
 
+	tile_data[8].hard = 1;
+	tile_data[8].shift_x = 0;
+	tile_data[8].shift_y = 0;
+
 	return tile_data;
 }

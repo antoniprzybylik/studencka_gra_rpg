@@ -213,7 +213,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	ac_index = 0;
 	for (i = 0; i < (int) screen_y; i++) {
 		for (j = 0; j < (int) screen_x; j++) {
-			skin = std::make_shared<TextureSkin>(*tiles, 8, 1);
+			skin = std::make_shared<TextureSkin>(*tiles, 9, 1);
 
 			tile_sprite = std::make_shared<TileSprite>
 						(skin, Rect(0, 0, 1280, 720), BA_NONE);
@@ -270,17 +270,21 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	engine->add_sprite(player_sprite);
 
 	/* Restrict area. */
-	for (i = map_height-1; i >= 0; i--) {
+	for (i = 0; i < map_height; i++) {
 		if (map[i][9] != BLOCK_CONCRETE &&
 		    map[i][9] != BLOCK_FLOOR) {
 			map[i][9] = BLOCK_FORBIDDEN;
+		} else if (map[i][9] == BLOCK_FLOOR) {
+			map[i-1][9] = BLOCK_STOP;
 		}
 	}
 
-	for (i = map_height-1; i >= 0; i--) {
+	for (i = 0; i < map_height; i++) {
 		if (map[i][91] != BLOCK_CONCRETE &&
 		    map[i][91] != BLOCK_FLOOR) {
 			map[i][91] = BLOCK_FORBIDDEN;
+		} else if (map[i][91] == BLOCK_FLOOR) {
+			map[i-1][91] = BLOCK_STOP;
 		}
 	}
 
