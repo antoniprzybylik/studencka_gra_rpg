@@ -6,7 +6,7 @@
 class LabelSprite : public Sprite {
 public:
 	LabelSprite(double x, double y,
-		    std::string *text_str);
+		    std::wstring *text_str);
 	~LabelSprite(void) override;
 };
 

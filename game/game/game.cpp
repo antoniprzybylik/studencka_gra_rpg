@@ -151,9 +151,14 @@ void Game::move_player(void)
 static
 const int ticks_in_frame = 17;
 
-static std::string position_str("position: (-, -)");
+static std::wstring position_str(L"position: (-, -)");
+static std::wstring save_label_str(L"S - zapis do pliku");
+static std::wstring hp_label_str(L"Punkty życia: -");
 
 static std::shared_ptr<LabelSprite> label_sprite(nullptr);
+static std::shared_ptr<LabelSprite> save_label_sprite(nullptr);
+static std::shared_ptr<LabelSprite> hp_label_sprite(nullptr);
+
 static std::shared_ptr<PlayerSprite> player_sprite(nullptr);
 
 static std::shared_ptr<BossSprite> boss1_sprite(nullptr);
@@ -168,13 +173,14 @@ void Game::on_tick(void)
 	handle_keys();
 	move_player();
 
-	/* TODO */
+	hp_label_str = std::wstring(L"Punkty życia: ") +
+		       std::to_wstring(Game::player_data.get_hp());
 
-	position_str = std::string("position: (") +
-		       std::to_string(player_x) +
-		       std::string(", ") +
-		       std::to_string(player_y) +
-		       std::string(")");
+	position_str = std::wstring(L"position: (") +
+		       std::to_wstring(player_x) +
+		       std::wstring(L", ") +
+		       std::to_wstring(player_y) +
+		       std::wstring(L")");
 }
 
 Player Game::player_data("Student", 3, 1, 1);
@@ -303,6 +309,14 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	/* Label Sprite. */
 	label_sprite = std::make_shared<LabelSprite>(10, 10, &position_str);
 	engine->add_sprite(std::static_pointer_cast<Sprite>(label_sprite));
+
+	/* Save Label Sprite. */
+	save_label_sprite = std::make_shared<LabelSprite>(10, 40, &save_label_str);
+	engine->add_sprite(std::static_pointer_cast<Sprite>(save_label_sprite));
+
+	/* HP Label Sprite. */
+	hp_label_sprite = std::make_shared<LabelSprite>(1010, 10, &hp_label_str);
+	engine->add_sprite(std::static_pointer_cast<Sprite>(hp_label_sprite));
 
 	/* Background Sprite. */
 	std::unique_ptr<sf::Image> bg_img = std::make_unique<sf::Image>();
