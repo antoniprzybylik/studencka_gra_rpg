@@ -213,7 +213,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 	ac_index = 0;
 	for (i = 0; i < (int) screen_y; i++) {
 		for (j = 0; j < (int) screen_x; j++) {
-			skin = std::make_shared<TextureSkin>(*tiles, 9, 1);
+			skin = std::make_shared<TextureSkin>(*tiles, 10, 1);
 
 			tile_sprite = std::make_shared<TileSprite>
 						(skin, Rect(0, 0, 1280, 720), BA_NONE);

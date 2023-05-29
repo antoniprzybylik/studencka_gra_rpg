@@ -10,5 +10,6 @@
 #define BLOCK_FORBIDDEN	((uint8_t) 6)
 #define BLOCK_STUDENT ((uint8_t) 7)
 #define BLOCK_STOP ((uint8_t) 8)
+#define BLOCK_TROPHY ((uint8_t) 8)
 
 #endif /* BLOCK_CODES_H_ */
