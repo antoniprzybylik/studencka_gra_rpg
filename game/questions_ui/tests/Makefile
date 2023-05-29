@@ -1,18 +1,24 @@
-.PHONY: clean all run
+.PHONY: clean all build run
 
-all:
-	g++ ui_tests.cpp ../question_ui.o \
+all: build
+build: ui_tests
+
+run: build
+	./ui_tests
+
+clean:
+	rm -f ui_tests ui_tests.o
+
+ui_tests: ui_tests.o
+	g++ ui_tests.o -o ui_tests \
+		../question_ui.o \
 		../font_arial.o ../scroll_bgrd.o \
 		../ui_exceptions.o \
-		-o ui_tests \
-		-I../ -I../../questions_core/ \
 		-L../../questions_core/ \
 		-l:questions_core.a \
 		-ljsoncpp -lsfml-system \
 		-lsfml-graphics -lsfml-window \
 
-run:
-	./ui_tests
-
-clean:
-	rm -f ui_tests
+ui_tests.o: ui_tests.cpp
+	g++ ui_tests.cpp -o ui_tests.o -c \
+		-I../ -I../../questions_core/ \
