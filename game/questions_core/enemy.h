@@ -46,9 +46,9 @@ class Enemy
         std::vector<Question> get_questions() const;
         bool is_in_questions(int id);
         Question& get_question(int id);
-        std::string get_content_fromid(int id);
-        std::string get_ganswer_fromid(int id);
-        std::string get_wanswer_fromid(int id);
+        std::wstring get_content_fromid(int id);
+        std::wstring get_ganswer_fromid(int id);
+        std::wstring get_wanswer_fromid(int id);
         void remove_question(Question& question);
         int number_of_elements();
 

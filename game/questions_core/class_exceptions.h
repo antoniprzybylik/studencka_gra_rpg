@@ -14,6 +14,7 @@ class WrongPath : public std::invalid_argument
 {
     public:
         WrongPath(std::string path);
+        WrongPath(std::wstring path);
 };
 
 class AlreadyDead : public std::invalid_argument

@@ -191,7 +191,7 @@ Question& Enemy::get_question(int id)
     }
 }
 
-std::string Enemy::get_content_fromid(int id)
+std::wstring Enemy::get_content_fromid(int id)
 {
     if (id >= 0 && id < this->number_of_elements())
     {
@@ -203,7 +203,7 @@ std::string Enemy::get_content_fromid(int id)
     }
 }
 
-std::string Enemy::get_ganswer_fromid(int id)
+std::wstring Enemy::get_ganswer_fromid(int id)
 {
     if (id >= 0 && id < this->number_of_elements())
     {
@@ -215,7 +215,7 @@ std::string Enemy::get_ganswer_fromid(int id)
     }
 }
 
-std::string Enemy::get_wanswer_fromid(int id)
+std::wstring Enemy::get_wanswer_fromid(int id)
 {
     if (id >= 0 && id < this->number_of_elements())
     {

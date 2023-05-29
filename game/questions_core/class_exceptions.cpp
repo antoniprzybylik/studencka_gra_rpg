@@ -1,10 +1,18 @@
+#include <locale>
+#include <codecvt>
+
 #include "class_exceptions.h"
+
+static std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 
 NegativeArgument::NegativeArgument(int value):
     std::invalid_argument("Negative value: " + std::to_string(value)){}
 
 WrongPath::WrongPath(std::string path):
     std::invalid_argument("This path does not exist: " + path){}
+WrongPath::WrongPath(std::wstring path):
+    std::invalid_argument("This path does not exist: " +
+		          converter.to_bytes(path)){}
 
 AlreadyDead::AlreadyDead(int health):
     std::invalid_argument("Player already has negative health: " + std::to_string(health)){}
