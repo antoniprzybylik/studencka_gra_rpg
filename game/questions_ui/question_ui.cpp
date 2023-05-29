@@ -19,7 +19,8 @@ static std::uniform_int_distribution<unsigned short> pick;
 static std::random_device rd;
 static std::default_random_engine re(rd());
 
-QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy)
+QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy) :
+window(window)
 {
     if(!background.loadFromMemory(_binary_scroll_bgrd_png_start,
 			          (size_t) ((uint64_t) _binary_scroll_bgrd_png_end -
@@ -92,19 +93,19 @@ QuestionUI::~QuestionUI()
 {
 }
 
-void QuestionUI::update_text(sf::RenderWindow &window)
+void QuestionUI::update_text()
 {
     text[0].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[0].getGlobalBounds().width / 2 , window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 1));
     text[1].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[1].getGlobalBounds().width / 2, window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 2));
     text[2].setPosition(sf::Vector2f(window.getView().getSize().x / 2 - text[2].getGlobalBounds().width / 2, window.getView().getSize().y / (MAX_NUMBER_OF_ITEMS + 1) * 3));
 }
 
-void QuestionUI::draw(sf::RenderWindow &window)
+void QuestionUI::draw()
 {
     sf::Sprite sprite(background);
     sprite.setScale(sf::Vector2f((float)window.getSize().x / (float)sprite.getTexture()->getSize().x, (float)window.getSize().y / (float)sprite.getTexture()->getSize().y));
     window.draw(sprite);
-    update_text(window);
+    update_text();
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
     {
         window.draw(text[i]);
@@ -177,7 +178,7 @@ void QuestionUI::reached_end()
 }
 
 
-void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
+void QuestionUI::exec(Enemy& enemy, Player& player)
 {
     QuestionUI q_ui(window, enemy);
     int i = 0;
@@ -269,7 +270,7 @@ void QuestionUI::exec(Enemy& enemy, Player& player, sf::RenderWindow &window)
         }
         window.clear();
         window.setView(sf::View(sf::FloatRect(0.f, 0.f, window.getSize().x, window.getSize().y)));
-        q_ui.draw(window);
+        q_ui.draw();
         window.display();
     }
 }

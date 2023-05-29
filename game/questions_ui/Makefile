@@ -1,7 +1,8 @@
 .PHONY: all clean build debug
 .SUFFIXES: .o .cpp .ttf .png
 
-PROJECT = demo
+TARGET1 = demo
+TARGET2 = question_ui.a
 
 CXX = g++
 LINK = ld
@@ -18,7 +19,6 @@ LDFLAGS = -fPIC \
 	  -ljsoncpp \
 
 OBJS = \
-demo_main.o \
 question_ui.o \
 ui_exceptions.o \
 font_arial.o \
@@ -28,19 +28,25 @@ DEPS = $(OBJS:%.o=%.d)
 
 all: build
 
-compile: $(OBJS)
+compile: $(OBJS) demo_main.o
 
 build: CXXFLAGS += -O3
 build: compile
-	$(CXX) $(OBJS) -o $(PROJECT) $(LDFLAGS)
-	$(STRIP) $(PROJECT)
+	$(CXX) $(OBJS) demo_main.o -o $(TARGET1) $(LDFLAGS)
+	$(STRIP) $(TARGET1)
+
+	ar r $(TARGET2) $(OBJS)
+	ranlib $(TARGET2)
 
 debug: CXXFLAGS += -g
 debug: clean | compile
-	$(CXX) $(OBJS) -o $(PROJECT) $(LDFLAGS)
+	$(CXX) $(OBJS) demo_main.o -o $(TARGET1) $(LDFLAGS)
+
+	ar r $(TARGET2) $(OBJS)
+	ranlib $(TARGET2)
 
 clean:
-	rm -f $(OBJS) $(DEPS)
+	rm -f $(OBJS) demo_main.o $(DEPS) demo_main.d
 
 .cpp.o:
 	$(CXX) $< -o $@ -c $(CXXFLAGS)
@@ -52,3 +58,4 @@ clean:
 	$(LINK) -r -b binary $< -o $@
 
 -include $(DEPS)
+-include demo_main.d
