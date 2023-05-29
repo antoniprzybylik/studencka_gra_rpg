@@ -1,3 +1,7 @@
+#include <json/json.h>
+#include <json/value.h>
+
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -87,6 +91,33 @@ void Game::handle_keys(void)
 		if (tile_info.hard)
 			sy = y_vel;
 	}
+
+	if (sf::Keyboard::
+		isKeyPressed(sf::Keyboard::S)) {
+		Json::Value root;
+
+		root["map"] = Game::map.dump();
+
+		// TODO
+		//root["player"] = Game::player.dump();
+		
+		std::ofstream of;
+		of.open("saved_game.json");
+		of << root << std::flush;
+		of.close();
+	}
+
+	if (sf::Keyboard::
+		isKeyPressed(sf::Keyboard::L)) {
+		Json::Value root;
+
+		std::ifstream ifs;
+		ifs.open("saved_game.json");
+		ifs >> root;
+		ifs.close();
+
+		Game::map.load(root["map"]);
+	}
 }
 
 void Game::move_player(void)
@@ -152,7 +183,7 @@ static
 const int ticks_in_frame = 17;
 
 static std::wstring position_str(L"position: (-, -)");
-static std::wstring save_label_str(L"S - zapis do pliku");
+static std::wstring save_label_str(L"S - zapisz, L - wczytaj");
 static std::wstring hp_label_str(L"Punkty życia: -");
 
 static std::shared_ptr<LabelSprite> label_sprite(nullptr);

@@ -62,13 +62,17 @@ Map &Map::operator=(Map &&map) & noexcept
 
 Json::Value Map::dump(void) const
 {
-	size_t i;
-	Json::Value root;
+	int i;
+	Json::Value d_root;
+	Json::Value &d_map = d_root["map"];
 
-	for (i = 0; i < 0; i++)
-		root.append(static_cast<int>(map[i]));
+	d_root["width"] = width;
+	d_root["height"] = height;
 
-	return root;
+	for (i = 0; i < width*height+1; i++)
+		d_map.append(static_cast<int>(map[i]));
+
+	return d_root;
 }
 
 void Map::load(Json::Value &d_root)
@@ -78,7 +82,8 @@ void Map::load(Json::Value &d_root)
 
 	if (!d_root.isObject()) {
 		throw std::invalid_argument(
-			"Corrupted data.");
+			"Corrupted data: "
+			"Not an object.");
 	}
 
 	Json::Value &d_width = d_root["width"];
@@ -87,31 +92,36 @@ void Map::load(Json::Value &d_root)
 
 	if (!d_map.isArray()) {
 		throw std::invalid_argument(
-			"Corrupted data.");
+			"Corrupted data: "
+			"Not an array.");
 	}
 
 	if (!d_width.isNumeric()) {
 		throw std::invalid_argument(
-			"Corrupted data.");
+			"Corrupted data: "
+			"Not a value.");
 	}
 	width = d_width.asInt();
 
 	if (!d_height.isNumeric()) {
 		throw std::invalid_argument(
-			"Corrupted data.");
+			"Corrupted data: "
+			"Not a value.");
 	}
 	height = d_height.asInt();
 
 	if (d_map.size() != (size_t) (width*height+1)) {
 		throw std::invalid_argument(
-			"Corrupted data.");
+			"Corrupted data: "
+			"Wrong array size.");
 	}
 
 	map = std::make_shared<uint8_t[]>(d_map.size());
 	for (i = 0; (size_t) i < d_map.size(); i++) {
 		if (!d_map[i].isNumeric()) {
 			throw std::invalid_argument(
-				"Corrupted data.");
+				"Corrupted data: "
+				"Not a value.");
 		}
 
 		map[i] = d_map[i].asInt();
