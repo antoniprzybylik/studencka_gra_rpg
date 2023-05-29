@@ -30,7 +30,9 @@ application: game menu
 
 run-tests: build
 	make run-tests -C questions_core/
+	make run-tests -C questions_ui/
 	make run-tests -C engine/
+	make run-tests -C menu/
 
 clean:
 	make clean -C engine/
