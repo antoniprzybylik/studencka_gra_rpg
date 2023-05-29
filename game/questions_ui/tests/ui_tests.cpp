@@ -31,12 +31,12 @@ TEST_CASE("question_ui tests", "[question_ui]")
 
     SECTION("change index")
     {
-        ui.set_index(0);
-        CHECK(ui.get_pressed_item() == 0);
-        ui.move_down();
+        ui.set_index(1);
         CHECK(ui.get_pressed_item() == 1);
+        ui.move_down();
+        CHECK(ui.get_pressed_item() == 2);
         ui.move_up();
-        CHECK(ui.get_pressed_item() == 0);
+        CHECK(ui.get_pressed_item() == 1);
     }
 
     SECTION("exceptions")
