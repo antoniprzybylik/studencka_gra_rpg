@@ -22,8 +22,14 @@ void run_game(void)
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
-    Menu menu(window);
+    sf::Texture background;
 
+    if(!background.loadFromFile("rc/background.jpg"))
+    {
+        throw std::invalid_argument("background load error");
+    }
+
+    Menu menu(window, background);
 
     while (window.isOpen())
     {

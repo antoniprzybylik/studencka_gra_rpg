@@ -12,7 +12,8 @@ class Menu
         sf::Texture background;
 
     public:
-        Menu(sf::RenderWindow &window);
+        Menu(sf::RenderWindow &window,
+	     sf::Texture background);
         ~Menu();
 
         void draw(sf::RenderWindow &window);

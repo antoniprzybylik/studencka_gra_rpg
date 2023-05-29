@@ -7,13 +7,10 @@
 extern char _binary_font_arial_ttf_start[];
 extern char _binary_font_arial_ttf_end[];
 
-Menu::Menu(sf::RenderWindow &window)
+Menu::Menu(sf::RenderWindow &window,
+	   sf::Texture background) :
+background(background)
 {
-    if(!background.loadFromFile("rc/background.jpg"))
-    {
-        throw std::invalid_argument("background load error");
-    }
-
     if(!font.loadFromMemory(_binary_font_arial_ttf_start,
 			    (size_t) ((uint64_t) _binary_font_arial_ttf_end -
 				      (uint64_t) _binary_font_arial_ttf_start)))
