@@ -1,12 +1,19 @@
 .PHONY: clean all run
 
-all:
-	g++ classes_tests.cpp -o classes_tests \
-		-I../ -L../ -l:questions_core.a \
-		-ljsoncpp \
+all: build
+build: classes_tests
 
-run:
+run: classes_tests
 	./classes_tests
 
 clean:
-	rm -f classes_tests
+	rm -f classes_tests classes_tests.o
+
+classes_tests: classes_tests.o
+	g++ classes_tests.o -o classes_tests \
+		-L../ -l:questions_core.a \
+		-ljsoncpp \
+
+classes_tests.o:
+	g++ classes_tests.cpp -o classes_tests.o \
+		-I../ -c \
