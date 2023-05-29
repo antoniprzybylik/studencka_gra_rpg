@@ -1,4 +1,4 @@
-.PHONY: all clean build debug
+.PHONY: all clean build debug tests run-tests
 .SUFFIXES: .o .cpp .ttf .png
 
 TARGET1 = demo
@@ -26,7 +26,7 @@ scroll_bgrd.o \
 
 DEPS = $(OBJS:%.o=%.d)
 
-all: build
+all: build | tests
 
 compile: $(OBJS) demo_main.o
 
@@ -44,6 +44,12 @@ debug: clean | compile
 
 	ar r $(TARGET2) $(OBJS)
 	ranlib $(TARGET2)
+
+tests: build
+	make -C tests/
+
+run-tests: tests
+	make run -C tests/
 
 clean:
 	rm -f $(OBJS) demo_main.o $(DEPS) demo_main.d
