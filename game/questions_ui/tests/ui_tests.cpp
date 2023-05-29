@@ -41,7 +41,7 @@ TEST_CASE("question_ui tests", "[question_ui]")
 
     SECTION("exceptions")
     {
-        CHECK_THROWS(ui.set_index(5));
+        CHECK_THROWS(ui.set_index(4));
         CHECK_THROWS(ui.set_index(-2));
         CHECK_THROWS(ui.answered_correctly(-2));
         CHECK_THROWS(ui.answered_incorrectly(3));
