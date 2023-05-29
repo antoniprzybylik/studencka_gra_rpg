@@ -84,49 +84,49 @@ TEST_CASE("player tests", "[player]")
 
 TEST_CASE("question tests", "[question]")
 {
-    Question question1("Ile to 2+2?", "4", "3", 1);
-    Question question2("Ile to 2+3?", "5", "2", 2);
+    Question question1(L"Ile to 2+2?", L"4", L"3", 1);
+    Question question2(L"Ile to 2+3?", L"5", L"2", 2);
 
-    CHECK(question1.get_content() == "Ile to 2+2?");
-    CHECK(question1.get_good_answer() == "4");
-    CHECK(question1.get_wrong_answer() == "3");
+    CHECK(question1.get_content() == L"Ile to 2+2?");
+    CHECK(question1.get_good_answer() == L"4");
+    CHECK(question1.get_wrong_answer() == L"3");
     CHECK(question1.get_id() == 1);
 
     SECTION("modifications")
     {
-        question1.set_content("Ile to 3+3?");
-        question1.set_good_answer("6");
-        question1.set_wrong_answer("2");
+        question1.set_content(L"Ile to 3+3?");
+        question1.set_good_answer(L"6");
+        question1.set_wrong_answer(L"2");
         question1.set_id(5);
 
-        CHECK(question1.get_content() == "Ile to 3+3?");
-        CHECK(question1.get_good_answer() == "6");
-        CHECK(question1.get_wrong_answer() == "2");
+        CHECK(question1.get_content() == L"Ile to 3+3?");
+        CHECK(question1.get_good_answer() == L"6");
+        CHECK(question1.get_wrong_answer() == L"2");
         CHECK(question1.get_id() == 5);
     }
 
     SECTION("modifications")
     {
-        question1.set_content("Ile to 3+8?");
-        question1.set_good_answer("11");
-        question1.set_wrong_answer("3");
+        question1.set_content(L"Ile to 3+8?");
+        question1.set_good_answer(L"11");
+        question1.set_wrong_answer(L"3");
         question1.set_id(9);
 
-        CHECK(question1.get_content() == "Ile to 3+8?");
-        CHECK(question1.get_good_answer() == "11");
-        CHECK(question1.get_wrong_answer() == "3");
+        CHECK(question1.get_content() == L"Ile to 3+8?");
+        CHECK(question1.get_good_answer() == L"11");
+        CHECK(question1.get_wrong_answer() == L"3");
         CHECK(question1.get_id() == 9);
     }
 
     SECTION("operator ==")
     {
-        Question question3("Ile to 2+2?", "4", "3", 1);
+        Question question3(L"Ile to 2+2?", L"4", L"3", 1);
         CHECK(question3 == question1);
     }
 
     SECTION("operator !=")
     {
-        Question question4("Ile to 2+2?", "4", "3", 9);
+        Question question4(L"Ile to 2+2?", L"4", L"3", 9);
         CHECK(question1 != question2);
         CHECK(question1 != question4);
         CHECK(question2 != question4);
@@ -138,8 +138,8 @@ TEST_CASE("enemy tests", "[enemy]")
 {
     Player player("Bob", 10, 1, 1);
     Enemy enemy("ork", 1, 1, 1);
-    Question question1("Ile to 2+2?", "4", "3", 1);
-    Question question2("Ile to 2+3?", "5", "2", 2);
+    Question question1(L"Ile to 2+2?", L"4", L"3", 1);
+    Question question2(L"Ile to 2+3?", L"5", L"2", 2);
 
     CHECK(enemy.get_name() == "ork");
     CHECK(enemy.get_attack_damage() == 1);
@@ -261,13 +261,13 @@ TEST_CASE("enemy tests", "[enemy]")
     {
         enemy.set_questions(question1);
         enemy.set_questions(question2);
-        CHECK(enemy.get_content_fromid(0) == "Ile to 2+2?");
-        CHECK(enemy.get_ganswer_fromid(0) == "4");
-        CHECK(enemy.get_wanswer_fromid(0) == "3");
+        CHECK(enemy.get_content_fromid(0) == L"Ile to 2+2?");
+        CHECK(enemy.get_ganswer_fromid(0) == L"4");
+        CHECK(enemy.get_wanswer_fromid(0) == L"3");
 
-        CHECK(enemy.get_content_fromid(1) == "Ile to 2+3?");
-        CHECK(enemy.get_ganswer_fromid(1) == "5");
-        CHECK(enemy.get_wanswer_fromid(1) == "2");
+        CHECK(enemy.get_content_fromid(1) == L"Ile to 2+3?");
+        CHECK(enemy.get_ganswer_fromid(1) == L"5");
+        CHECK(enemy.get_wanswer_fromid(1) == L"2");
     }
 
 
@@ -305,11 +305,11 @@ TEST_CASE("player class exceptions", "[player]")
 
 TEST_CASE("question class exceptions", "[question]")
 {
-    Question question1("Ile to 2+2?", "4", "3", 1);
+    Question question1(L"Ile to 2+2?", L"4", L"3", 1);
 
     SECTION("read from not existing file")
     {
-        CHECK_THROWS(question1.read_from_file("output111.txt"));
+        CHECK_THROWS(question1.read_from_file(L"output111.txt"));
     }
 }
 
@@ -318,8 +318,8 @@ TEST_CASE("enemy class exceptions", "[enemy]")
 {
     Enemy enemy("ork", 1, 1, 1);
     Player player("Bob", 1, 1, 1);
-    Question question1("Ile to 2+2?", "4", "3", 1);
-    Question question2("Ile to 2+5?", "7", "3", 4);
+    Question question1(L"Ile to 2+2?", L"4", L"3", 1);
+    Question question2(L"Ile to 2+5?", L"7", L"3", 4);
 
     SECTION("setters exceptions")
     {
