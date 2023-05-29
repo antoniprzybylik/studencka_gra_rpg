@@ -1,6 +1,7 @@
 .PHONY: all clean engine game menu questions-core questions-ui application run-tests
 
-all: engine game menu questions-core questions-ui | application
+all: build
+build: engine game menu questions-core questions-ui | application
 
 engine:
 	make -C engine/
@@ -17,7 +18,7 @@ questions-core:
 questions-ui: questions-core
 	make -C questions_ui/
 
-application:
+application: game menu
 	rm -rf application
 	mkdir application
 	mkdir application/bin
@@ -27,7 +28,7 @@ application:
 	cp game/game application/bin/
 	cp game/rc/* application/rc/
 
-run-tests:
+run-tests: build
 	make run-tests -C questions_core/
 	make run-tests -C engine/
 
