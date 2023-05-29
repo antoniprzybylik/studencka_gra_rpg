@@ -51,7 +51,7 @@ int main()
         QuestionUI q_ui2(window, enemy2);
         QuestionUI q_ui3(window, enemy3);
 
-        q_ui1.exec(enemy1, player);
+        q_ui1.exec(player);
         //q_ui1.exec(enemy2, player);
         //q_ui1.exec(enemy3, player);
 	

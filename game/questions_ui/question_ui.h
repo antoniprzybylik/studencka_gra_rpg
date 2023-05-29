@@ -15,7 +15,9 @@ class QuestionUI
         sf::Font font;
         sf::Text text[MAX_NUMBER_OF_ITEMS];
         sf::Texture background;
+
 	sf::RenderWindow &window;
+	Enemy &enemy;
 
     public:
         QuestionUI(sf::RenderWindow &window, Enemy& new_enemy);
@@ -27,7 +29,7 @@ class QuestionUI
         int get_pressed_item();
         void set_index(int new_index);
         sf::Text& get_text(int index);
-        void exec(Enemy& enemy, Player& player);
+        void exec(Player& player);
         void answered_correctly(int index);
         void answered_incorrectly(int index);
         void game_over();

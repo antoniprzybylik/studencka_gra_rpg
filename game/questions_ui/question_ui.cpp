@@ -20,7 +20,8 @@ static std::random_device rd;
 static std::default_random_engine re(rd());
 
 QuestionUI::QuestionUI(sf::RenderWindow &window, Enemy& new_enemy) :
-window(window)
+window(window),
+enemy(new_enemy)
 {
     if(!background.loadFromMemory(_binary_scroll_bgrd_png_start,
 			          (size_t) ((uint64_t) _binary_scroll_bgrd_png_end -
@@ -178,12 +179,12 @@ void QuestionUI::reached_end()
 }
 
 
-void QuestionUI::exec(Enemy& enemy, Player& player)
+void QuestionUI::exec(Player& player)
 {
     QuestionUI q_ui(window, enemy);
     int i = 0;
 
-    for (;;)
+    while (window.isOpen())
     {
         sf::Event event;
 
