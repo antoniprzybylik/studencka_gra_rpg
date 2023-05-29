@@ -1,7 +1,7 @@
 .PHONY: all clean build debug
 .SUFFIXES: .o .cpp .ttf .png
 
-PROJECT = question_ui-app
+PROJECT = demo
 
 CXX = g++
 LINK = ld
@@ -18,7 +18,7 @@ LDFLAGS = -fPIC \
 	  -ljsoncpp \
 
 OBJS = \
-question_window.o \
+demo_main.o \
 question_ui.o \
 ui_exceptions.o \
 font_arial.o \
