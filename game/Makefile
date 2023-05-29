@@ -6,7 +6,7 @@ build: engine game menu questions-core questions-ui | application
 engine:
 	make -C engine/
 
-game: engine
+game: engine questions-core questions-ui
 	make -C game/
 
 menu:
