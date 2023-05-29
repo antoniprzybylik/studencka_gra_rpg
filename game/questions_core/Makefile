@@ -30,10 +30,10 @@ debug: clean | compile
 	ar r $(TARGET) $(OBJS)
 	ranlib $(TARGET)
 
-tests:
+tests: build
 	make -C tests/
 
-run-tests:
+run-tests: tests
 	make run -C tests/
 
 clean:
