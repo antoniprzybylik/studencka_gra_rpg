@@ -201,7 +201,7 @@ void Game::prepare_game(std::unique_ptr<Engine> &engine)
 
 	/* Obrazki bloków. */
 	tiles = std::make_unique<sf::Image>();
-	if (!tiles->loadFromFile("rc/tiles2.png")) {
+	if (!tiles->loadFromFile("rc/tiles.png")) {
 		throw std::runtime_error(
 				"Loading resources "
 				"failure.");
