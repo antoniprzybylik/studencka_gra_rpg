@@ -3,7 +3,7 @@
 all: build
 build: classes_tests
 
-run: classes_tests
+run: build
 	./classes_tests
 
 clean:
