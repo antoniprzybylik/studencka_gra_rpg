@@ -7,8 +7,14 @@ CXX = g++
 LINK = g++
 STRIP = strip
 
-CXXFLAGS = -MMD -MP -Wall -I../engine/ -std=c++20
+CXXFLAGS = -MMD -MP -Wall \
+	   -I../engine/ -I../questions_core/ \
+	   -I../questions_ui \
+	   -std=c++20 \
+
 LDFLAGS = -fPIC -L../engine/ -lengine \
+	  -L../questions_core/ -l:questions_core.a \
+	  -L../questions_ui/ -l:question_ui.a \
 	  -lsfml-graphics \
 	  -lsfml-window \
 	  -lsfml-system \

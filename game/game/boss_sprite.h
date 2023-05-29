@@ -6,15 +6,20 @@
 #include "sprite.h"
 #include "sprite_skin.h"
 
+#include "question_ui.h"
+
 class BossSprite : public Sprite {
 private:
 	int x, y;
+	QuestionUI qui;
 
 public:
 	void animate(void) override;
+	void on_click(void) override;
 
 	BossSprite(std::shared_ptr<SpriteSkin> skin,
-		   int x, int y, int z_order = 0);
+		   int x, int y, QuestionUI qui,
+		   int z_order = 0);
 	~BossSprite(void) override {};
 };
 

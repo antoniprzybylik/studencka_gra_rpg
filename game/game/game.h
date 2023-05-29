@@ -8,6 +8,8 @@
 #include "engine.h"
 #include "tile_data.h"
 
+#include "player.h"
+
 class Game {
 private:
 	static std::unique_ptr<Engine> engine;
@@ -48,6 +50,8 @@ public:
 	static double player_y;
 	static double sx;
 	static double sy;
+
+	static Player player_data;
 
 	Game(void) = delete;
 	static void init(void);
