@@ -10,13 +10,25 @@
 #include <stdexcept>
 
 
-Enemy::Enemy(std::string new_name, int new_attack_dmg, int new_pos_x, int new_pos_y)
+Enemy::Enemy(std::string new_name,
+	     int new_attack_dmg,
+	     int new_pos_x,
+	     int new_pos_y)
 {
     set_name(new_name);
     set_attack_damage(new_attack_dmg);
     set_pos_x(new_pos_x);
     set_pos_y(new_pos_y);
     done = false;
+}
+
+Enemy::Enemy(Json::Value &root) :
+name(root["name"].asString()),
+attack_damage(root["attack_damage"].asInt()),
+pos_x(root["pos_x"].asInt()),
+pos_y(root["pos_y"].asInt()),
+done(root["is_done"].asBool())
+{
 }
 
 std::string Enemy::get_name() const
@@ -121,33 +133,26 @@ Enemy& Enemy::operator=(const Enemy& source)
     return *this;
 }
 
-void Enemy::save_to_file(Enemy& enemy, std::string path)
+Json::Value Enemy::dump(void) const
 {
-    std::ofstream file;
-    file.open(path, std::ios::out | std::ios::app);
-    if (!file)
-    {
-        throw WrongPath(path);
-    }
-    file<<enemy.get_name()<<" " <<enemy.get_attack_damage()<< " "<<enemy.get_pos_x()<< " "<<enemy.is_done()<< std::endl;
-    file.close();
+	Json::Value d_root;
+
+	d_root["name"] = this->get_name();
+	d_root["attack_damage"] = this->get_attack_damage();
+	d_root["pos_x"] = this->get_pos_x();
+	d_root["pos_y"] = this->get_pos_y();
+	d_root["is_done"] = this->is_done();
+
+	return d_root;
 }
 
-std::vector<Enemy> Enemy::read_from_file(std::string path)
+void Enemy::load(Json::Value &d_root)
 {
-    std::ifstream file;
-    file.open(path);
-    if (!file)
-    {
-        throw WrongPath(path);
-    }
-    std::vector<Enemy> enemies;
-    Enemy temp(" ", 1, 1, 1);
-    while (file>>temp.name>>temp.attack_damage>>temp.pos_x>>temp.pos_y>>temp.done)
-    {
-        enemies.push_back(temp);
-    }
-    return enemies;
+	set_name(d_root["name"].asString());
+	set_attack_damage(d_root["attack_damage"].asInt());
+	set_pos_x(d_root["pos_x"].asInt());
+	set_pos_y(d_root["pos_y"].asInt());
+	set_done(d_root["is_done"].asBool());
 }
 
 void Enemy::set_questions(Question& question)

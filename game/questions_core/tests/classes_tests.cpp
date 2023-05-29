@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 
 #include <catch2/catch.hpp>
+#include <fstream>
 
 #include "player.h"
 #include "question.h"
@@ -216,13 +217,22 @@ TEST_CASE("enemy tests", "[enemy]")
         CHECK(enemy != enemy1);
     }
 
-    SECTION("read from file")
+    SECTION("load from file")
     {
-        Enemy enemy1 = enemy.read_from_file("output_enemy.txt")[0];
+        Json::Reader reader;
+        Json::Value root;
+	std::ifstream ifs;
+	
+	ifs.open("output_enemy.json");
+	REQUIRE(reader.parse(ifs, root));
+
+	Enemy enemy1(root);
+	ifs.close();
+
         CHECK(enemy1.get_name() == "ork");
         CHECK(enemy1.get_attack_damage() == 1);
-        CHECK(enemy1.get_pos_x() == 1);
-        CHECK(enemy1.get_pos_y() == 1);
+        CHECK(enemy1.get_pos_x() == 2);
+        CHECK(enemy1.get_pos_y() == 3);
         CHECK(enemy1.is_done() == 0);
     }
 
@@ -325,11 +335,6 @@ TEST_CASE("enemy class exceptions", "[enemy]")
     {
         enemy.attack(player);
         CHECK_THROWS(enemy.attack(player));
-    }
-
-    SECTION("read from not existing file")
-    {
-        CHECK_THROWS(enemy.read_from_file("output1t.txt"));
     }
 
     SECTION("questions errors")

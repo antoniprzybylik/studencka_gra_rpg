@@ -1,7 +1,12 @@
 #ifndef ENEMY_H
 #define ENEMY_H
+
+#include <json/json.h>
+#include <json/value.h>
+
 #include <iostream>
 #include <vector>
+
 #include "player.h"
 #include "question.h"
 
@@ -23,6 +28,7 @@ class Enemy
     public:
 
         Enemy(std::string, int, int, int);
+	Enemy(Json::Value&);
         std::string get_name() const;
         unsigned int get_attack_damage() const;
         unsigned int get_pos_x() const;
@@ -48,11 +54,12 @@ class Enemy
 
         bool operator==(const Enemy& enemy) const;
         bool operator!=(const Enemy& enemy) const;
-        friend std::ostream& operator<<(std::ostream& stream, const Enemy& enemy);
+        friend std::ostream& operator<<(std::ostream& stream,
+					const Enemy& enemy);
         Enemy& operator=(const Enemy& source);
 
-        void save_to_file(Enemy& enemy, std::string path);
-        std::vector<Enemy> read_from_file(std::string path);
+	Json::Value dump(void) const;
+	void load(Json::Value&);
 };
 std::ostream& operator<<(std::ostream& stream, const Enemy& enemy);
 #endif

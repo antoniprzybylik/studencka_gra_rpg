@@ -1,7 +1,9 @@
 .PHONY: clean all run
 
 all:
-	g++ classes_tests.cpp -o classes_tests -I../ -L../ -l:questions_core.a
+	g++ classes_tests.cpp -o classes_tests \
+		-I../ -L../ -l:questions_core.a \
+		-ljsoncpp \
 
 run:
 	./classes_tests
