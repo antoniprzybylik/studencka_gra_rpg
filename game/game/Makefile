@@ -1,4 +1,4 @@
-.PHONY: all clean build debug
+.PHONY: all clean build debug tests run-tests
 .SUFFIXES: .o .cpp
 
 PROJECT = game
@@ -34,7 +34,7 @@ tile_data.o \
 
 DEPS = $(OBJS:%.o=%.d)
 
-all: build
+all: build | tests
 
 compile: $(OBJS)
 
@@ -46,6 +46,12 @@ build: compile
 debug: CXXFLAGS += -g
 debug: clean | compile
 	$(LINK) $(OBJS) -o $(PROJECT) $(LDFLAGS)
+
+tests:
+	make -C tests/
+
+run-tests:
+	make run -C tests/
 
 clean:
 	rm -f $(OBJS) $(DEPS)
