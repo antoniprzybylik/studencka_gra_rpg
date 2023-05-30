@@ -33,6 +33,7 @@ run-tests: build
 	make run-tests -C questions_ui/
 	make run-tests -C engine/
 	make run-tests -C menu/
+	make run-tests -C game/
 
 clean:
 	make clean -C engine/
