@@ -14,6 +14,6 @@ classes_tests: classes_tests.o
 		-L../ -l:questions_core.a \
 		-ljsoncpp \
 
-classes_tests.o:
+classes_tests.o: classes_tests.cpp
 	g++ classes_tests.cpp -o classes_tests.o \
 		-I../ -c \
