@@ -47,7 +47,7 @@ debug: CXXFLAGS += -g
 debug: clean | compile
 	$(LINK) $(OBJS) -o $(PROJECT) $(LDFLAGS)
 
-tests:
+tests: build
 	make -C tests/
 
 run-tests:
