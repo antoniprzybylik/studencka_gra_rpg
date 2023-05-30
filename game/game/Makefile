@@ -50,7 +50,7 @@ debug: clean | compile
 tests: build
 	make -C tests/
 
-run-tests:
+run-tests: tests
 	make run -C tests/
 
 clean:
