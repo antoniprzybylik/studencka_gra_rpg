@@ -122,6 +122,27 @@ Enemy enemy2("Prowadzacy", 2, 1, 1);
 static
 Enemy enemy3("Sesja", 3, 1, 1);
 
+static
+const int ticks_in_frame = 17;
+
+static std::wstring position_str(L"position: (-, -)");
+static std::wstring save_label_str(L"S - zapisz, L - wczytaj");
+static std::wstring hp_label_str(L"Punkty życia: -");
+
+static std::shared_ptr<LabelSprite> label_sprite(nullptr);
+static std::shared_ptr<LabelSprite> save_label_sprite(nullptr);
+static std::shared_ptr<LabelSprite> hp_label_sprite(nullptr);
+
+static std::shared_ptr<PlayerSprite> player_sprite(nullptr);
+
+static std::shared_ptr<BossSprite> boss1_sprite(nullptr);
+static std::shared_ptr<BossSprite> boss2_sprite(nullptr);
+static std::shared_ptr<BossSprite> boss3_sprite(nullptr);
+
+Player Game::player_data("Student", 3, 1, 1);
+
+sf::RenderWindow *sfml_window;
+
 void Game::handle_keys(void)
 {
 	tile_info_t tile_info;
@@ -182,6 +203,13 @@ void Game::handle_keys(void)
 
 		Game::player_x = 10;
 		Game::player_y = Game::map_height*0.15;
+
+		boss1_sprite->set_pos_x(enemy1.get_pos_x());
+		boss1_sprite->set_pos_y(enemy1.get_pos_y());
+		boss2_sprite->set_pos_x(enemy2.get_pos_x());
+		boss2_sprite->set_pos_y(enemy2.get_pos_y());
+		boss3_sprite->set_pos_x(enemy3.get_pos_x());
+		boss3_sprite->set_pos_y(enemy3.get_pos_y());
 	}
 }
 
@@ -243,27 +271,6 @@ void Game::move_player(void)
 		}
 	}
 }
-
-static
-const int ticks_in_frame = 17;
-
-static std::wstring position_str(L"position: (-, -)");
-static std::wstring save_label_str(L"S - zapisz, L - wczytaj");
-static std::wstring hp_label_str(L"Punkty życia: -");
-
-static std::shared_ptr<LabelSprite> label_sprite(nullptr);
-static std::shared_ptr<LabelSprite> save_label_sprite(nullptr);
-static std::shared_ptr<LabelSprite> hp_label_sprite(nullptr);
-
-static std::shared_ptr<PlayerSprite> player_sprite(nullptr);
-
-static std::shared_ptr<BossSprite> boss1_sprite(nullptr);
-static std::shared_ptr<BossSprite> boss2_sprite(nullptr);
-static std::shared_ptr<BossSprite> boss3_sprite(nullptr);
-
-Player Game::player_data("Student", 3, 1, 1);
-
-sf::RenderWindow *sfml_window;
 
 void Game::on_tick(void)
 {

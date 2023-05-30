@@ -16,6 +16,9 @@ x(x),
 y(y),
 qui(qui)
 {
+	Enemy &e = qui.get_enemy();
+	e.set_pos_x(x);
+	e.set_pos_y(y);
 }
 
 void BossSprite::animate(void)
