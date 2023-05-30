@@ -28,7 +28,7 @@ class Enemy
     public:
 
         Enemy(std::string, int, int, int);
-	Enemy(Json::Value&);
+	Enemy(const Json::Value&);
         std::string get_name() const;
         unsigned int get_attack_damage() const;
         unsigned int get_pos_x() const;
@@ -59,7 +59,7 @@ class Enemy
         Enemy& operator=(const Enemy& source);
 
 	Json::Value dump(void) const;
-	void load(Json::Value&);
+	void load(const Json::Value&);
 };
 std::ostream& operator<<(std::ostream& stream, const Enemy& enemy);
 #endif

@@ -22,7 +22,7 @@ Enemy::Enemy(std::string new_name,
     done = false;
 }
 
-Enemy::Enemy(Json::Value &root) :
+Enemy::Enemy(const Json::Value &root) :
 name(root["name"].asString()),
 attack_damage(root["attack_damage"].asInt()),
 pos_x(root["pos_x"].asInt()),
@@ -146,7 +146,7 @@ Json::Value Enemy::dump(void) const
 	return d_root;
 }
 
-void Enemy::load(Json::Value &d_root)
+void Enemy::load(const Json::Value &d_root)
 {
 	set_name(d_root["name"].asString());
 	set_attack_damage(d_root["attack_damage"].asInt());
