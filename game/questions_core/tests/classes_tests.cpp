@@ -73,7 +73,16 @@ TEST_CASE("player tests", "[player]")
 
     SECTION("read from file")
     {
-        Player player1 = player.read_from_file("output.txt")[0];
+        Json::Reader reader;
+        Json::Value root;
+	std::ifstream ifs;
+
+	ifs.open("output_player.json");
+	REQUIRE(reader.parse(ifs, root));
+
+	Player player1(root);
+	ifs.close();
+
         CHECK(player1.get_name() == "Zoja");
         CHECK(player1.get_hp() == 100);
         CHECK(player1.get_pos_x() == 1);
@@ -294,11 +303,6 @@ TEST_CASE("player class exceptions", "[player]")
         CHECK_THROWS(player.set_pos_y(-7));
         CHECK_THROWS(player.set_pos_x(-10));
         CHECK_THROWS(player.set_pos_y(-5));
-    }
-
-    SECTION("read from not existing file")
-    {
-        CHECK_THROWS(player.read_from_file("outputtt.txt"));
     }
 }
 
