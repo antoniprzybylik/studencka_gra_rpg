@@ -97,9 +97,7 @@ void Game::handle_keys(void)
 		Json::Value root;
 
 		root["map"] = Game::map.dump();
-
-		// TODO
-		//root["player"] = Game::player.dump();
+		root["player"] = Game::player_data.dump();
 		
 		std::ofstream of;
 		of.open("saved_game.json");
@@ -117,6 +115,7 @@ void Game::handle_keys(void)
 		ifs.close();
 
 		Game::map.load(root["map"]);
+		Game::player_data.load(root["player"]);
 	}
 }
 
