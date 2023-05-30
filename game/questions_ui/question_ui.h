@@ -34,6 +34,8 @@ class QuestionUI
         void answered_incorrectly(int index);
         void game_over();
         void reached_end();
+
+        Enemy &get_enemy(void) {return enemy;};
 };
 
 #endif
