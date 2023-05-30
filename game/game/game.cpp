@@ -65,6 +65,63 @@ tile_info_t Game::check_tiles(int x1, int y1,
 	return tile_info;
 }
 
+static
+Question question1(L"Czy masz podbitą "
+		   L"legitymację?",
+		   L"Tak",
+		   L"Nie", 1);
+
+static
+Question question2(L"Którego dnia dziekanat "
+		   L"nie przyjmuje studentów?",
+		   L"Środa",
+		   L"Piątek", 2);
+
+static
+Question question3(L"Punkty, przyznawane w "
+		   L"ramach zaliczenia przedmiotu to:",
+		   L"ECTS",
+		   L"ADTC", 3);
+
+static
+Question question4(L"Jaka jest wartość wyrażenia "
+		   L"sizeof(5)[\"alamakota\"]?",
+		   L"1",
+		   L"97", 4);
+
+static
+Question question5(L"Słowo kluczowe \"auto\" w C++03 jest:",
+		   L"Specyfikatorem klasy pamięci",
+		   L"Słowem oznaczającym dedukcję typu", 5);
+
+static
+Question question6(L"Którego z tych operatorów nie ma "
+		   L"w standardzie C++?",
+		   L"typeof", L"decltype", 6);
+
+static
+Question question7(L"Calka z 5x^4 + 8x to:",
+		   L"x^5 + 4x^2", L"20x^3 + 8", 7);
+
+static
+Question question8(L"Funkcję gęstości rozkładu "
+		   L"normalnego opisuje:",
+		   L"Krzywa Gaussa", L"Funkcja wykładnicza", 8);
+
+static
+Question question9(L"Dowolny dwójnik liniowy bezźródłowy "
+		   L"można zastapić:",
+		   L"Szeregowo połączonym idealnym źródłem napięciowym i impedancją",
+		   L"Równolegle połączonym idealnym źródłem napięciowym i reaktancją", 9);
+
+static
+Enemy enemy1("Pani z dziekanatu",
+	     1, 1, 1);
+static
+Enemy enemy2("Prowadzacy", 2, 1, 1);
+static
+Enemy enemy3("Sesja", 3, 1, 1);
+
 void Game::handle_keys(void)
 {
 	tile_info_t tile_info;
@@ -98,6 +155,9 @@ void Game::handle_keys(void)
 
 		root["map"] = Game::map.dump();
 		root["player"] = Game::player_data.dump();
+		root["enemy1"] = enemy1.dump();
+		root["enemy2"] = enemy2.dump();
+		root["enemy3"] = enemy3.dump();
 		
 		std::ofstream of;
 		of.open("saved_game.json");
@@ -116,6 +176,9 @@ void Game::handle_keys(void)
 
 		Game::map.load(root["map"]);
 		Game::player_data.load(root["player"]);
+		enemy1.load(root["enemy1"]);
+		enemy2.load(root["enemy2"]);
+		enemy3.load(root["enemy3"]);
 	}
 }
 
@@ -195,6 +258,10 @@ static std::shared_ptr<BossSprite> boss1_sprite(nullptr);
 static std::shared_ptr<BossSprite> boss2_sprite(nullptr);
 static std::shared_ptr<BossSprite> boss3_sprite(nullptr);
 
+Player Game::player_data("Student", 3, 1, 1);
+
+sf::RenderWindow *sfml_window;
+
 void Game::on_tick(void)
 {
 	scroll_x = (player_x + scroll_x*11)/12;
@@ -212,67 +279,6 @@ void Game::on_tick(void)
 		       std::to_wstring(player_y) +
 		       std::wstring(L")");
 }
-
-Player Game::player_data("Student", 3, 1, 1);
-
-sf::RenderWindow *sfml_window;
-
-static
-Question question1(L"Czy masz podbitą "
-		   L"legitymację?",
-		   L"Tak",
-		   L"Nie", 1);
-
-static
-Question question2(L"Którego dnia dziekanat "
-		   L"nie przyjmuje studentów?",
-		   L"Środa",
-		   L"Piątek", 2);
-
-static
-Question question3(L"Punkty, przyznawane w "
-		   L"ramach zaliczenia przedmiotu to:",
-		   L"ECTS",
-		   L"ADTC", 3);
-
-static
-Question question4(L"Jaka jest wartość wyrażenia "
-		   L"sizeof(5)[\"alamakota\"]?",
-		   L"1",
-		   L"97", 4);
-
-static
-Question question5(L"Słowo kluczowe \"auto\" w C++03 jest:",
-		   L"Specyfikatorem klasy pamięci",
-		   L"Słowem oznaczającym dedukcję typu", 5);
-
-static
-Question question6(L"Którego z tych operatorów nie ma "
-		   L"w standardzie C++?",
-		   L"typeof", L"decltype", 6);
-
-static
-Question question7(L"Calka z 5x^4 + 8x to:",
-		   L"x^5 + 4x^2", L"20x^3 + 8", 7);
-
-static
-Question question8(L"Funkcję gęstości rozkładu "
-		   L"normalnego opisuje:",
-		   L"Krzywa Gaussa", L"Funkcja wykładnicza", 8);
-
-static
-Question question9(L"Dowolny dwójnik liniowy bezźródłowy "
-		   L"można zastapić:",
-		   L"Szeregowo połączonym idealnym źródłem napięciowym i impedancją",
-		   L"Równolegle połączonym idealnym źródłem napięciowym i reaktancją", 9);
-
-static
-Enemy enemy1("Pani z dziekanatu",
-	     1, 1, 1);
-static
-Enemy enemy2("Prowadzacy", 2, 1, 1);
-static
-Enemy enemy3("Sesja", 3, 1, 1);
 
 void Game::prepare_game(std::unique_ptr<Engine> &engine)
 {
