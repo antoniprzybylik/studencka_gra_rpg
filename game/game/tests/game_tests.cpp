@@ -16,8 +16,8 @@ TEST_CASE("map")
 	Json::Value root = map.dump();
 	map2.load(root);
 
-	for (i = 0; i <= map.get_width() *
-			 map.get_height(); i++) {
+	for (i = 0; i < map.get_width() *
+			map.get_height(); i++) {
 		CHECK(map.tile(i) == map2.tile(i));
 	}
 }
