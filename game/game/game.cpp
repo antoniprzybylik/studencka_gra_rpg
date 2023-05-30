@@ -179,6 +179,9 @@ void Game::handle_keys(void)
 		enemy1.load(root["enemy1"]);
 		enemy2.load(root["enemy2"]);
 		enemy3.load(root["enemy3"]);
+
+		Game::player_x = 10;
+		Game::player_y = Game::map_height*0.15;
 	}
 }
 
