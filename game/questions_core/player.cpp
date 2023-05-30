@@ -24,6 +24,14 @@ Player::Player(std::string new_name, int new_hp, int new_pos_x, int new_pos_y)
     set_pos_y(new_pos_y);
 }
 
+Player::Player(const Json::Value &root) :
+name(root["name"].asString()),
+health_points(root["hp"].asInt()),
+pos_x(root["pos_x"].asInt()),
+pos_y(root["pos_y"].asInt())
+{
+}
+
 std::string Player::get_name() const
 {
     return name;
@@ -110,32 +118,22 @@ bool Player::operator!=(const Player& player) const
     return !(*this == player);
 }
 
-void Player::save_to_file(Player& player, std::string path)
+Json::Value Player::dump(void) const
 {
-    std::ofstream file;
-    Player player_to_write(player);
-    file.open(path, std::ios::out | std::ios::app);
-    if (!file)
-    {
-        throw WrongPath(path);
-    }
-    file<<player_to_write.get_name()<< " "<<player_to_write.get_hp()<<" "<<player_to_write.get_pos_x()<< " " << player_to_write.get_pos_y()<<std::endl;
-    file.close();
+	Json::Value d_root;
+
+	d_root["name"] = this->get_name();
+	d_root["hp"] = this->get_hp();
+	d_root["pos_x"] = this->get_pos_x();
+	d_root["pos_y"] = this->get_pos_y();
+
+	return d_root;
 }
 
-std::vector<Player> Player::read_from_file(std::string path)
+void Player::load(const Json::Value &d_root)
 {
-    std::ifstream file;
-    file.open(path);
-    if (!file)
-    {
-        throw WrongPath(path);
-    }
-    std::vector<Player> players;
-    Player temp(" ", 1, 1, 1);
-    while (file >> temp.name >> temp.health_points >> temp.pos_x >> temp.pos_y)
-    {
-        players.push_back(temp);
-    }
-    return players;
+	set_name(d_root["name"].asString());
+	set_hp(d_root["hp"].asInt());
+	set_pos_x(d_root["pos_x"].asInt());
+	set_pos_y(d_root["pos_y"].asInt());
 }

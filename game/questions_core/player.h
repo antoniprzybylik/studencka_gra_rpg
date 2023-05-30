@@ -2,8 +2,12 @@
 #define PLAYER_H
 #include <iostream>
 #include <vector>
-#include "enemy.h"
 #include <fstream>
+
+#include <json/json.h>
+#include <json/value.h>
+
+#include "enemy.h"
 
 
 class Enemy;
@@ -20,6 +24,7 @@ class Player
     public:
 
         Player(std::string, int, int, int);
+        Player(const Json::Value&);
         std::string get_name() const;
         int get_hp() const;
         unsigned int get_pos_x() const;
@@ -37,8 +42,8 @@ class Player
         bool operator!=(const Player& player) const;
         friend std::ostream& operator<<(std::ostream& stream, const Player& player);
 
-        void save_to_file(Player& player, std::string path);
-        std::vector<Player> read_from_file(std::string path);
+	Json::Value dump(void) const;
+	void load(const Json::Value&);
 };
 std::ostream& operator<<(std::ostream& stream, const Player& player);
 #endif
