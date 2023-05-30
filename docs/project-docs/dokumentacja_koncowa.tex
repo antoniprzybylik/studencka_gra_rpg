@@ -64,14 +64,12 @@
 Studencka gra RPG to wyzwanie dla miłośników przygód, którzy chcą zmierzyć się z największą zmorą inżynierów - Politechniką. Czy uda Ci się przeżyć te studia? Przejdź się korytarzami uczelni wśród gąszczu książek, pustych biurek i płaczących nad kodami studentów, na ścianach widząc istny koszmar programisty – wypisany czerwonymi literami ERROR. Niech nie zgasi Twego zapału oschłość Pani z dziekanatu, dbałość o szczegóły prowadzącego czy bezwzględność, wobec Twego zdrowia psychicznego, sesji. Legenda miejsca głosi, iż nikt jeszcze nie przeżył Politechniki bez uszczerbku na zdrowiu. Czy będziesz pierwszym, który dokona niemożliwego? 
 
 \section{Instrukcja obsługi}
-Po uruchomieniu programu, na ekranie ukaże się menu startowe. Aby wybrać jedną z dostępnych opcji należy użyć strzałek (górnej lub dolnej), a następnie wcisnąć klawisz ENTER. “Play” rozpocznie grę, “Options” da możliwość zapisania stanu gry, a także wznowienie wcześniej zapisanej gry, “Exit” za to spowoduje zamknięcie okna menu.  
+Po uruchomieniu programu, na ekranie ukaże się menu startowe. Aby wybrać jedną z dostępnych opcji należy użyć strzałek (górnej lub dolnej), a następnie wcisnąć klawisz ENTER. “Play” rozpocznie grę, a “Exit” spowoduje zamknięcie okna menu.  
 \\~\\
-Po wciśnięciu “Play” i pojawieniu się postaci na mapie, możesz swobodnie się po niej poruszać, używając, intuicyjnie działających, strzałek. Po spotkaniu na swej drodze jednego z trzech bossów, kliknij na niego, aby rozpocząć quiz. Wybierz odpowiedź za pomocą strzałek, a następnie zatwierdź swój wybór klawiszem ENTER. Wciśnij spację, aby przejść do kolejnego pytania. Po odpowiedzeniu na wszystkie pytania (bądź utracie wszystkich punktów zdrowia) zamknij okno za pomocą klawisza ESC. Nie tracąc wszystkich punktów zdrowia, odpowiedz na wszystkie pytania i przeżyj studia! 
+Po wciśnięciu “Play” i pojawieniu się postaci na mapie, możesz swobodnie się po niej poruszać, używając, intuicyjnie działających, strzałek. Po spotkaniu na swej drodze jednego z trzech bossów, kliknij na niego, aby rozpocząć quiz. Wybierz odpowiedź za pomocą strzałek, a następnie zatwierdź swój wybór klawiszem ENTER. Wciśnij spację, aby przejść do kolejnego pytania. Po odpowiedzeniu na wszystkie pytania (bądź utracie wszystkich punktów zdrowia) zamknij okno za pomocą klawisza ESC. Nie tracąc wszystkich punktów zdrowia, odpowiedz na wszystkie pytania i przeżyj studia! Podczas rozgrywki możesz wczytać, bądź zapisać aktualną rozgrywkę.
 
 \section{Zmiany względem wcześniejszych założeń}
-<TODO>
-
-
+W pierwotnym planie gry gracz miał walczyć z przeciwnikami, używając do tego przedmiotów, jednak jako zwolennicy polubownego rozwiązywania konfliktów, stwierdziliśmy, że dużo ciekawsze i bardziej pasujące do klimatu studiów będzie przeprowadzenie mini quizów z, odpowiednimi dla każdego bossa, pytaniami. 
 
 \section{Architektura}
 Projekt jest podzielony na cztery moduły:
@@ -128,50 +126,50 @@ Wyświetla się tam treść pytań wraz z dostępnymi odpowiedziami. Zła odpowi
 \subsection{Aplikacja Gry}
 Aplikacja gry jest programem który służy
 do grania w grę. W oknie aplikacji gry jest
-renderowana symulacja gry. Aplikacja gry
-powinna dodatkowo pozwalać na zatrzymanie
-gry, zmianę ustawień i wyjście z gry.
+renderowana symulacja gry. Aplikacja gry pozwala na zapis gry oraz wczytanie wcześniej zapisanej mapy.
 
 \section{Wymagania}
 Gra wymaga zainstalowanej biblioteki
 SFML. Założone jest działanie gry
 na systemach operacyjnych Windows i
-Linux. Opcjonalnie gra mogłaby wspierać
-system MacOS.
+Linux.
 
 \section{Biblioteki i Narzędzia}
-Projekt w całości ma zostać zrealizowany
+Projekt w całości został zrealizowany
 w języku C++, w standardzie C++20.
 Dopuszczalne jest używanie rozszerzeń
 GCC.
 \\~\\
 Skrypty pozwalające na zbudowanie
-projektu mają być kompatybilne z
+projektu są kompatybilne z
 programem make i do zbudowania
-projektu ma zostać użyty toolchain
+projektu został użyty toolchain
 GCC. Do kompilacji gry na Windowsa
-zostanie użyty MinGW.
+został użyty MinGW.
 \\~\\
-Projekt ma zostać zrealizowany przy
+Projekt został zrealizowany przy
 użyciu biblioteki SFML, biblioteki
 standardowej języka C++ (libstdc++),
 biblioteki standardowej języka C (libc)
 i biblioteki matematycznej (libm).
-\\~\\
-Dodatkowe aplikacje takie jak
-launcher mogą zostać zrealizowane
-przy użyciu innych bibliotek np.
-QT.
 \\~\\
 W projekcie nie jest wymagane ścisłe
 trzymanie się kanonicznej wersji tych
 bibliotek. Dopuszczalne jest użycie
 rozszerzeń GLIBC.
 
+\section{Obsługa wyjątków i testy}
+Zidentyfikowane sytuacje wyjątkowe to np. utworzenie gracza o niedodatnich punktach życia czy ujemnej pozycji, próba odwołania się do nieistniejącego obiektu Question w wektorze questions w klasie Enemy, dodanie do niego obiektu już istniejącego, bądź próba usunięcia obiektu, który się w wektorze nie znajduje. W takim wypadku w terminalu ukazuje się odpowiedni komunikat wraz z nieprawidłową wartością, która spowodowała sytuację wyjątkową. Ponadto pod uwagę brane są wyjątki rzucane w trakcie działania programu - "runtime error".
+Testy jednostkowe sprawdzają prawidłowe działanie klas: Enemy, Player, Question oraz interfejsów pytań i menu.
+
+
 \section{Podział Pracy}
 \textbf{Antoni}
 \begin{itemize}
 	\item Silnik
+        \item Zapisywanie oraz wczytywanie rozgrywki
+        \item Generator mapy
+        \item Sprite'y związane z właściwą rozgrywką
 	\item Wybrane części gry
 \end{itemize}
  
@@ -182,6 +180,7 @@ rozszerzeń GLIBC.
 	\item Interfejs pytań
 	\item Tekstury i obrazki
 	\item Ciało gry; Klasy: Player, Enemy, Question
+        \item Testy jednostkowe i obsługa wyjątków
 \end{itemize}
 
 \end{document}
