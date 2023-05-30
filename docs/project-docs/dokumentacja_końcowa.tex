@@ -61,24 +61,86 @@
 \lstset{style=listingstyle}
 
 \section{Opis gry}
-Studencka gra RPG to wyzwanie dla miłośników przygód, którzy chcą zmierzyć się z największą zmorą inżynierów - Politechniką. Czy uda Ci się przeżyć te studia? Przejdź się korytarzami uczelni wśród gąszczu książek, pustych biurek i płaczących nad kodami studentów, na ścianach widząc istny koszmar programisty – wypisany czerwonymi literami ERROR. Niech nie zgasi Twego zapału oschłość Pani z dziekanatu, dbałość o szczegóły prowadzącego czy bezwzględność, wobec Twego zdrowia psychicznego, sesji. Legenda miejsca głosi, iż nikt jeszcze nie przeżył Politechniki bez uszczerbku na zdrowiu. Czy będziesz pierwszym, który dokona niemożliwego? 
+Studencka gra RPG to wyzwanie dla
+miłośników przygód, którzy chcą zmierzyć
+się z największą zmorą inżynierów - Politechniką.
+Czy uda Ci się przeżyć te studia?
+Przejdź się korytarzami uczelni wśród
+gąszczu książek, pustych biurek i
+płaczących nad kodami studentów, na ścianach
+widząc istny koszmar programisty – wypisany
+czerwonymi literami ERROR. Niech nie zgasi
+Twego zapału oschłość Pani z dziekanatu,
+dbałość o szczegóły prowadzącego czy
+bezwzględność, wobec Twego zdrowia
+sychicznego, sesji. Legenda miejsca
+głosi, iż nikt jeszcze nie przeżył
+Politechniki bez uszczerbku na zdrowiu.
+Czy będziesz pierwszym, który dokona
+niemożliwego? 
 
 \section{Instrukcja obsługi}
-Po uruchomieniu programu, na ekranie ukaże się menu startowe. Aby wybrać jedną z dostępnych opcji należy użyć strzałek (górnej lub dolnej), a następnie wcisnąć klawisz ENTER. “Play” rozpocznie grę, a “Exit” spowoduje zamknięcie okna menu.  
+Po uruchomieniu programu, na ekranie ukaże
+się menu startowe. Aby wybrać jedną z
+dostępnych opcji należy użyć strzałek
+(górnej lub dolnej), a następnie wcisnąć
+klawisz ENTER. "`Play"' rozpocznie grę,
+"`Options"' da możliwość dostosowania
+parametrów gry, "`Exit"' za to spowoduje
+zamknięcie okna menu.  
 \\~\\
-Po wciśnięciu “Play” i pojawieniu się postaci na mapie, możesz swobodnie się po niej poruszać, używając, intuicyjnie działających, strzałek. Po spotkaniu na swej drodze jednego z trzech bossów, kliknij na niego, aby rozpocząć quiz. Wybierz odpowiedź za pomocą strzałek, a następnie zatwierdź swój wybór klawiszem ENTER. Wciśnij spację, aby przejść do kolejnego pytania. Po odpowiedzeniu na wszystkie pytania (bądź utracie wszystkich punktów zdrowia) zamknij okno za pomocą klawisza ESC. Nie tracąc wszystkich punktów zdrowia, odpowiedz na wszystkie pytania i przeżyj studia! Podczas rozgrywki możesz wczytać, bądź zapisać aktualną rozgrywkę.
+Po wciśnięciu "`Play"' i pojawieniu się
+postaci na mapie, możesz swobodnie się
+po niej poruszać, używając, intuicyjnie
+działających, strzałek. Po spotkaniu na
+swej drodze jednego z trzech bossów,
+kliknij na niego, aby rozpocząć quiz.
+Wybierz odpowiedź za pomocą strzałek,
+a następnie zatwierdź swój wybór klawiszem
+ENTER. Wciśnij spację, aby przejść do
+kolejnego pytania. Po odpowiedzeniu na
+wszystkie pytania (bądź utracie wszystkich
+punktów zdrowia) zamknij okno za pomocą
+klawisza ESC. Nie tracąc wszystkich
+punktów zdrowia, odpowiedz na wszystkie
+pytania i przeżyj studia! 
 
-\section{Zmiany względem wcześniejszych założeń}
-W pierwotnym planie gry gracz miał walczyć z przeciwnikami, używając do tego przedmiotów, jednak jako zwolennicy polubownego rozwiązywania konfliktów, stwierdziliśmy, że dużo ciekawsze i bardziej pasujące do klimatu studiów będzie przeprowadzenie mini quizów z, odpowiednimi dla każdego bossa, pytaniami. 
+W pierwotnym planie gry gracz miał
+walczyć z przeciwnikami, używając do
+tego przedmiotów, jednak jako zwolennicy
+polubownego rozwiązywania konfliktów,
+stwierdziliśmy, że dużo ciekawsze i
+bardziej pasujące do klimatu studiów
+będzie przeprowadzenie mini quizów
+z, odpowiednimi dla każdego bossa,
+pytaniami.
 
+\newpage
 \section{Architektura}
-Projekt jest podzielony na cztery moduły:
+Na początku założyliśmy podział projektu
+na następujące cztery moduły:
 \begin{itemize}
 	\item Silnik gry
 	\item Ciało gry
 	\item Launcher
-        \item Launcher pytań
 	\item Aplikacja gry
+\end{itemize}
+
+\noindent
+Ostatecznie, nie zrobiliśmy osobnej
+aplikacji gry. UI i ciało gry są
+zintegrowane. Zostały natomiast
+wyodrębnione dodatkowo moduły
+\textbf{questions\_ui} i
+\textbf{questions\_core}.
+Ostatecznie podział projektu na
+moduły wygląda w ten sposób:
+\begin{itemize}
+	\item Silnik gry
+	\item Ciało gry
+	\item Launcher
+	\item Questions UI
+	\item Questions Core
 \end{itemize}
 
 \subsection{Silnik}
@@ -96,91 +158,127 @@ można w duszkach umieszczać kod który zostanie
 wykonany na odpowiednich zdarzeniach takich jak
 zderzenie dwóch duszków lub kodu, który jest
 wykonywany w każdym tyknięciu zegara.
+\\~\\
+Silnik został zaimplementowany tak jak założono
+w dokumentacji wstępnej.
 
 \subsection{Ciało Gry}
 Ciało gry to kod implementujący właściwą
-rozgrywkę.
+rozgrywkę. Znajdują się w nim klasy takie
+jak \textbf{PlayerSprite}, \textbf{TileSprite},
+\textbf{BossSprite}, \textbf{LabelSprite}
+które odpowiadają kolejno
+za duszka gracza, duszki bloków,
+duszki przeciwników, duszki będące napisami
+wyświetlanymi na ekranie.
+\\~\\
+Poza nimi znajduje się tam kod odpowiedzialny
+za inicjalizację gry (min. wygenerowanie mapy),
+oraz klasa Game.
+
+\subsection{Launcher}
+Launcher jest programem
+służącym do uruchomienia gry.
+Z jego pomocą rozpoczyna się
+rozgrywkę, zapisuje stan gry
+do pliku, a także wczytuje stan 
+wcześniej zapisanej gry.
+\\~\\
+Ostatecznie przybrał on formę
+menu gry.
+
+\subsection{Questions UI}
+Aplikacja "`Questions UI"'
+jest odpowiedzialna za
+wyświetlanie zadań znajdujących
+się w grze.
+Wyświetla się tam treść pytań
+wraz z dostępnymi odpowiedziami.
+Zła odpowiedź odbiera
+życie graczowi, a odpowiedzenie
+na wszystkie pytania przeciwnika
+sprawia, że znika z mapy.
+\\~\\
+Ten moduł jest odpowiedzialny
+tylko za wyświetlanie pytań.
+Klasy przechowujące pytania znajdują
+się w Questions Core.
+
+\subsection{Questions Core}
+Klasy odpowiedzialne za pytania.
+Jest możliwość ich serializacji,
+zapisu i wczytania z pliku.
+W tym module znajdują się między
+innymi następujące klasy:
 \\~\\
 \textbf{Klasa Player} przechowuje
 liczbę punktów zdrowia gracza.
 \\~\\
-\textbf{Klasa Enemy} jest klasą, opisującą wrogów. Każdy wróg posiada 
-wektor indywidualnych pytań oraz punktów zdrowia, które zabierają graczowi za niepoprawną
+\textbf{Klasa Enemy} jest klasą,
+opisującą wrogów. Każdy wróg posiada 
+wektor indywidualnych pytań oraz
+punktów zdrowia, które zabierają
+graczowi za niepoprawną
 odpowiedź. Metody klasy
-pozwalają na zarządzanie zestawem pytań, wyświetlaniem ich treści oraz odpowiedzi, a także 
+pozwalają na zarządzanie zestawem
+pytań, wyświetlaniem ich treści
+oraz odpowiedzi, a także 
 modyfikację parametrów gracza.
 \\~\\
-\textbf{Klasa Question} przechowują informacje dotyczące pytań - ich treść oraz dostępne odpowiedzi.
-
-
-\subsection{Launcher}
-Launcher jest programem służącym do uruchomienia gry.
-Z jego pomocą rozpoczyna się rozgrywkę, zapisuje stan gry do pliku, a także wczytuje stan 
-wcześniej zapisanej gry.
-
-\subsection{Launcher pytań}
-Launcher jest programem odpowiednio zarządzającym, dostępnym w grze, quizem.
-Wyświetla się tam treść pytań wraz z dostępnymi odpowiedziami. Zła odpowiedź odbiera
-życie graczowi, a odpowiedzenie na wszystkie pytania przeciwnika sprawia, że znika z mapy.
-
-\subsection{Aplikacja Gry}
-Aplikacja gry jest programem który służy
-do grania w grę. W oknie aplikacji gry jest
-renderowana symulacja gry. Aplikacja gry pozwala na zapis gry oraz wczytanie wcześniej zapisanej mapy.
+\textbf{Klasa Question} przechowuje
+informacje dotyczące pytań - ich
+treść oraz dostępne odpowiedzi.
 
 \section{Wymagania}
 Gra wymaga zainstalowanej biblioteki
-SFML. Założone jest działanie gry
-na systemach operacyjnych Windows i
-Linux.
+SFML i jsoncpp. Działa na Linuksie. 
 
 \section{Biblioteki i Narzędzia}
 Projekt w całości został zrealizowany
 w języku C++, w standardzie C++20.
-Dopuszczalne jest używanie rozszerzeń
-GCC.
+Nie używaliśmy żadnych rozszerzeń
+kompilatora, ale skorzystaliśmy
+z jednej niestandardowej biblioteki
+\textbf{unistd.h} ze standardu POSIX,
+który jest implementowany przez
+wszystkie powszechnie używane systemy
+operacyjne (Linux, MacOS, Windows).
 \\~\\
 Skrypty pozwalające na zbudowanie
-projektu są kompatybilne z
+projektu mają są kompatybilne z
 programem make i do zbudowania
-projektu został użyty toolchain
-GCC. Do kompilacji gry na Windowsa
-został użyty MinGW.
+projektu ma jest używany toolchain
+GCC. Wszystkie moduły można zbudować
+uruchamiając Makefile w katalogu game/.
+Ten Makefile rekursywnie wywoła
+pliki Makefile wszystkich modułów.
 \\~\\
 Projekt został zrealizowany przy
 użyciu biblioteki SFML, biblioteki
 standardowej języka C++ (libstdc++),
 biblioteki standardowej języka C (libc)
 i biblioteki matematycznej (libm).
-\\~\\
-W projekcie nie jest wymagane ścisłe
-trzymanie się kanonicznej wersji tych
-bibliotek. Dopuszczalne jest użycie
-rozszerzeń GLIBC.
-
-\section{Obsługa wyjątków i testy}
-Zidentyfikowane sytuacje wyjątkowe to np. utworzenie gracza o niedodatnich punktach życia czy ujemnej pozycji, próba odwołania się do nieistniejącego obiektu Question w wektorze questions w klasie Enemy, dodanie do niego obiektu już istniejącego, bądź próba usunięcia obiektu, który się w wektorze nie znajduje. W takim wypadku w terminalu ukazuje się odpowiedni komunikat wraz z nieprawidłową wartością, która spowodowała sytuację wyjątkową. Ponadto pod uwagę brane są wyjątki rzucane w trakcie działania programu - "runtime error".
-Testy jednostkowe sprawdzają prawidłowe działanie klas: Enemy, Player, Question oraz interfejsów pytań i menu.
-
+Do tego skorzystaliśmy jeszcze z
+biblioteki jsoncpp do serializacji
+obiektów.
 
 \section{Podział Pracy}
 \textbf{Antoni}
 \begin{itemize}
 	\item Silnik
-        \item Zapisywanie oraz wczytywanie rozgrywki
-        \item Generator mapy
-        \item Sprite'y związane z właściwą rozgrywką
-	\item Wybrane części gry
+	\item Ciało Gry
+	\item Wybrane części
+	      wszystkich innych
+	      modułów
 \end{itemize}
  
 \noindent
 \textbf{Zoja}
 \begin{itemize}
-	\item Menu
-	\item Interfejs pytań
+	\item Launcher (Menu)
+	\item Aplikacja do wyświetlania pytań
+	\item Klasy przechowywujące stan gry
 	\item Tekstury i obrazki
-	\item Ciało gry; Klasy: Player, Enemy, Question
-        \item Testy jednostkowe i obsługa wyjątków
 \end{itemize}
 
 \end{document}
