@@ -15,6 +15,21 @@ zaimplementowano scrollowany świat z płynnie poruszającą się
 kamerą. Gra napisana jest w C++20 i wykorzystuje najnowsze 
 funkcjonalności tego języka.
 
+# Kompilacja
+
+Repozytorium należy sklonować korzystając z opcji `--recursive` żeby sklonowały się również podmoduły:
+```bash
+git clone https://github.com/antoniprzybylik/studencka_gra_rpg.git --recursive
+```
+
+Następnie należy wejść do katalogu z kodem gry i wykonać komendę `make build`:
+```bash
+cd studencka_gra_rpg/game/
+make build
+```
+
+Zbudowana gra pojawi się w nowo utworzonym katalogu `application`.
+
 # Demo gry
 
 ![Krótki film z gry](./resources/demo.gif)
