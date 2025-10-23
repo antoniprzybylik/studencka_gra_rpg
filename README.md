@@ -1,3 +1,15 @@
 # Studencka Gra RPG
 
 Studencka gra RPG, takie trochę Diablo, tylko z widokiem z boku (o ile nadal w takim przypadku można mówić o Diablo). Gracz (student) przechodzić będzie przez mapę politechniki, a przy okazji będzie zbierać przedmioty i walczyć z potworami godnymi studiów Będzie posiadał swoje umiejętności, zdrowie i manę, a sam pojedynek będzie wyglądał bardziej jak w karciankach - w swojej turze gracz rzuca umiejętności, które zadają losowe obrażenia z danego przedziału (obrażenia są zwiększane przez itemki czy inne umiejętności), a potem swoje umiejętności rzuca przeciwnik. Celem gry jest zabicie wszystkich bossów i tym samym przeżycie studiów.
+
+# Demo gry
+
+![Krótki film z gry](./resources/demo.gif)
+
+# Zrzuty ekranu
+
+![Początek gry](./resources/screenshot1.jpg)
+
+![Spotkanie z panią z dziekanatu](./resources/screenshot2.jpg)
+
+![Quiz pani z dziekanatu](./resources/screenshot3.jpg)
