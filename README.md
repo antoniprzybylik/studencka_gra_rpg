@@ -1,6 +1,19 @@
 # Studencka Gra RPG
 
-Studencka gra RPG, takie trochę Diablo, tylko z widokiem z boku (o ile nadal w takim przypadku można mówić o Diablo). Gracz (student) przechodzić będzie przez mapę politechniki, a przy okazji będzie zbierać przedmioty i walczyć z potworami godnymi studiów Będzie posiadał swoje umiejętności, zdrowie i manę, a sam pojedynek będzie wyglądał bardziej jak w karciankach - w swojej turze gracz rzuca umiejętności, które zadają losowe obrażenia z danego przedziału (obrażenia są zwiększane przez itemki czy inne umiejętności), a potem swoje umiejętności rzuca przeciwnik. Celem gry jest zabicie wszystkich bossów i tym samym przeżycie studiów.
+Gra RPG, taka trochę jak Diablo, ale z widokiem z 
+boku (o ile nadal można mówić o Diablo w takim przypadku). 
+Gracz (student) przechodzi przez mapę politechniki walcząc z potworami godnymi 
+studiów. Celem gry jest zabicie wszystkich bossów i
+przeżycie studiów.
+
+# Opis techniczny
+
+Studencka Gra RPG została stworzona w autorskim silniku 
+do grafiki sprite'owej, który nie korzysta z SFMLowych 
+sprite'ów ani żadnych gotowych rozwiązań. W jej ramach 
+zaimplementowano scrollowany świat z płynnie poruszającą się 
+kamerą. Gra napisana jest w C++20 i wykorzystuje najnowsze 
+funkcjonalności tego języka.
 
 # Demo gry
 
@@ -13,3 +26,13 @@ Studencka gra RPG, takie trochę Diablo, tylko z widokiem z boku (o ile nadal w 
 ![Spotkanie z panią z dziekanatu](./resources/screenshot2.jpg)
 
 ![Quiz pani z dziekanatu](./resources/screenshot3.jpg)
+
+# Autorzy
+
+Antoni Michał Przybylik
+- Mechanika gry
+
+Zoja Hordyńska
+- Menu
+- Quizy
+- Tekstury
