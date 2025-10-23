@@ -54,6 +54,7 @@ Uwaga: Silnik nie kompiluje się z SFML 3 ani Catch2 3. Trzeba użyć starszych 
 # Autorzy
 
 Antoni Michał Przybylik
+- Silnik gry
 - Mechanika gry
 - Zapisywanie i wczytywanie stanu gry z pliku
 
