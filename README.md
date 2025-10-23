@@ -30,6 +30,13 @@ make build
 
 Zbudowana gra pojawi się w nowo utworzonym katalogu `application`.
 
+# Wymagania
+
+- SFML (wersja wcześniejsza niż 3.x, np. 2.6.2)
+- Catch2 (wersja wcześniejsza niż 3.x, np. 2.13.9)
+
+Uwaga: Silnik nie kompiluje się z SFML 3 ani Catch2 3. Trzeba użyć starszych wersji tych bibliotek.
+
 # Demo gry
 
 ![Krótki film z gry](./resources/demo.gif)
